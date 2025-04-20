@@ -8,3 +8,10 @@ export const SERVER_URL =
 export const categoryDefaultValues = {
   name: '',
 };
+
+export const contactMessageDefaultValues = {
+  senderName: '',
+  senderEmail: '',
+  subject: '',
+  messageText: '',
+};

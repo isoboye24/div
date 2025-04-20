@@ -1,23 +1,186 @@
 'use client';
 
-import React from 'react';
-import FormSection from './form-section';
+import React, { useEffect } from 'react';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { z } from 'zod';
+import { upsertContactMessageSchema } from '@/lib/validator';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { upsertContactMessage } from '@/lib/actions/message.actions';
+import { ContactMessage } from '@/types';
+import { contactMessageDefaultValues } from '@/lib/constants';
 
 import SectionTitle from '../shared/section-title';
-import ContactCards from './contact-cards';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../card';
 
-const ContactForm = () => {
+const ContactForm = ({
+  type,
+  contactMessage,
+  id,
+}: {
+  type: 'Send' | 'Update';
+  contactMessage?: ContactMessage;
+  id?: number;
+}) => {
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof upsertContactMessageSchema>>({
+    resolver: zodResolver(upsertContactMessageSchema),
+    defaultValues: contactMessage
+      ? {
+          senderName: contactMessage.senderName,
+          senderEmail: contactMessage.senderEmail,
+          subject: contactMessage.subject,
+          messageText: contactMessage.messageText,
+        }
+      : contactMessageDefaultValues,
+  });
+
+  // Reset form values when category prop changes
+  useEffect(() => {
+    if (contactMessage && type === 'Update') {
+      console.log('Form values:', form.getValues());
+      form.reset({
+        senderName: contactMessage.senderName,
+        senderEmail: contactMessage.senderEmail,
+        subject: contactMessage.subject,
+        messageText: contactMessage.messageText,
+      });
+    }
+  }, [contactMessage, type, form]);
+
+  const onSubmit: SubmitHandler<
+    z.infer<typeof upsertContactMessageSchema>
+  > = async (values) => {
+    const payload = { ...values, id: type === 'Update' && id ? id : undefined };
+
+    const res = await upsertContactMessage(payload);
+
+    if (!res.success) {
+      toast.error(res.message);
+    } else {
+      toast.success(res.message);
+      router.push('/admin/messages');
+    }
+  };
+
   return (
-    <div className="">
-      <div className="wrapper">
-        <div className="flex flex-col items-center justify-center">
-          <SectionTitle title="Send me a message" />
-        </div>
-        <div className="flex items-center justify-center mb-2 md:mb-20">
-          <FormSection />
-        </div>
-        <ContactCards />
-      </div>
+    <div className="mb-25 flex justify-center items-center">
+      <Card className="w-full max-w-lg">
+        <CardHeader>
+          <CardTitle>
+            <SectionTitle title="Send me a message" />
+          </CardTitle>
+          <CardDescription>
+            Fill out the form below and send your message.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form
+              method="post"
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8"
+            >
+              <div className="">
+                <div className="grid grid-cols-1 gap-3 mb-6 xl:mb-10">
+                  <div className="mb-4">
+                    <FormField
+                      control={form.control}
+                      name="senderName"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter Name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <FormField
+                      control={form.control}
+                      name="senderEmail"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter Email" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <FormField
+                      control={form.control}
+                      name="subject"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Subject</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter Subject" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="">
+                    <FormField
+                      control={form.control}
+                      name="messageText"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Your Message</FormLabel>
+                          <FormControl>
+                            <Textarea placeholder="Enter Message" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-center items-center"></div>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="justify-center">
+          <Button
+            type="submit"
+            size="lg"
+            disabled={form.formState.isSubmitting}
+            className="button w-[50vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[10vw] bg-teal-500 hover:bg-teal-600"
+          >
+            {form.formState.isSubmitting ? 'Submitting...' : `${type} Message`}
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 };

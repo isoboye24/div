@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { formatError } from '../utils';
 
-export const upsertMessage = async (
+export const upsertContactMessage = async (
   data: z.infer<typeof upsertContactMessageSchema>
 ) => {
   const parsed = upsertContactMessageSchema.safeParse(data);
