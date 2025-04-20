@@ -44,3 +44,12 @@ model Image {
   project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
   date      DateTime @default(now()) @db.Timestamp(6)
 }
+
+model Message {
+  id          Int      @id @default(autoincrement())
+  senderName  String
+  senderEmail String
+  subject     String
+  messageText String
+  date        DateTime @default(now()) @db.Timestamp(6)
+}

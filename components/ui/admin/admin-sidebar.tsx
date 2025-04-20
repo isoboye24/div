@@ -9,6 +9,7 @@ import {
   FolderGit2,
   Brain,
   Boxes,
+  MailCheck,
 } from 'lucide-react';
 
 const links = [
@@ -25,6 +26,7 @@ const links = [
     icon: <FolderGit2 size={20} />,
   },
   { href: '/admin/skills', label: 'Skills', icon: <Brain size={20} /> },
+  { href: '/admin/messages', label: 'Messages', icon: <MailCheck size={20} /> },
 ];
 
 export default function AdminSidebar() {
