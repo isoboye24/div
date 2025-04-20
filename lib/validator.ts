@@ -40,3 +40,19 @@ export const upsertCategorySchema = z.object({
   id: z.number().optional(), // optional for "Create"
   name: z.string().min(1, 'Name is required'),
 });
+
+export const upsertContactMessageSchema = z.object({
+  id: z.number().optional(),
+  senderName: z
+    .string()
+    .min(3, 'sender name is required and must be at least 3 characters'),
+  senderEmail: z
+    .string()
+    .min(3, 'sender email is required and must be at least 3 characters'),
+  subject: z
+    .string()
+    .min(3, 'Subject is required and must be at least 3 characters'),
+  messageText: z
+    .string()
+    .min(3, 'Text is required and must be at least 3 characters'),
+});

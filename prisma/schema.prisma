@@ -45,7 +45,7 @@ model Image {
   date      DateTime @default(now()) @db.Timestamp(6)
 }
 
-model Message {
+model ContactMessage {
   id          Int      @id @default(autoincrement())
   senderName  String
   senderEmail String
