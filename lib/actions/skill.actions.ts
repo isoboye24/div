@@ -116,3 +116,13 @@ export async function deleteSkill(id: number) {
     return { success: false, message: formatError(error) };
   }
 }
+
+export const getTotalSkills = async () => {
+  try {
+    const total = await prisma.skill.count();
+    return { success: true, total };
+  } catch (error) {
+    console.error('Error calculating total skills:', error);
+    return { success: false, message: 'Failed to count skills' };
+  }
+};

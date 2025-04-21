@@ -9,7 +9,11 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
-import { getAllCategory, deleteCategory } from '@/lib/actions/category.actions';
+import {
+  getAllCategory,
+  deleteCategory,
+  getTotalCategories,
+} from '@/lib/actions/category.actions';
 import Link from 'next/link';
 import DeleteDialog from '@/components/ui/shared/delete-dialog';
 
@@ -19,6 +23,7 @@ export const metadata: Metadata = {
 
 const Categories = async () => {
   const categories = await getAllCategory();
+  const total = await getTotalCategories();
 
   return (
     <div className="space-y-2">
@@ -52,6 +57,9 @@ const Categories = async () => {
             ))}
           </TableBody>
         </Table>
+      </div>
+      <div className="mt-10 text-end pr-4 md:pr-8 text-green-500">
+        Total Categories: {total.total}
       </div>
     </div>
   );

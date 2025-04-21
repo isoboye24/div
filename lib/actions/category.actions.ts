@@ -118,3 +118,13 @@ export async function deleteCategory(id: number) {
     return { success: false, message: formatError(error) };
   }
 }
+
+export const getTotalCategories = async () => {
+  try {
+    const total = await prisma.category.count();
+    return { success: true, total };
+  } catch (error) {
+    console.error('Error calculating total categories:', error);
+    return { success: false, message: 'Failed to count categories' };
+  }
+};

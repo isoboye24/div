@@ -9,7 +9,11 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
-import { getAllSkill, deleteSkill } from '@/lib/actions/skill.actions';
+import {
+  getAllSkill,
+  deleteSkill,
+  getTotalSkills,
+} from '@/lib/actions/skill.actions';
 import { getAllCategory } from '@/lib/actions/category.actions';
 import Link from 'next/link';
 import DeleteDialog from '@/components/ui/shared/delete-dialog';
@@ -21,6 +25,7 @@ export const metadata: Metadata = {
 const Skills = async () => {
   const skills = await getAllSkill();
   const allCategory = await getAllCategory();
+  const total = await getTotalSkills();
 
   return (
     <div className="space-y-2">
@@ -64,6 +69,9 @@ const Skills = async () => {
             })}
           </TableBody>
         </Table>
+      </div>
+      <div className="mt-10 text-end pr-4 md:pr-8 text-green-500">
+        Total Skills: {total.total}
       </div>
     </div>
   );

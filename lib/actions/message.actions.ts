@@ -120,3 +120,13 @@ export async function deleteContactMessage(id: number) {
     return { success: false, message: formatError(error) };
   }
 }
+
+export const getTotalContactMessages = async () => {
+  try {
+    const total = await prisma.contactMessage.count();
+    return { success: true, total };
+  } catch (error) {
+    console.error('Error calculating total contact messages:', error);
+    return { success: false, message: 'Failed to count contact messages' };
+  }
+};

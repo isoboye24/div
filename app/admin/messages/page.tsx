@@ -12,6 +12,7 @@ import { Metadata } from 'next';
 import {
   getAllContactMessages,
   deleteContactMessage,
+  getTotalContactMessages,
 } from '@/lib/actions/message.actions';
 import Link from 'next/link';
 import DeleteDialog from '@/components/ui/shared/delete-dialog';
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
 
 const Messages = async () => {
   const contactMessageData = await getAllContactMessages();
+  const total = await getTotalContactMessages();
 
   return (
     <div className="space-y-2">
@@ -62,6 +64,9 @@ const Messages = async () => {
             ))}
           </TableBody>
         </Table>
+      </div>
+      <div className="mt-10 text-end pr-4 md:pr-8 text-green-500">
+        Total Messages: {total.total}
       </div>
     </div>
   );
