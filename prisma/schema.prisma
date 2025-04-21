@@ -50,5 +50,5 @@ model ContactMessage {
   senderEmail String
   subject     String
   messageText String
-  createdAt   DateTime @default(now())
+  date        DateTime @default(now()) @db.Timestamp(6)
 }
