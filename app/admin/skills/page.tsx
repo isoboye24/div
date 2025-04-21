@@ -1,7 +1,70 @@
 import React from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Metadata } from 'next';
+import { getAllSkill, deleteSkill } from '@/lib/actions/skill.actions';
+import { getAllCategory } from '@/lib/actions/category.actions';
+import Link from 'next/link';
+import DeleteDialog from '@/components/ui/shared/delete-dialog';
 
-const Skills = () => {
-  return <div>Skills</div>;
+export const metadata: Metadata = {
+  title: 'List of Skills',
+};
+
+const Skills = async () => {
+  const skills = await getAllSkill();
+  const allCategory = await getAllCategory();
+
+  return (
+    <div className="space-y-2">
+      <div className="flex-between">
+        <div className="flex gap-3">
+          <h1 className="h2-bold text-center">List of Skill</h1>
+        </div>
+        <Link href="/admin/skills/create">
+          <Button variant="default">Create Skill</Button>
+        </Link>
+      </div>
+      <div className="mt-7">
+        <Table>
+          <TableHeader className="text-xl">
+            <TableRow>
+              <TableHead>Skill</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead className="w-[200px]">ACTIONS</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {skills?.data?.map((skill) => {
+              const category = allCategory?.data?.find(
+                (category) => category.id === skill.categoryId
+              );
+
+              return (
+                <TableRow key={skill.id}>
+                  <TableCell>{skill.skillName}</TableCell>
+                  <TableCell>{category?.name || 'unknown category'}</TableCell>
+                  <TableCell className="flex gap-5">
+                    <Link href={`/admin/skills/${skill.id}`}>
+                      <Button>Edit</Button>
+                    </Link>
+                    <DeleteDialog id={skill.id} action={deleteSkill} />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
 };
 
 export default Skills;

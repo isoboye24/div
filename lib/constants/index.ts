@@ -15,3 +15,8 @@ export const contactMessageDefaultValues = {
   subject: '',
   messageText: '',
 };
+
+export const skillDefaultValues = {
+  skillName: '',
+  categoryId: 0,
+};

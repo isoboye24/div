@@ -15,11 +15,11 @@ model Category {
 }
 
 model Skill {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   skillName  String
-  categoryId Int?
-  date       DateTime  @default(now()) @db.Timestamp(6)
-  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  date       DateTime @default(now()) @db.Timestamp(6)
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Project {
