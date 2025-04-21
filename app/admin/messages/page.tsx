@@ -15,6 +15,7 @@ import {
 } from '@/lib/actions/message.actions';
 import Link from 'next/link';
 import DeleteDialog from '@/components/ui/shared/delete-dialog';
+import { ContactMessage } from '@/types';
 
 export const metadata: Metadata = {
   title: 'List of Messages',
@@ -42,7 +43,7 @@ const Messages = async () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {contactMessageData?.data?.map((contactMessage) => (
+            {contactMessageData?.data?.map((contactMessage: ContactMessage) => (
               <TableRow key={contactMessage.id}>
                 <TableCell>{contactMessage.senderName}</TableCell>
                 <TableCell>{contactMessage.senderEmail}</TableCell>
@@ -53,7 +54,7 @@ const Messages = async () => {
                     <Button>View</Button>
                   </Link>
                   <DeleteDialog
-                    id={contactMessage.id}
+                    id={contactMessage.id!}
                     action={deleteContactMessage}
                   />
                 </TableCell>
