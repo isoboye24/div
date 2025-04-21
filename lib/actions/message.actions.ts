@@ -22,17 +22,17 @@ export const upsertContactMessage = async (
   const { id, senderName, senderEmail, subject, messageText } = parsed.data;
 
   try {
-    let contactMessage;
+    let contactMessageData;
 
     // Upsert the message
     if (id) {
-      contactMessage = await prisma.contactMessage.upsert({
+      contactMessageData = await prisma.contactMessage.upsert({
         where: { id },
         update: { senderName, senderEmail, subject, messageText },
         create: { senderName, senderEmail, subject, messageText },
       });
     } else {
-      contactMessage = await prisma.contactMessage.create({
+      contactMessageData = await prisma.contactMessage.create({
         data: { senderName, senderEmail, subject, messageText },
       });
     }
@@ -42,7 +42,7 @@ export const upsertContactMessage = async (
       clientMessage: id
         ? 'Contact message updated successfully'
         : 'Message sent successfully',
-      data: contactMessage,
+      data: contactMessageData,
     };
   } catch (error) {
     console.error('Upsert contact message error:', error);
@@ -55,7 +55,7 @@ export const upsertContactMessage = async (
 
 export const getAllContactMessages = async () => {
   try {
-    const contactMessages = await prisma.contactMessage.findMany({
+    const contactMessageData = await prisma.contactMessage.findMany({
       orderBy: {
         date: 'desc',
       },
@@ -63,7 +63,7 @@ export const getAllContactMessages = async () => {
 
     return {
       success: true,
-      data: contactMessages,
+      data: contactMessageData,
     };
   } catch (error) {
     console.error('Error fetching contact messages:', error);
@@ -76,11 +76,11 @@ export const getAllContactMessages = async () => {
 
 export const getContactMessageById = async (id: number) => {
   try {
-    const contactMessage = await prisma.contactMessage.findFirst({
+    const contactMessageData = await prisma.contactMessage.findFirst({
       where: { id },
     });
 
-    if (!contactMessage) {
+    if (!contactMessageData) {
       return {
         success: false,
         message: 'Contact message not found',
@@ -89,7 +89,7 @@ export const getContactMessageById = async (id: number) => {
 
     return {
       success: true,
-      data: contactMessage,
+      data: contactMessageData,
     };
   } catch (error) {
     console.error('Error fetching contact message:', error);
@@ -102,11 +102,11 @@ export const getContactMessageById = async (id: number) => {
 
 export async function deleteContactMessage(id: number) {
   try {
-    const contactMessageExists = await prisma.contactMessage.findFirst({
+    const contactMessageData = await prisma.contactMessage.findFirst({
       where: { id },
     });
 
-    if (!contactMessageExists) throw new Error('Contact message not found');
+    if (!contactMessageData) throw new Error('Contact message not found');
 
     await prisma.contactMessage.delete({ where: { id } });
 

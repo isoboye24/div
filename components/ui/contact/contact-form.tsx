@@ -27,7 +27,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '../card';
@@ -79,7 +78,12 @@ const ContactForm = ({
       toast.error(res.message);
     } else {
       toast.success(res.message);
-      router.push('/admin/messages');
+      if (type === 'Send') {
+        form.reset();
+        router.push('/contact');
+      } else {
+        router.push('/admin/messages');
+      }
     }
   };
 
@@ -165,21 +169,22 @@ const ContactForm = ({
                   </div>
                 </div>
 
-                <div className="flex justify-center items-center"></div>
+                <div className="flex justify-center items-center">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={form.formState.isSubmitting}
+                    className="button w-[50vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[10vw] bg-teal-500 hover:bg-teal-600"
+                  >
+                    {form.formState.isSubmitting
+                      ? 'Submitting...'
+                      : `${type} Message`}
+                  </Button>
+                </div>
               </div>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="justify-center">
-          <Button
-            type="submit"
-            size="lg"
-            disabled={form.formState.isSubmitting}
-            className="button w-[50vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[10vw] bg-teal-500 hover:bg-teal-600"
-          >
-            {form.formState.isSubmitting ? 'Submitting...' : `${type} Message`}
-          </Button>
-        </CardFooter>
       </Card>
     </div>
   );

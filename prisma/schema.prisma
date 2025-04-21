@@ -17,23 +17,22 @@ model Category {
 model Skill {
   id         Int       @id @default(autoincrement())
   skillName  String
-  category   Category? @relation(fields: [categoryId], references: [id])
   categoryId Int?
   date       DateTime  @default(now()) @db.Timestamp(6)
+  category   Category? @relation(fields: [categoryId], references: [id])
 }
 
 model Project {
-  id               Int      @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   projectName      String
-  image            Image[]
   projectThumbnail String
   siteLink         String?
   codeLink         String?
   description      String?
-  date             DateTime @default(now()) @db.Timestamp(6)
-
-  category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId Int?
+  date             DateTime  @default(now()) @db.Timestamp(6)
+  categoryId       Int?
+  image            Image[]
+  category         Category? @relation(fields: [categoryId], references: [id])
 }
 
 model Image {
@@ -41,8 +40,8 @@ model Image {
   caption   String?
   url       String
   projectId Int?
-  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
   date      DateTime @default(now()) @db.Timestamp(6)
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model ContactMessage {
@@ -51,5 +50,5 @@ model ContactMessage {
   senderEmail String
   subject     String
   messageText String
-  date        DateTime @default(now()) @db.Timestamp(6)
+  createdAt   DateTime @default(now())
 }

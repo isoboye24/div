@@ -36,7 +36,7 @@ export default function AdminSidebar() {
         href="/admin/dashboard"
         className="text-4xl text-center font-bold mb-6 text-amber-500"
       >
-        D-OIV
+        DIV
       </a>
       <nav className="flex-1 space-y-2">
         {links.map(({ href, label, icon }) => (
