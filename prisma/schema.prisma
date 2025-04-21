@@ -19,6 +19,7 @@ model Skill {
   skillName  String
   categoryId Int
   date       DateTime @default(now()) @db.Timestamp(6)
+  level      Int      @default(50)
   category   Category @relation(fields: [categoryId], references: [id])
 }
 

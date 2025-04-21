@@ -27,6 +27,7 @@ export const upsertProjectSchema = z.object({
 export const upsertSkillSchema = z.object({
   id: z.number().optional(),
   skillName: z.string().min(1, 'Skill name is required'),
+  level: z.number(),
   categoryId: z.coerce.number(),
 });
 

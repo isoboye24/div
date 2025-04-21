@@ -17,7 +17,7 @@ export const upsertSkill = async (data: z.infer<typeof upsertSkillSchema>) => {
     };
   }
 
-  const { id, skillName, categoryId } = parsed.data;
+  const { id, skillName, categoryId, level } = parsed.data;
 
   try {
     let skillData;
@@ -26,12 +26,12 @@ export const upsertSkill = async (data: z.infer<typeof upsertSkillSchema>) => {
     if (id) {
       skillData = await prisma.skill.upsert({
         where: { id },
-        update: { skillName, categoryId },
-        create: { skillName, categoryId },
+        update: { skillName, categoryId, level },
+        create: { skillName, categoryId, level },
       });
     } else {
       skillData = await prisma.skill.create({
-        data: { skillName, categoryId },
+        data: { skillName, categoryId, level },
       });
     }
 
@@ -53,7 +53,7 @@ export const getAllSkill = async () => {
   try {
     const skillData = await prisma.skill.findMany({
       orderBy: {
-        skillName: 'asc',
+        level: 'desc',
       },
     });
 

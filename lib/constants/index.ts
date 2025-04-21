@@ -19,4 +19,5 @@ export const contactMessageDefaultValues = {
 export const skillDefaultValues = {
   skillName: '',
   categoryId: 0,
+  level: 0,
 };

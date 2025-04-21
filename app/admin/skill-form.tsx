@@ -43,7 +43,11 @@ const SkillForm = ({
   const form = useForm<z.infer<typeof upsertSkillSchema>>({
     resolver: zodResolver(upsertSkillSchema),
     defaultValues: skill
-      ? { skillName: skill.skillName, categoryId: skill.categoryId }
+      ? {
+          skillName: skill.skillName,
+          categoryId: skill.categoryId,
+          level: skill.level,
+        }
       : skillDefaultValues,
   });
 
@@ -55,7 +59,11 @@ const SkillForm = ({
   useEffect(() => {
     if (skill && type === 'Update') {
       console.log('Form values:', form.getValues());
-      form.reset({ skillName: skill.skillName, categoryId: skill.categoryId });
+      form.reset({
+        skillName: skill.skillName,
+        categoryId: skill.categoryId,
+        level: skill.level,
+      });
     }
   }, [skill, type, form]);
 
@@ -106,6 +114,26 @@ const SkillForm = ({
                     <FormLabel>Skill Name</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter Skill name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="mb-6">
+              <FormField
+                control={form.control}
+                name="level"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Skill Level</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter Skill level"
+                        value={field.value ?? ''}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
