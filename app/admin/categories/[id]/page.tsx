@@ -19,7 +19,7 @@ const UpdateCategory = async (props: {
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
-      <h1 className="h2-bold">Update Product</h1>
+      <h1 className="h2-bold">Update Category</h1>
       <CategoryForm
         type="Update"
         category={category.data}
