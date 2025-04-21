@@ -21,7 +21,7 @@ export default function MainAdminNav({
         </button>
 
         <a
-          href="http://localhost:3000"
+          href="https://div-mu.vercel.app"
           target="_blank"
           rel="noopener noreferrer"
         >

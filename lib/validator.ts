@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-export const insertProjectSchema = z.object({
+export const upsertProjectSchema = z.object({
+  id: z.number().optional(),
   projectName: z.string().min(1, 'Project name is required'),
   siteLink: z
     .string()
@@ -23,17 +24,10 @@ export const insertProjectSchema = z.object({
   description: z.string().min(3).optional().nullable(),
 });
 
-export const updateProjectSchema = insertProjectSchema.extend({
-  id: z.number().int().min(1, 'Id is required'),
-});
-
-export const insertSkillSchema = z.object({
-  name: z.string().min(1, 'Skill name is required'),
-});
-
-export const updateSkillSchema = insertSkillSchema.extend({
-  id: z.number().int().min(1, 'Id is required'),
-  categoryId: z.string().min(3, 'Project category link is required'),
+export const upsertSkillSchema = z.object({
+  id: z.number().optional(),
+  skillName: z.string().min(1, 'Skill name is required'),
+  categoryId: z.coerce.number(),
 });
 
 export const upsertCategorySchema = z.object({
