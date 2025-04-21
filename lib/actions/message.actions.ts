@@ -57,7 +57,7 @@ export const getAllContactMessages = async () => {
   try {
     const contactMessageData = await prisma.contactMessage.findMany({
       orderBy: {
-        date: 'desc',
+        senderName: 'desc',
       },
     });
 
