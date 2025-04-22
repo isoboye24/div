@@ -16,10 +16,8 @@ export const upsertProjectSchema = z.object({
   projectThumbnail: z
     .string()
     .min(1, 'Project must have at least one thumbnail'),
-  image: z
-    .array(z.string().min(1, 'Project must have at least one image'))
-    .optional()
-    .nullable(),
+  slug: z.string().min(3, 'Slug must be at least 3 characters'),
+  images: z.array(z.string().min(1, 'Project must have at least one image')),
   categoryId: z.number().int().min(1, 'Id is required'),
   description: z.string().min(3).optional().nullable(),
 });

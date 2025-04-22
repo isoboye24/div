@@ -30,19 +30,11 @@ model Project {
   siteLink         String?
   codeLink         String?
   description      String?
-  date             DateTime  @default(now()) @db.Timestamp(6)
   categoryId       Int?
-  image            Image[]
+  slug             String    @unique(map: "project_slug_idx") @default("")
+  createdAt        DateTime  @default(now()) @db.Timestamp(6)
+  images           String[]
   category         Category? @relation(fields: [categoryId], references: [id])
-}
-
-model Image {
-  id        Int      @id @default(autoincrement())
-  caption   String?
-  url       String
-  projectId Int?
-  date      DateTime @default(now()) @db.Timestamp(6)
-  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model ContactMessage {
