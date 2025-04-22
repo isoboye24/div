@@ -18,8 +18,10 @@ export const upsertProjectSchema = z.object({
     .min(1, 'Project must have at least one thumbnail'),
   slug: z.string().min(3, 'Slug must be at least 3 characters'),
   images: z.array(z.string().min(1, 'Project must have at least one image')),
-  categoryId: z.number().int().min(1, 'Id is required'),
+  categoryId: z.number().int().min(1, 'categoryId is required'),
   description: z.string().min(3).optional().nullable(),
+  publish: z.boolean(),
+  rate: z.number().int().min(1, 'rate is required'),
 });
 
 export const upsertSkillSchema = z.object({

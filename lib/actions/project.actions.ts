@@ -49,6 +49,8 @@ export const upsertProject = async (
     slug,
     description,
     categoryId,
+    publish,
+    rate,
   } = parsed.data;
 
   try {
@@ -67,6 +69,8 @@ export const upsertProject = async (
           slug,
           description,
           categoryId,
+          publish,
+          rate,
         },
         create: {
           projectName,
@@ -77,6 +81,8 @@ export const upsertProject = async (
           slug,
           description,
           categoryId,
+          publish,
+          rate,
         },
       });
     } else {
@@ -90,6 +96,8 @@ export const upsertProject = async (
           slug,
           description,
           categoryId,
+          publish,
+          rate,
         },
       });
     }
@@ -113,9 +121,7 @@ export const upsertProject = async (
 export const getAllProjects = async () => {
   try {
     const projects = await prisma.project.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
+      orderBy: [{ publish: 'desc' }, { rate: 'desc' }, { createdAt: 'desc' }],
     });
 
     return {
@@ -178,7 +184,7 @@ export async function deleteProject(id: number) {
   }
 }
 
-export const getTotalCategories = async () => {
+export const getTotalProjects = async () => {
   try {
     const total = await prisma.project.count();
     return { success: true, total };

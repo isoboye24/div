@@ -1,6 +1,7 @@
 import {
   upsertCategorySchema,
   upsertContactMessageSchema,
+  upsertProjectSchema,
   upsertSkillSchema,
 } from '@/lib/validator';
 import { StaticImageData } from 'next/image';
@@ -11,6 +12,7 @@ export type Category = z.infer<typeof upsertCategorySchema>;
 export type ContactMessage = z.infer<typeof upsertContactMessageSchema>;
 
 export type Skill = z.infer<typeof upsertSkillSchema>;
+export type ProjectNew = z.infer<typeof upsertProjectSchema>;
 
 export type Project = {
   id?: number;
