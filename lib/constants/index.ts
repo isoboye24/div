@@ -21,3 +21,16 @@ export const skillDefaultValues = {
   categoryId: 0,
   level: 0,
 };
+
+export const projectDefaultValues = {
+  projectName: '',
+  categoryId: 0,
+  publish: false,
+  images: [],
+  slug: '',
+  rate: 0,
+  siteLink: '',
+  codeLink: '',
+  description: '',
+  projectThumbnail: '',
+};

@@ -33,7 +33,7 @@ const Projects = async () => {
         <div className="flex gap-3">
           <h1 className="h2-bold text-center">List of Projects</h1>
         </div>
-        <Link href="/admin/categories/create">
+        <Link href="/admin/projects/create">
           <Button variant="default">Create Project</Button>
         </Link>
       </div>
@@ -58,7 +58,9 @@ const Projects = async () => {
                 <TableRow key={project.id}>
                   <TableCell>{project.projectName}</TableCell>
                   <TableCell>{category?.name || 'unknown category'}</TableCell>
-                  <TableCell>{project.publish}</TableCell>
+                  <TableCell>
+                    {project.publish ? 'Published' : 'Unpublished'}
+                  </TableCell>
                   <TableCell>{project.rate}</TableCell>
                   <TableCell className="flex gap-5">
                     <Link href={`/admin/projects/${project.id}`}>

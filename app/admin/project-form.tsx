@@ -10,16 +10,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { z } from 'zod';
-import { upsertSkillSchema } from '@/lib/validator';
+import { upsertProjectSchema } from '@/lib/validator';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { Skill } from '@/types';
-import { skillDefaultValues } from '@/lib/constants';
-import { upsertSkill } from '@/lib/actions/skill.actions';
+import { ProjectNew } from '@/types';
+import { projectDefaultValues } from '@/lib/constants';
 import {
   Select,
   SelectTrigger,
@@ -28,27 +27,43 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { getAllCategory } from '@/lib/actions/category.actions';
+import { upsertProject } from '@/lib/actions/project.actions';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import Image from 'next/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { UploadButton } from '@uploadthing/react';
+import type { ClientUploadedFileData } from 'uploadthing/types';
+import { OurFileRouter } from '@/lib/uploadthing';
+import slugify from 'slugify';
 
-const SkillForm = ({
+const ProjectForm = ({
   type,
-  skill,
+  project,
   id,
 }: {
   type: 'Create' | 'Update';
-  skill?: Skill;
+  project?: ProjectNew;
   id?: number;
 }) => {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof upsertSkillSchema>>({
-    resolver: zodResolver(upsertSkillSchema),
-    defaultValues: skill
+  const form = useForm<z.infer<typeof upsertProjectSchema>>({
+    resolver: zodResolver(upsertProjectSchema),
+    defaultValues: project
       ? {
-          skillName: skill.skillName,
-          categoryId: skill.categoryId,
-          level: skill.level,
+          projectName: project.projectName,
+          categoryId: project.categoryId,
+          publish: project.publish,
+          images: project.images,
+          slug: project.slug,
+          rate: project.rate,
+          siteLink: project.siteLink,
+          codeLink: project.codeLink,
+          description: project.description,
+          projectThumbnail: project.projectThumbnail,
         }
-      : skillDefaultValues,
+      : projectDefaultValues,
   });
 
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
@@ -57,15 +72,22 @@ const SkillForm = ({
 
   // Reset form values when skill prop changes
   useEffect(() => {
-    if (skill && type === 'Update') {
+    if (project && type === 'Update') {
       console.log('Form values:', form.getValues());
       form.reset({
-        skillName: skill.skillName,
-        categoryId: skill.categoryId,
-        level: skill.level,
+        projectName: project.projectName,
+        categoryId: project.categoryId,
+        publish: project.publish,
+        images: project.images,
+        slug: project.slug,
+        rate: project.rate,
+        siteLink: project.siteLink,
+        codeLink: project.codeLink,
+        description: project.description,
+        projectThumbnail: project.projectThumbnail,
       });
     }
-  }, [skill, type, form]);
+  }, [project, type, form]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -81,39 +103,39 @@ const SkillForm = ({
     fetchCategories();
   }, []);
 
-  const onSubmit: SubmitHandler<z.infer<typeof upsertSkillSchema>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof upsertProjectSchema>> = async (
     values
   ) => {
     const payload = { ...values, id: type === 'Update' && id ? id : undefined };
 
-    const res = await upsertSkill(payload);
+    const res = await upsertProject(payload);
 
     if (!res.success) {
       toast.error(res.message);
     } else {
       toast.success(res.message);
-      router.push('/admin/skills');
+      router.push('/admin/projects');
     }
   };
 
   return (
-    <div>
+    <div className="">
       <Form {...form}>
         <form
           method="post"
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8"
         >
-          <div className="">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4">
             <div className="mb-6">
               <FormField
                 control={form.control}
-                name="skillName"
+                name="projectName"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Skill Name</FormLabel>
+                    <FormLabel>Project Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Skill name" {...field} />
+                      <Input placeholder="Enter Project name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -123,14 +145,207 @@ const SkillForm = ({
             <div className="mb-6">
               <FormField
                 control={form.control}
-                name="level"
+                name="siteLink"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Skill Level</FormLabel>
+                    <FormLabel>Site Link</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Site Link" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="mb-6">
+              <FormField
+                control={form.control}
+                name="codeLink"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Code Link</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Code Link" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="mb-6">
+              <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Slug</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          placeholder="Generate slug"
+                          className="pl-8"
+                          {...field}
+                        />
+                        <button
+                          type="button"
+                          className="bg-gray-500 text-white px-4 py-1 mt-2 hover:bg-gray-600"
+                          onClick={() => {
+                            form.setValue(
+                              'slug',
+                              slugify(form.getValues('projectName'), {
+                                lower: true,
+                              })
+                            );
+                          }}
+                        >
+                          Generate
+                        </button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="mb-6">
+              <div className="upload-field flex flex-col gap-5 md:flex-row">
+                {/* Thumbnail */}
+                <FormField
+                  control={form.control}
+                  name="projectThumbnail"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Thumbnail</FormLabel>
+                      <Card>
+                        <CardContent className="space-y-2 mt-2 min-h-48">
+                          <div className="flex-start space-x-2 flex flex-wrap">
+                            {/* Render uploaded images */}
+                            {field.value && (
+                              <Image
+                                key={field.value}
+                                src={field.value}
+                                alt="product image"
+                                className="w-20 h-20 object-cover object-center rounded-sm"
+                                width={100}
+                                height={100}
+                              />
+                            )}
+
+                            {/* Upload Button */}
+                            {(!field.value || field.value.length === 0) && (
+                              <FormControl>
+                                <UploadButton<OurFileRouter, 'imageUploader'>
+                                  endpoint="imageUploader"
+                                  onClientUploadComplete={(res) => {
+                                    const uploadedUrl = res?.[0]?.ufsUrl;
+                                    if (uploadedUrl) {
+                                      field.onChange(uploadedUrl);
+                                    }
+                                  }}
+                                  onUploadError={(error: Error) => {
+                                    console.error('Upload failed:', error);
+                                  }}
+                                />
+                              </FormControl>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="mb-6">
+              <div className="upload-field flex flex-col gap-5 md:flex-row">
+                {/* Images */}
+                <FormField
+                  control={form.control}
+                  name="images"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Images</FormLabel>
+                      <Card>
+                        <CardContent className="space-y-2 mt-2 min-h-48">
+                          <div className="flex-start space-x-2 flex flex-wrap">
+                            {/* Render uploaded images */}
+                            {field.value?.map((image: string) => (
+                              <Image
+                                key={image}
+                                src={image}
+                                alt="product image"
+                                className="w-20 h-20 object-cover object-center rounded-sm"
+                                width={100}
+                                height={100}
+                              />
+                            ))}
+
+                            {/* Upload Button */}
+                            <FormControl>
+                              <UploadButton<OurFileRouter, 'imageUploader'>
+                                endpoint="imageUploader"
+                                onClientUploadComplete={(
+                                  res:
+                                    | ClientUploadedFileData<null>[]
+                                    | undefined
+                                ) => {
+                                  const uploadedUrls = res
+                                    ?.map((r) => r.ufsUrl)
+                                    .filter(Boolean);
+
+                                  if (uploadedUrls?.length) {
+                                    const newImages = [
+                                      ...(field.value ?? []),
+                                      ...uploadedUrls,
+                                    ];
+                                    field.onChange(newImages);
+                                  }
+                                }}
+                                onUploadError={(error: Error) => {
+                                  console.error('Upload failed:', error);
+                                }}
+                              />
+                            </FormControl>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="mb-6">
+              <FormField
+                control={form.control}
+                name="publish"
+                render={({ field }) => (
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel className="mb-0">Publish ?</FormLabel>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="mb-6">
+              <FormField
+                control={form.control}
+                name="rate"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Rate</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="Enter Skill level"
+                        placeholder="Enter Rate level"
                         value={field.value ?? ''}
                         onChange={(e) => field.onChange(Number(e.target.value))}
                       />
@@ -140,22 +355,23 @@ const SkillForm = ({
                 )}
               />
             </div>
+
             <div className="mb-6">
               <FormField
                 control={form.control}
                 name="categoryId"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Skill Category</FormLabel>
+                    <FormLabel>Select Category</FormLabel>
                     <FormControl>
                       <Select
                         value={field.value?.toString() || ''}
                         onValueChange={(val) => field.onChange(Number(val))}
                       >
-                        <SelectTrigger className="w-full min-w-[300px]">
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
-                        <SelectContent className="w-full min-w-[300px]">
+                        <SelectContent className="w-full ">
                           {categories.map((category) => (
                             <SelectItem
                               key={category.id}
@@ -172,19 +388,37 @@ const SkillForm = ({
                 )}
               />
             </div>
-
-            <div className="col-start-1 col-end-3 lg:col-start-2 lg:col-end-3">
-              <Button
-                type="submit"
-                size="lg"
-                disabled={form.formState.isSubmitting}
-                className="button col-span-2 w-full"
-              >
-                {form.formState.isSubmitting
-                  ? 'Submitting...'
-                  : `${type} Skill`}
-              </Button>
+            <div className="mb-6">
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Describe the project"
+                        {...field}
+                        className="h-40"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
+          </div>
+          <div className="col-start-1 col-end-3 lg:col-start-2 lg:col-end-3">
+            <Button
+              type="submit"
+              size="lg"
+              disabled={form.formState.isSubmitting}
+              className="button col-span-2 w-full"
+            >
+              {form.formState.isSubmitting
+                ? 'Submitting...'
+                : `${type} Project`}
+            </Button>
           </div>
         </form>
       </Form>
@@ -192,4 +426,4 @@ const SkillForm = ({
   );
 };
 
-export default SkillForm;
+export default ProjectForm;

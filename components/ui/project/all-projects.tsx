@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import ProjectCard from '../project/project-card';
 import { Project } from '@/types';
 import { ProjectSectionProps } from '@/interfaces';
-import { getAllFilterProjects } from '@/lib/actions/project.actions';
+import { getAllFilterProjects } from '@/lib/actions/old-project.actions';
 
 const AllProjects = <T extends string>({
   tab,

@@ -3,23 +3,15 @@ import { z } from 'zod';
 export const upsertProjectSchema = z.object({
   id: z.number().optional(),
   projectName: z.string().min(1, 'Project name is required'),
-  siteLink: z
-    .string()
-    .min(3, 'If provided, site link must be at least 3 characters long')
-    .optional()
-    .nullable(),
-  codeLink: z
-    .string()
-    .min(3, 'If provided, code link must be at least 3 characters long')
-    .optional()
-    .nullable(),
+  siteLink: z.string().url().optional().or(z.literal('')),
+  codeLink: z.string().url().optional().or(z.literal('')),
   projectThumbnail: z
     .string()
     .min(1, 'Project must have at least one thumbnail'),
   slug: z.string().min(3, 'Slug must be at least 3 characters'),
   images: z.array(z.string().min(1, 'Project must have at least one image')),
   categoryId: z.number().int().min(1, 'categoryId is required'),
-  description: z.string().min(3).optional().nullable(),
+  description: z.string().optional().or(z.literal('')),
   publish: z.boolean(),
   rate: z.number().int().min(1, 'rate is required'),
 });

@@ -5,7 +5,7 @@ import CustomCarousel from '../project/custom-carousel';
 import ProjectCard from '../project/project-card';
 import { Project } from '@/types';
 import { ProjectSectionProps } from '@/interfaces';
-import { getFilterProjects } from '@/lib/actions/project.actions';
+import { getFilterProjects } from '@/lib/actions/old-project.actions';
 
 const ProjectCarousel = <T extends string>({
   tab,

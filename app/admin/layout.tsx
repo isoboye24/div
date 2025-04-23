@@ -25,7 +25,7 @@ export default function AdminLayout({
   }, [isDarkMode]);
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-y-hidden">
       {/* Sidebar */}
       <div className={`${isSidebarOpen ? 'block' : 'hidden'} md:block`}>
         <AdminSidebar />
@@ -37,7 +37,7 @@ export default function AdminLayout({
           toggleSidebar={toggleSidebar}
           toggleDarkMode={toggleDarkMode}
         />
-        <main className="p-6 flex-1 text-gray-900 dark:text-gray-100">
+        <main className="overflow-auto flex-1 text-gray-900 dark:text-gray-100 p-6">
           {children}
         </main>
       </div>

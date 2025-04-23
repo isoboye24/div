@@ -1,30 +1,10 @@
-import { projectList } from '@/db/project-data';
-import { Project } from '@/types';
+'use server';
+
 import { prisma } from '@/lib/prisma';
 import { upsertProjectSchema } from '../validator';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { formatError } from '../utils';
-
-export const getFilterProjects = ({ activeType }: { activeType: string }) => {
-  const filteredProjects = projectList
-    .filter((project: Project) => project.type === activeType)
-    .slice(0, 3); // limit to 3
-
-  return filteredProjects;
-};
-
-export const getAllFilterProjects = ({
-  activeType,
-}: {
-  activeType: string;
-}) => {
-  const allFilteredProjects = projectList.filter((project: Project) =>
-    activeType === 'All' ? true : project.type === activeType
-  );
-
-  return allFilteredProjects;
-};
 
 export const upsertProject = async (
   data: z.infer<typeof upsertProjectSchema>
@@ -54,11 +34,11 @@ export const upsertProject = async (
   } = parsed.data;
 
   try {
-    let category;
+    let project;
 
-    // Upsert the category
+    // Upsert the project
     if (id) {
-      category = await prisma.project.upsert({
+      project = await prisma.project.upsert({
         where: { id },
         update: {
           projectName,
@@ -86,7 +66,7 @@ export const upsertProject = async (
         },
       });
     } else {
-      category = await prisma.project.create({
+      project = await prisma.project.create({
         data: {
           projectName,
           projectThumbnail,
@@ -105,15 +85,15 @@ export const upsertProject = async (
     return {
       success: true,
       message: id
-        ? 'Category updated successfully'
-        : 'Category created successfully',
-      data: category,
+        ? 'Project updated successfully'
+        : 'Project created successfully',
+      data: project,
     };
   } catch (error) {
-    console.error('Upsert category error:', error);
+    console.error('Upsert project error:', error);
     return {
       success: false,
-      message: 'Failed to upsert category',
+      message: 'Failed to upsert project',
     };
   }
 };
