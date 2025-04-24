@@ -18,13 +18,13 @@ export const contactMessageDefaultValues = {
 
 export const skillDefaultValues = {
   skillName: '',
-  categoryId: 0,
+  categoryId: '',
   level: 0,
 };
 
 export const projectDefaultValues = {
   projectName: '',
-  categoryId: 0,
+  categoryId: '',
   publish: false,
   images: [],
   slug: '',

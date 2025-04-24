@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 const UpdateCategory = async (props: {
   params: Promise<{
-    id: number;
+    id: string;
   }>;
 }) => {
   const { id } = await props.params;
-  const category = await getCategoryById(Number(id));
+  const category = await getCategoryById(id);
 
   if (!category) return notFound();
 

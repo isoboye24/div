@@ -74,7 +74,7 @@ export const getAllContactMessages = async () => {
   }
 };
 
-export const getContactMessageById = async (id: number) => {
+export const getContactMessageById = async (id: string) => {
   try {
     const contactMessageData = await prisma.contactMessage.findFirst({
       where: { id },
@@ -100,7 +100,7 @@ export const getContactMessageById = async (id: number) => {
   }
 };
 
-export async function deleteContactMessage(id: number) {
+export async function deleteContactMessage(id: string) {
   try {
     const contactMessageData = await prisma.contactMessage.findFirst({
       where: { id },

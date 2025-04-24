@@ -9,17 +9,18 @@ export const metadata: Metadata = {
 
 const UpdateProject = async (props: {
   params: Promise<{
-    id: number;
+    id: string;
   }>;
 }) => {
   const { id } = await props.params;
-  const project = await getProjectById(Number(id));
+  const project = await getProjectById(id);
 
   if (!project) return notFound();
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       <h1 className="h2-bold">Update Project</h1>
+
       <ProjectForm type="Update" project={project.data} id={project.data?.id} />
     </div>
   );

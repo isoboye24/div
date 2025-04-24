@@ -72,7 +72,7 @@ export const getAllCategory = async () => {
   }
 };
 
-export const getCategoryById = async (id: number) => {
+export const getCategoryById = async (id: string) => {
   try {
     const category = await prisma.category.findFirst({
       where: { id },
@@ -98,7 +98,7 @@ export const getCategoryById = async (id: number) => {
   }
 };
 
-export async function deleteCategory(id: number) {
+export async function deleteCategory(id: string) {
   try {
     const categoryExists = await prisma.category.findFirst({
       where: { id },

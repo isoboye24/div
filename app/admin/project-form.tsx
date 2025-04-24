@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { Project } from '@/types';
+import { ProjectNew } from '@/types';
 import { projectDefaultValues } from '@/lib/constants';
 import {
   Select,
@@ -43,8 +43,8 @@ const ProjectForm = ({
   id,
 }: {
   type: 'Create' | 'Update';
-  project?: Project;
-  id?: number;
+  project?: ProjectNew;
+  id?: string;
 }) => {
   const router = useRouter();
 
@@ -66,11 +66,11 @@ const ProjectForm = ({
       : projectDefaultValues,
   });
 
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     []
   );
 
-  // Reset form values when skill prop changes
+  // Reset form values when project prop changes
   useEffect(() => {
     if (project && type === 'Update') {
       console.log('Form values:', form.getValues());
@@ -366,7 +366,7 @@ const ProjectForm = ({
                     <FormControl>
                       <Select
                         value={field.value?.toString() || ''}
-                        onValueChange={(val) => field.onChange(Number(val))}
+                        onValueChange={(val) => field.onChange(val)}
                       >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select category" />

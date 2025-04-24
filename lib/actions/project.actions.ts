@@ -122,7 +122,7 @@ export const getAllProjects = async () => {
   }
 };
 
-export const getProjectById = async (id: number) => {
+export const getProjectById = async (id: string) => {
   try {
     const project = await prisma.project.findFirst({
       where: { id },
@@ -148,7 +148,7 @@ export const getProjectById = async (id: number) => {
   }
 };
 
-export async function deleteProject(id: number) {
+export async function deleteProject(id: string) {
   try {
     const project = await prisma.project.findFirst({
       where: { id },
@@ -177,4 +177,56 @@ export const getTotalProjects = async () => {
     console.error('Error calculating total projects:', error);
     return { success: false, message: 'Failed to count projects' };
   }
+};
+
+export const getAllFilterProjects = async ({
+  activeType,
+}: {
+  activeType: string;
+}) => {
+  const categories = await prisma.category.findMany({
+    orderBy: [{ name: 'asc' }],
+  });
+
+  const projects = await prisma.project.findMany({
+    orderBy: [
+      { publish: 'desc' },
+      { rate: 'desc' },
+      { createdAt: 'desc' },
+      { projectName: 'asc' },
+    ],
+  });
+
+  const filteredProjects = projects.filter((project) => {
+    const category = categories.find((cat) => cat.id === project.categoryId);
+    return activeType === 'All' || category?.name === activeType;
+  });
+
+  return filteredProjects.slice(0, 3);
+};
+
+export const getFilterProjects = async ({
+  activeType,
+}: {
+  activeType: string;
+}) => {
+  const categories = await prisma.category.findMany({
+    orderBy: [{ name: 'asc' }],
+  });
+
+  const projects = await prisma.project.findMany({
+    orderBy: [
+      { publish: 'desc' },
+      { rate: 'desc' },
+      { createdAt: 'desc' },
+      { projectName: 'asc' },
+    ],
+  });
+
+  const allFilteredProjects = projects.filter((project) => {
+    const category = categories.find((cat) => cat.id === project.categoryId);
+    return activeType === 'All' ? true : category?.name === activeType;
+  });
+
+  return allFilteredProjects;
 };

@@ -19,8 +19,8 @@ export default function DeleteDialog({
   id,
   action,
 }: {
-  id: number;
-  action: (id: number) => Promise<{ success: boolean; message: string }>;
+  id: string;
+  action: (id: string) => Promise<{ success: boolean; message: string }>;
 }) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();

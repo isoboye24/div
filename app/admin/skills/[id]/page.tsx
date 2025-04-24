@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 const UpdateSkill = async (props: {
   params: Promise<{
-    id: number;
+    id: string;
   }>;
 }) => {
   const { id } = await props.params;
-  const skill = await getSkillById(Number(id));
+  const skill = await getSkillById(id);
 
   if (!skill) return notFound();
 

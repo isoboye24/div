@@ -1,7 +1,10 @@
 import { z } from 'zod';
 
 export const upsertProjectSchema = z.object({
-  id: z.number().optional(),
+  id: z
+    .string()
+    .min(1, 'If provided, project id is should be at least 1 character')
+    .optional(),
   projectName: z.string().min(1, 'Project name is required'),
   siteLink: z.string().url().optional().or(z.literal('')),
   codeLink: z.string().url().optional().or(z.literal('')),
@@ -10,26 +13,35 @@ export const upsertProjectSchema = z.object({
     .min(1, 'Project must have at least one thumbnail'),
   slug: z.string().min(3, 'Slug must be at least 3 characters'),
   images: z.array(z.string().min(1, 'Project must have at least one image')),
-  categoryId: z.number().int().min(1, 'categoryId is required'),
+  categoryId: z.string().min(1, 'Project name is required'),
   description: z.string().optional().or(z.literal('')),
   publish: z.boolean(),
   rate: z.number().int().min(1, 'rate is required'),
 });
 
 export const upsertSkillSchema = z.object({
-  id: z.number().optional(),
+  id: z
+    .string()
+    .min(1, 'If provided, skill id is should be at least 1 character')
+    .optional(),
   skillName: z.string().min(1, 'Skill name is required'),
   level: z.number(),
-  categoryId: z.coerce.number(),
+  categoryId: z.string().min(1, 'Project name is required'),
 });
 
 export const upsertCategorySchema = z.object({
-  id: z.number().optional(), // optional for "Create"
+  id: z
+    .string()
+    .min(1, 'If provided, category id is should be at least 1 character')
+    .optional(), // optional for "Create"
   name: z.string().min(1, 'Name is required'),
 });
 
 export const upsertContactMessageSchema = z.object({
-  id: z.number().optional(),
+  id: z
+    .string()
+    .min(1, 'If provided, message id is should be at least 1 character')
+    .optional(),
   senderName: z
     .string()
     .min(3, 'sender name is required and must be at least 3 characters'),

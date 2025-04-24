@@ -36,7 +36,7 @@ const SkillForm = ({
 }: {
   type: 'Create' | 'Update';
   skill?: Skill;
-  id?: number;
+  id?: string;
 }) => {
   const router = useRouter();
 
@@ -51,7 +51,7 @@ const SkillForm = ({
       : skillDefaultValues,
   });
 
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>(
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     []
   );
 
@@ -150,7 +150,7 @@ const SkillForm = ({
                     <FormControl>
                       <Select
                         value={field.value?.toString() || ''}
-                        onValueChange={(val) => field.onChange(Number(val))}
+                        onValueChange={(val) => field.onChange(val)}
                       >
                         <SelectTrigger className="w-full ">
                           <SelectValue placeholder="Select category" />

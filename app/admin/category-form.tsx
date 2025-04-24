@@ -28,7 +28,7 @@ const CategoryForm = ({
 }: {
   type: 'Create' | 'Update';
   category?: Category;
-  id?: number;
+  id?: string;
 }) => {
   const router = useRouter();
 

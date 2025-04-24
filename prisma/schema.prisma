@@ -8,39 +8,39 @@ datasource db {
 }
 
 model Category {
-  id       Int       @id @default(autoincrement())
+  id       String    @id @default(uuid())
   name     String
   projects Project[]
   skills   Skill[]
 }
 
 model Skill {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(uuid())
   skillName  String
-  categoryId Int
+  categoryId String
   date       DateTime @default(now()) @db.Timestamp(6)
   level      Int      @default(50)
   category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Project {
-  id               Int       @id @default(autoincrement())
+  id               String   @id @default(uuid())
   projectName      String
   projectThumbnail String
   siteLink         String?
   codeLink         String?
   description      String?
-  categoryId       Int?
-  slug             String    @unique(map: "project_slug_idx") @default("")
-  createdAt        DateTime  @default(now()) @db.Timestamp(6)
+  categoryId       String
+  slug             String   @unique(map: "project_slug_idx") @default("")
+  createdAt        DateTime @default(now()) @db.Timestamp(6)
   images           String[]
   publish          Boolean
   rate             Int
-  category         Category? @relation(fields: [categoryId], references: [id])
+  category         Category @relation(fields: [categoryId], references: [id])
 }
 
 model ContactMessage {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   senderName  String
   senderEmail String
   subject     String

@@ -70,7 +70,7 @@ export const getAllSkill = async () => {
   }
 };
 
-export const getSkillById = async (id: number) => {
+export const getSkillById = async (id: string) => {
   try {
     const skillData = await prisma.skill.findFirst({
       where: { id },
@@ -96,7 +96,7 @@ export const getSkillById = async (id: number) => {
   }
 };
 
-export async function deleteSkill(id: number) {
+export async function deleteSkill(id: string) {
   try {
     const skillData = await prisma.skill.findFirst({
       where: { id },
