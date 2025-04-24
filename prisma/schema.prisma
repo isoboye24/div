@@ -47,3 +47,30 @@ model ContactMessage {
   messageText String
   date        DateTime @default(now()) @db.Timestamp(6)
 }
+
+model User {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String    @default("NO_NAME")
+  email         String    @unique(map: "user_email_idx")
+  emailVerified DateTime? @db.Timestamp(6)
+  password      String
+  role          String    @default("user")
+  image         String?
+  createdAt     DateTime  @default(now()) @db.Timestamp(6)
+  sessions      Session[]
+}
+
+model Session {
+  sessionToken String   @id
+  userId       String   @db.Uuid
+  expires      DateTime @db.Timestamp(6)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
