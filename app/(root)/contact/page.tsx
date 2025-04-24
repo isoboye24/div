@@ -1,9 +1,9 @@
-import ContactForm from '@/components/ui/contact/contact-form';
+import ContactForm from '@/components/ui/contact-messages/contact-form';
 import React from 'react';
 
 import { Metadata } from 'next';
 import PageTopSection from '@/components/ui/page-top-section';
-import ContactCards from '@/components/ui/contact/contact-cards';
+import ContactCards from '@/components/ui/contact-messages/contact-cards';
 
 export const metadata: Metadata = {
   title: 'Contact',

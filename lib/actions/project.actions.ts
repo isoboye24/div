@@ -1,6 +1,6 @@
 'use server';
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/db/prisma';
 import { upsertProjectSchema } from '../validator';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
