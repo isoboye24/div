@@ -38,7 +38,7 @@ const ContactForm = ({
 }: {
   type: 'Send' | 'Update';
   contactMessage?: ContactMessage;
-  id?: number;
+  id?: string;
 }) => {
   const router = useRouter();
 
