@@ -152,10 +152,10 @@ const SkillForm = ({
                         value={field.value?.toString() || ''}
                         onValueChange={(val) => field.onChange(Number(val))}
                       >
-                        <SelectTrigger className="w-full min-w-[300px]">
+                        <SelectTrigger className="w-full ">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
-                        <SelectContent className="w-full min-w-[300px]">
+                        <SelectContent className="w-full">
                           {categories.map((category) => (
                             <SelectItem
                               key={category.id}

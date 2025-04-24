@@ -101,7 +101,12 @@ export const upsertProject = async (
 export const getAllProjects = async () => {
   try {
     const projects = await prisma.project.findMany({
-      orderBy: [{ publish: 'desc' }, { rate: 'desc' }, { createdAt: 'desc' }],
+      orderBy: [
+        { publish: 'desc' },
+        { rate: 'desc' },
+        { createdAt: 'desc' },
+        { projectName: 'asc' },
+      ],
     });
 
     return {
@@ -151,7 +156,7 @@ export async function deleteProject(id: number) {
 
     if (!project) throw new Error('Project not found');
 
-    await prisma.category.delete({ where: { id } });
+    await prisma.project.delete({ where: { id } });
 
     revalidatePath('/admin/projects');
 

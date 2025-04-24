@@ -11,7 +11,7 @@ const CreateCategory = () => {
     <div className="">
       <h2 className="h2-bold">Create Category</h2>
       <div className="my-8 justify-items-center">
-        <div className="w-[50vw]">
+        <div className="w-full lg:w-[50vw]">
           <CategoryForm type="Create" />
         </div>
       </div>

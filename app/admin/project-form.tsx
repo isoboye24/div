@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { ProjectNew } from '@/types';
+import { Project } from '@/types';
 import { projectDefaultValues } from '@/lib/constants';
 import {
   Select,
@@ -43,7 +43,7 @@ const ProjectForm = ({
   id,
 }: {
   type: 'Create' | 'Update';
-  project?: ProjectNew;
+  project?: Project;
   id?: number;
 }) => {
   const router = useRouter();
