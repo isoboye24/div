@@ -4,6 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from '@/db/prisma';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { authConfig } from './auth.config';
+import type { NextAuthConfig } from 'next-auth';
 // import { cookies } from 'next/headers';
 
 export const config = {
@@ -112,6 +113,6 @@ export const config = {
     //   return token;
     // },
   },
-};
+} satisfies NextAuthConfig;
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);

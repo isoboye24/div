@@ -55,3 +55,11 @@ export const upsertContactMessageSchema = z.object({
     .string()
     .min(3, 'Text is required and must be at least 3 characters'),
 });
+
+export const signInFormSchema = z.object({
+  email: z
+    .string()
+    .email('Invalid email address')
+    .min(3, 'Email must be at least 3 characters'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+});
