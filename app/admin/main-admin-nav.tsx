@@ -1,5 +1,6 @@
 // app/admin/main-admin-nav.tsx
-import { Menu, Bell, UserCircle, Sun, Moon } from 'lucide-react';
+import UserButton from '@/components/ui/admin/user-button';
+import { Menu, Bell, Sun, Moon } from 'lucide-react';
 
 type MainAdminNavProps = {
   toggleSidebar: () => void;
@@ -29,7 +30,7 @@ export default function MainAdminNav({
         </a>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 px-5">
         <button
           onClick={toggleDarkMode}
           className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition"
@@ -38,7 +39,7 @@ export default function MainAdminNav({
           <Moon className="w-5 h-5 text-gray-200 hidden dark:block" />
         </button>
         <Bell className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-        <UserCircle className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+        <UserButton />
       </div>
     </header>
   );

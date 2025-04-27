@@ -15,6 +15,7 @@ export const signUpDefaultValues = {
   email: '',
   password: '',
   confirmPassword: '',
+  image: '',
 };
 
 export const USER_ROLES = process.env.USER_ROLES

@@ -44,6 +44,7 @@ export const config = {
               name: user.name,
               email: user.email,
               role: user.role,
+              image: user.image,
             };
           }
         }
@@ -59,9 +60,11 @@ export const config = {
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
+      session.user.image = token.image;
 
       if (trigger === 'update') {
         session.user.name = user.name;
+        session.user.image = user.image;
       }
 
       return session;
