@@ -66,6 +66,10 @@ export const signInFormSchema = z.object({
 
 export const signUpFormSchema = z
   .object({
+    id: z
+      .string()
+      .min(1, 'If provided, user id is should be at least 1 character')
+      .optional(),
     name: z.string().min(3, 'Name must be at least 3 characters'),
     email: z
       .string()

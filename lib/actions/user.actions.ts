@@ -6,6 +6,8 @@ import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { formatError } from '../utils';
 import { hashSync } from 'bcrypt-ts-edge';
 import { prisma } from '@/db/prisma';
+import { z } from 'zod';
+import { revalidatePath } from 'next/cache';
 
 export async function signInWithCredentials(
   prevState: unknown,
@@ -35,30 +37,57 @@ export async function SignOutUser() {
   await signOut();
 }
 
-export async function signUpUser(prevState: unknown, formData: FormData) {
+export const signUpUser = async (data: z.infer<typeof signUpFormSchema>) => {
+  const parsed = signUpFormSchema.safeParse(data);
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: 'User not found',
+      errors: parsed.error.flatten().fieldErrors,
+    };
+  }
+
+  const { id, name, password: rawPassword, email, image, role } = parsed.data;
+
+  const hashedPassword = hashSync(rawPassword, 10);
+
   try {
-    const user = signUpFormSchema.parse({
-      name: formData.get('name'),
-      email: formData.get('email'),
-      password: formData.get('password'),
-      confirmPassword: formData.get('confirmPassword'),
-    });
+    let user;
 
-    const plainPassword = user.password;
-
-    user.password = hashSync(user.password, 10);
-
-    await prisma.user.create({
-      data: {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-      },
-    });
+    if (id) {
+      user = await prisma.user.upsert({
+        where: { id },
+        update: {
+          name,
+          password: hashedPassword,
+          email,
+          image,
+          role,
+        },
+        create: {
+          name,
+          password: hashedPassword,
+          email,
+          image,
+          role,
+        },
+      });
+    } else {
+      user = await prisma.user.create({
+        data: {
+          name,
+          password: hashedPassword,
+          email,
+          image,
+          role,
+        },
+      });
+    }
 
     await signIn('credentials', {
       email: user.email,
-      password: plainPassword,
+      password: rawPassword,
     });
 
     return { success: true, message: 'User created successfully' };
@@ -72,4 +101,54 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       message: formatError(error),
     };
   }
+};
+
+export async function deleteUser(id: string) {
+  try {
+    const user = await prisma.user.findFirst({
+      where: { id },
+    });
+
+    if (!user) throw new Error('User not found');
+
+    await prisma.project.delete({ where: { id } });
+
+    revalidatePath('/admin/users');
+
+    return {
+      success: true,
+      message: 'User deleted successfully',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
 }
+
+export const getAllUsers = async () => {
+  try {
+    const users = await prisma.user.findMany({
+      orderBy: [{ role: 'asc' }],
+    });
+
+    return {
+      success: true,
+      data: users,
+    };
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return {
+      success: false,
+      message: 'Failed to fetch users',
+    };
+  }
+};
+
+export const getTotalUsers = async () => {
+  try {
+    const total = await prisma.user.count();
+    return { success: true, total };
+  } catch (error) {
+    console.error('Error calculating total users:', error);
+    return { success: false, message: 'Failed to count users' };
+  }
+};
