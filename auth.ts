@@ -4,8 +4,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from '@/db/prisma';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { authConfig } from './auth.config';
-import type { NextAuthConfig } from 'next-auth';
-// import { cookies } from 'next/headers';
 
 export const config = {
   pages: {
@@ -44,7 +42,6 @@ export const config = {
               name: user.name,
               email: user.email,
               role: user.role,
-              image: user.image,
             };
           }
         }
@@ -60,62 +57,38 @@ export const config = {
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
-      session.user.image = token.image;
 
       if (trigger === 'update') {
         session.user.name = user.name;
-        session.user.image = user.image;
       }
 
       return session;
     },
-    // async jwt({ token, user, trigger, session }: any) {
-    //   if (user) {
-    //     token.role = user.role;
-    //     token.id = user.id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async jwt({ token, user, trigger, session }: any) {
+      if (user) {
+        token.role = user.role;
+        token.id = user.id;
 
-    //     if (user.name === 'NO_NAME') {
-    //       token.name = user.email!.split('@')[0];
+        if (user.name === 'NO_NAME') {
+          token.name = user.email!.split('@')[0];
 
-    //       await prisma.user.update({
-    //         where: { id: user.id },
-    //         data: { name: token.name },
-    //       });
-    //     }
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { name: token.name },
+          });
+        }
+      }
 
-    //     if (trigger === 'signIn' || trigger === 'signUp') {
-    //       const cookiesObject = await cookies();
-    //       const sessionCartId = cookiesObject.get('sessionCartId')?.value;
+      // Handle session updates
+      if (session?.user.name && trigger === 'update') {
+        token.name = session.user.name;
+        token.id = session.user.id;
+      }
 
-    //       if (sessionCartId) {
-    //         const sessionCart = await prisma.cart.findFirst({
-    //           where: { sessionCartId },
-    //         });
-
-    //         if (sessionCart) {
-    //           await prisma.cart.deleteMany({
-    //             where: { userId: user.id },
-    //           });
-
-    //           // Assign the guest cart to the logged-in user
-    //           await prisma.cart.update({
-    //             where: { id: sessionCart.id },
-    //             data: { userId: user.id },
-    //           });
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   // Handle session updates
-    //   if (session?.user.name && trigger === 'update') {
-    //     token.name = session.user.name;
-    //     token.id = session.user.id;
-    //   }
-
-    //   return token;
-    // },
+      return token;
+    },
   },
-} satisfies NextAuthConfig;
+};
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);

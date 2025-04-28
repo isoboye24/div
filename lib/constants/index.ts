@@ -51,3 +51,11 @@ export const projectDefaultValues = {
   description: '',
   projectThumbnail: '',
 };
+
+export const userDefault = {
+  name: '',
+  email: '',
+  role: '',
+  image: '',
+  password: '',
+};

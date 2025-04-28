@@ -76,6 +76,7 @@ export const signUpFormSchema = z
       .string()
       .min(3, 'Confirm password must be at least 3 characters'),
     image: z.string().min(3, 'Password must be at least 3 characters'),
+    role: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",

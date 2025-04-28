@@ -74,3 +74,8 @@ model VerificationToken {
 
   @@id([identifier, token])
 }
+
+enum Role {
+  user
+  admin
+}
