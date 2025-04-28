@@ -26,7 +26,7 @@ import Image from 'next/image';
 import { UploadButton } from '@uploadthing/react';
 import { OurFileRouter } from '@/lib/uploadthing';
 
-const ContactForm = ({
+const SignUpForm = ({
   type,
   register,
   id,
@@ -42,7 +42,7 @@ const ContactForm = ({
     defaultValues: register
       ? {
           name: register.name,
-          role: register.role,
+          role: 'user',
           password: register.password,
           image: register.image,
           email: register.email,
@@ -56,7 +56,7 @@ const ContactForm = ({
       console.log('Form values:', form.getValues());
       form.reset({
         name: register.name,
-        role: register.role,
+        role: register.role || 'user',
         password: register.password,
         image: register.image,
         email: register.email,
@@ -143,24 +143,26 @@ const ContactForm = ({
                       )}
                     />
                   </div>
-                  <div className="mb-4">
-                    <FormField
-                      control={form.control}
-                      name="confirmPassword"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Confirm Password</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter confirm password"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  {type === 'Register' && (
+                    <div className="mb-4">
+                      <FormField
+                        control={form.control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Confirm Password</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Enter confirm password"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
                   <div className="mb-4">
                     <div className="upload-field flex flex-col gap-5 md:flex-row">
                       {/* image */}
@@ -218,6 +220,24 @@ const ContactForm = ({
                       />
                     </div>
                   </div>
+
+                  {type === 'Update' && (
+                    <div className="mb-4">
+                      <FormField
+                        control={form.control}
+                        name="role"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Select Role</FormLabel>
+                            <FormControl>
+                              <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex justify-center items-center">
@@ -239,4 +259,4 @@ const ContactForm = ({
   );
 };
 
-export default ContactForm;
+export default SignUpForm;

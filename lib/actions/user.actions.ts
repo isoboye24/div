@@ -102,6 +102,32 @@ export const signUpUser = async (data: z.infer<typeof signUpFormSchema>) => {
   }
 };
 
+export const getUserById = async (id: string) => {
+  try {
+    const userData = await prisma.user.findFirst({
+      where: { id },
+    });
+
+    if (!userData) {
+      return {
+        success: false,
+        message: 'User not found',
+      };
+    }
+
+    return {
+      success: true,
+      data: userData,
+    };
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return {
+      success: false,
+      message: 'Failed to fetch user',
+    };
+  }
+};
+
 export async function deleteUser(id: string) {
   try {
     const user = await prisma.user.findFirst({

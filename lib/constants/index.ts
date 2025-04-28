@@ -55,7 +55,7 @@ export const projectDefaultValues = {
 export const userDefault = {
   name: '',
   email: '',
-  role: '',
+  role: 'user',
   image: '',
   password: '',
   confirmPassword: '',
