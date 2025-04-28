@@ -58,4 +58,5 @@ export const userDefault = {
   role: '',
   image: '',
   password: '',
+  confirmPassword: '',
 };

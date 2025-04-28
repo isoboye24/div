@@ -84,13 +84,12 @@ export const signUpUser = async (data: z.infer<typeof signUpFormSchema>) => {
         },
       });
     }
-
-    await signIn('credentials', {
-      email: user.email,
-      password: rawPassword,
-    });
-
-    return { success: true, message: 'User created successfully' };
+    revalidatePath('/sign-in');
+    return {
+      success: true,
+      message: 'User created successfully',
+      data: user,
+    };
   } catch (error) {
     if (isRedirectError(error)) {
       throw error;
@@ -111,7 +110,7 @@ export async function deleteUser(id: string) {
 
     if (!user) throw new Error('User not found');
 
-    await prisma.project.delete({ where: { id } });
+    await prisma.user.delete({ where: { id } });
 
     revalidatePath('/admin/users');
 

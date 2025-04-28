@@ -40,8 +40,8 @@ const SignUp = async (props: {
             <Image
               priority={true}
               src="/images/logo.png"
-              width={100}
-              height={100}
+              width={80}
+              height={80}
               alt={`${APP_NAME} logo`}
               className="hidden md:block"
             />
@@ -54,13 +54,13 @@ const SignUp = async (props: {
               className="block md:hidden"
             />
           </Link>
-          <CardTitle className="text-center">Create Account</CardTitle>
+          <CardTitle className="text-center">Register</CardTitle>
           <CardDescription className="text-center">
-            Enter your information below to create your account
+            Enter your information below to register
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <SignUpForm />
+          <SignUpForm type="Register" />
         </CardContent>
       </Card>
     </div>

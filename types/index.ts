@@ -3,6 +3,7 @@ import {
   upsertContactMessageSchema,
   upsertProjectSchema,
   upsertSkillSchema,
+  signUpFormSchema,
 } from '@/lib/validator';
 import { StaticImageData } from 'next/image';
 import { z } from 'zod';
@@ -33,3 +34,5 @@ export type CarouselProps = {
 // export type GetProjectByIdResponse =
 //   | { success: true; data: Project }
 //   | { success: false; message: string };
+
+export type User = z.infer<typeof signUpFormSchema>;
