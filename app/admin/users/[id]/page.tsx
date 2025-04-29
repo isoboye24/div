@@ -7,14 +7,12 @@ export const metadata: Metadata = {
   title: 'Update User',
 };
 
-const UpdateUser = async ({
-  params,
-}: {
-  params: {
+const UpdateUser = async (props: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }) => {
-  const { id } = await params;
+  const { id } = await props.params;
   const user = await getUserById(id);
 
   if (!user || !user.data) return notFound();
