@@ -63,13 +63,9 @@ export const signInFormSchema = z.object({
     .min(3, 'Email must be at least 3 characters'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
-
+// Register Schema
 export const signUpFormSchema = z
   .object({
-    id: z
-      .string()
-      .min(1, 'If provided, user id is should be at least 1 character')
-      .optional(),
     name: z.string().min(3, 'Name must be at least 3 characters'),
     email: z
       .string()
@@ -86,3 +82,16 @@ export const signUpFormSchema = z
     message: "Passwords don't match",
     path: ['confirmPassword'],
   });
+
+// Update Schema
+export const updateUserFormSchema = z.object({
+  id: z.string(),
+  name: z.string().min(3, 'Name must be at least 3 characters'),
+  email: z
+    .string()
+    .min(3, 'Email must be at least 3 characters')
+    .email('Invalid email address'),
+  password: z.string().min(3, 'Password must be at least 3 characters'),
+  image: z.string().min(3, 'Image must be at least 3 characters'),
+  role: z.string(),
+});

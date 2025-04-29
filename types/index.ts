@@ -31,8 +31,4 @@ export type CarouselProps = {
   children: React.ReactNode;
 };
 
-// export type GetProjectByIdResponse =
-//   | { success: true; data: Project }
-//   | { success: false; message: string };
-
 export type User = z.infer<typeof signUpFormSchema>;

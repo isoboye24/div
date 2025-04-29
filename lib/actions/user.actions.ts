@@ -1,7 +1,11 @@
 'use server';
 
 import { signIn, signOut } from '@/auth';
-import { signInFormSchema, signUpFormSchema } from '../validator';
+import {
+  signInFormSchema,
+  updateUserFormSchema,
+  signUpFormSchema,
+} from '../validator';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { formatError } from '../utils';
 import { hashSync } from 'bcrypt-ts-edge';
@@ -37,68 +41,68 @@ export async function SignOutUser() {
   await signOut();
 }
 
-export const signUpUser = async (data: z.infer<typeof signUpFormSchema>) => {
+export const createUser = async (data: z.infer<typeof signUpFormSchema>) => {
   const parsed = signUpFormSchema.safeParse(data);
-
   if (!parsed.success) {
     return {
       success: false,
-      message: 'User not found',
+      message: 'Validation failed',
       errors: parsed.error.flatten().fieldErrors,
     };
   }
 
-  const { id, name, password: rawPassword, email, image, role } = parsed.data;
-
-  const hashedPassword = hashSync(rawPassword, 10);
+  const { name, email, password, image, role } = parsed.data;
+  const hashedPassword = hashSync(password, 10);
 
   try {
-    let user;
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        image,
+        role,
+      },
+    });
 
-    if (id) {
-      user = await prisma.user.upsert({
-        where: { id },
-        update: {
-          name,
-          password: hashedPassword,
-          email,
-          image,
-          role,
-        },
-        create: {
-          name,
-          password: hashedPassword,
-          email,
-          image,
-          role,
-        },
-      });
-    } else {
-      user = await prisma.user.create({
-        data: {
-          name,
-          password: hashedPassword,
-          email,
-          image,
-          role,
-        },
-      });
-    }
     revalidatePath('/sign-in');
-    return {
-      success: true,
-      message: 'User created successfully',
-      data: user,
-    };
+    return { success: true, message: 'User created', data: user };
   } catch (error) {
-    if (isRedirectError(error)) {
-      throw error;
-    }
+    return { success: false, message: formatError(error) };
+  }
+};
 
+export const updateUser = async (
+  data: z.infer<typeof updateUserFormSchema>
+) => {
+  const parsed = updateUserFormSchema.safeParse(data);
+  if (!parsed.success) {
     return {
       success: false,
-      message: formatError(error),
+      message: 'Validation failed',
+      errors: parsed.error.flatten().fieldErrors,
     };
+  }
+
+  const { id, name, email, password, image, role } = parsed.data;
+  const hashedPassword = hashSync(password, 10);
+
+  try {
+    const user = await prisma.user.update({
+      where: { id },
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        image,
+        role,
+      },
+    });
+
+    revalidatePath('/admin/users');
+    return { success: true, message: 'User updated', data: user };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
   }
 };
 

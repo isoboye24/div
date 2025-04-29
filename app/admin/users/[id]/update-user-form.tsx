@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Form,
   FormControl,
@@ -10,27 +10,34 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { z } from 'zod';
-import { signUpFormSchema } from '@/lib/validator';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { updateUserFormSchema } from '@/lib/validator';
+import { ControllerRenderProps, SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { User } from '@/types';
-import { userDefault } from '@/lib/constants';
+import { USER_ROLES, userDefault } from '@/lib/constants';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { SignOutUser, createUser } from '@/lib/actions/user.actions';
+import { updateUser } from '@/lib/actions/user.actions';
 import Image from 'next/image';
 import { UploadButton } from '@uploadthing/react';
 import { OurFileRouter } from '@/lib/uploadthing';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-const SignUpForm = ({ register }: { register: User }) => {
+const UpdateUserForm = ({ register, id }: { register: User; id: string }) => {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof signUpFormSchema>>({
-    resolver: zodResolver(signUpFormSchema),
+  const form = useForm<z.infer<typeof updateUserFormSchema>>({
+    resolver: zodResolver(updateUserFormSchema),
     defaultValues: register
       ? {
           name: register.name,
@@ -42,21 +49,32 @@ const SignUpForm = ({ register }: { register: User }) => {
       : userDefault,
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof signUpFormSchema>> = async (
+  // Reset form values when register prop changes
+  useEffect(() => {
+    console.log('Form values:', form.getValues());
+    form.reset({
+      name: register.name,
+      role: register.role || 'user',
+      password: register.password,
+      image: register.image,
+      email: register.email,
+    });
+  }, [register, form]);
+
+  const onSubmit: SubmitHandler<z.infer<typeof updateUserFormSchema>> = async (
     values
   ) => {
-    const payload = { ...values };
+    console.log('Submitting form with values:', values);
+    const payload = { ...values, id };
 
-    const res = await createUser(payload);
+    const res = await updateUser(payload);
+    console.log('Update response:', res);
 
     if (!res.success) {
       toast.error(res.message);
     } else {
       toast.success(res.message);
-
-      form.reset();
-      await SignOutUser();
-      router.push('/sign-in');
+      router.push('/admin/users');
     }
   };
 
@@ -95,11 +113,7 @@ const SignUpForm = ({ register }: { register: User }) => {
                         <FormItem className="w-full">
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input
-                              type="email"
-                              placeholder="Enter Email"
-                              {...field}
-                            />
+                            <Input placeholder="Enter Email" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -118,26 +132,6 @@ const SignUpForm = ({ register }: { register: User }) => {
                             <Input
                               type="password"
                               placeholder="Enter Password"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div>
-                    <FormField
-                      control={form.control}
-                      name="confirmPassword"
-                      render={({ field }) => (
-                        <FormItem className="w-full">
-                          <FormLabel>Confirm Password</FormLabel>
-                          <FormControl>
-                            <Input
-                              type="password"
-                              placeholder="Enter confirm password"
                               {...field}
                             />
                           </FormControl>
@@ -204,6 +198,43 @@ const SignUpForm = ({ register }: { register: User }) => {
                       />
                     </div>
                   </div>
+
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="role"
+                      render={({
+                        field,
+                      }: {
+                        field: ControllerRenderProps<
+                          z.infer<typeof updateUserFormSchema>,
+                          'role'
+                        >;
+                      }) => (
+                        <FormItem className=" items-center">
+                          <FormLabel>Role</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value.toString()}
+                          >
+                            <FormControl className="w-full">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a role" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {USER_ROLES.map((role) => (
+                                <SelectItem key={role} value={role}>
+                                  {role.charAt(0).toUpperCase() + role.slice(1)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex justify-center items-center">
@@ -213,7 +244,7 @@ const SignUpForm = ({ register }: { register: User }) => {
                     disabled={form.formState.isSubmitting}
                     className="button w-[50vw] md:w-[20vw] lg:w-[20vw] 2xl:w-[10vw] bg-teal-500 hover:bg-teal-600"
                   >
-                    {form.formState.isSubmitting ? 'Submitting...' : `Submit`}
+                    {form.formState.isSubmitting ? 'Submitting...' : `Update`}
                   </Button>
                 </div>
               </div>
@@ -225,4 +256,4 @@ const SignUpForm = ({ register }: { register: User }) => {
   );
 };
 
-export default SignUpForm;
+export default UpdateUserForm;

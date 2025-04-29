@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getUserById } from '@/lib/actions/user.actions';
-import SignUpForm from '@/app/(auth)/sign-up/signup-form';
+import UpdateUserForm from './update-user-form';
 
 export const metadata: Metadata = {
   title: 'Update User',
@@ -15,23 +15,23 @@ const UpdateUser = async (props: {
   const { id } = await props.params;
   const user = await getUserById(id);
 
-  if (!user) return notFound();
-
-  const userData = user.data
-    ? {
-        ...user.data,
-        name: user.data.name ?? undefined,
-        password: user.data.password ?? undefined,
-        image: user.data.image ?? undefined,
-        role: user.data.role ?? undefined,
-        email: user.data.email ?? undefined,
-      }
-    : undefined;
+  if (!user || !user.data) return notFound();
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       <h1 className="h2-bold">Update User</h1>
-      <SignUpForm type="Update" register={userData} id={user.data?.id} />
+      <UpdateUserForm
+        register={{
+          ...user.data,
+          image: user.data.image ?? '',
+          name: user.data.name ?? '',
+          email: user.data.email ?? '',
+          password: user.data.password ?? '',
+          role: user.data.role ?? 'user',
+          confirmPassword: user.data.password ?? '',
+        }}
+        id={user.data.id}
+      />
     </div>
   );
 };
