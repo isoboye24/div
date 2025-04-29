@@ -60,7 +60,7 @@ const SignUp = async (props: {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <SignUpForm type="Register" />
+          <SignUpForm />
         </CardContent>
       </Card>
     </div>

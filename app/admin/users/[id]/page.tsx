@@ -7,12 +7,14 @@ export const metadata: Metadata = {
   title: 'Update User',
 };
 
-const UpdateUser = async (props: {
-  params: Promise<{
+const UpdateUser = async ({
+  params,
+}: {
+  params: {
     id: string;
-  }>;
+  };
 }) => {
-  const { id } = await props.params;
+  const { id } = await params;
   const user = await getUserById(id);
 
   if (!user || !user.data) return notFound();
@@ -24,11 +26,11 @@ const UpdateUser = async (props: {
         register={{
           ...user.data,
           image: user.data.image ?? '',
-          name: user.data.name ?? '',
-          email: user.data.email ?? '',
-          password: user.data.password ?? '',
-          role: user.data.role ?? 'user',
-          confirmPassword: user.data.password ?? '',
+          name: user.data.name,
+          email: user.data.email,
+          password: user.data.password,
+          role: user.data.role,
+          confirmPassword: user.data.password,
         }}
         id={user.data.id}
       />

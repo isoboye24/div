@@ -17,7 +17,6 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { User } from '@/types';
 import { userDefault } from '@/lib/constants';
 
 import { Card, CardContent } from '@/components/ui/card';
@@ -26,20 +25,12 @@ import Image from 'next/image';
 import { UploadButton } from '@uploadthing/react';
 import { OurFileRouter } from '@/lib/uploadthing';
 
-const SignUpForm = ({ register }: { register: User }) => {
+const SignUpForm = () => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
-    defaultValues: register
-      ? {
-          name: register.name,
-          role: 'user',
-          password: register.password,
-          image: register.image,
-          email: register.email,
-        }
-      : userDefault,
+    defaultValues: userDefault,
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof signUpFormSchema>> = async (

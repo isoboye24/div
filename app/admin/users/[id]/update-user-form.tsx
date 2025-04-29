@@ -40,8 +40,9 @@ const UpdateUserForm = ({ register, id }: { register: User; id: string }) => {
     resolver: zodResolver(updateUserFormSchema),
     defaultValues: register
       ? {
+          id,
           name: register.name,
-          role: 'user',
+          role: register.role,
           password: register.password,
           image: register.image,
           email: register.email,
@@ -133,6 +134,7 @@ const UpdateUserForm = ({ register, id }: { register: User; id: string }) => {
                               type="password"
                               placeholder="Enter Password"
                               {...field}
+                              disabled
                             />
                           </FormControl>
                           <FormMessage />
