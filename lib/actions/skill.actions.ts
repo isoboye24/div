@@ -70,6 +70,41 @@ export const getAllSkill = async () => {
   }
 };
 
+export const getAllFilterSkills = async ({
+  activeType,
+}: {
+  activeType: string;
+}) => {
+  const categoryFilter = ['Frontend', 'Backend'];
+
+  const whereCondition =
+    activeType === 'All'
+      ? {
+          category: {
+            name: {
+              in: categoryFilter,
+            },
+          },
+        }
+      : {
+          category: {
+            name: activeType,
+          },
+        };
+
+  const allFilteredSkills = await prisma.skill.findMany({
+    where: whereCondition,
+    include: {
+      category: true, // optional, if you want to access category info in results
+    },
+    orderBy: {
+      level: 'desc',
+    },
+  });
+
+  return allFilteredSkills;
+};
+
 export const getSkillById = async (id: string) => {
   try {
     const skillData = await prisma.skill.findFirst({

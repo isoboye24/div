@@ -3,15 +3,11 @@
 import React, { useState } from 'react';
 import ProjectCard from '../project/project-card';
 import { Project } from '@/types';
-import { ProjectSectionProps } from '@/interfaces';
+import { TabSectionProps } from '@/interfaces';
 import { getAllFilterProjects } from '@/lib/actions/old-project.actions';
 
-const AllProjects = <T extends string>({
-  tab,
-  types,
-}: ProjectSectionProps<T>) => {
-  const [activeType, setActiveType] =
-    useState<ProjectSectionProps['types']>(types);
+const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
+  const [activeType, setActiveType] = useState<TabSectionProps['types']>(types);
 
   const filteredProjects = getAllFilterProjects({ activeType });
 
