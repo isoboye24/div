@@ -106,6 +106,23 @@ export const updateUser = async (
   }
 };
 
+export const checkIfUserExists = async (emailEntered: string) => {
+  try {
+    const existing = await prisma.user.findFirst({
+      where: {
+        email: {
+          equals: emailEntered,
+        },
+      },
+    });
+
+    return !!existing;
+  } catch (error) {
+    console.error('Error checking for existing skill:', error);
+    return false;
+  }
+};
+
 export const getUserById = async (id: string) => {
   try {
     const userData = await prisma.user.findFirst({

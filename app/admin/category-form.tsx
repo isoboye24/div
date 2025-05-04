@@ -17,7 +17,10 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { upsertCategory } from '@/lib/actions/category.actions';
+import {
+  checkIfCategoryExists,
+  upsertCategory,
+} from '@/lib/actions/category.actions';
 import { Category } from '@/types';
 import { categoryDefaultValues } from '@/lib/constants';
 
@@ -48,6 +51,13 @@ const CategoryForm = ({
   const onSubmit: SubmitHandler<z.infer<typeof upsertCategorySchema>> = async (
     values
   ) => {
+    if (type === 'Create') {
+      const exists = await checkIfCategoryExists(values.name);
+      if (exists) {
+        toast.error('Category with this name already exists.');
+        return;
+      }
+    }
     const payload = { ...values, id: type === 'Update' && id ? id : undefined };
 
     const res = await upsertCategory(payload);

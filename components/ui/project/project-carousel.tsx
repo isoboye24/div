@@ -4,15 +4,14 @@ import React, { useState } from 'react';
 import CustomCarousel from '../project/custom-carousel';
 import ProjectCard from '../project/project-card';
 import { Project } from '@/types';
-import { ProjectSectionProps } from '@/interfaces';
+import { TabSectionProps } from '@/interfaces';
 import { getFilterProjects } from '@/lib/actions/old-project.actions';
 
 const ProjectCarousel = <T extends string>({
   tab,
   types,
-}: ProjectSectionProps<T>) => {
-  const [activeType, setActiveType] =
-    useState<ProjectSectionProps['types']>(types);
+}: TabSectionProps<T>) => {
+  const [activeType, setActiveType] = useState<TabSectionProps['types']>(types);
 
   const filteredProjects = getFilterProjects({ activeType });
 

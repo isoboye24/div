@@ -51,6 +51,24 @@ export const upsertCategory = async (
   }
 };
 
+export const checkIfCategoryExists = async (categoryName: string) => {
+  try {
+    const existing = await prisma.category.findFirst({
+      where: {
+        name: {
+          equals: categoryName,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return !!existing;
+  } catch (error) {
+    console.error('Error checking for existing category:', error);
+    return false;
+  }
+};
+
 export const getAllCategory = async () => {
   try {
     const categories = await prisma.category.findMany({

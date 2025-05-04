@@ -20,7 +20,11 @@ import { useRouter } from 'next/navigation';
 import { userDefault } from '@/lib/constants';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { SignOutUser, createUser } from '@/lib/actions/user.actions';
+import {
+  SignOutUser,
+  checkIfUserExists,
+  createUser,
+} from '@/lib/actions/user.actions';
 import Image from 'next/image';
 import { UploadButton } from '@uploadthing/react';
 import { OurFileRouter } from '@/lib/uploadthing';
@@ -36,6 +40,12 @@ const SignUpForm = () => {
   const onSubmit: SubmitHandler<z.infer<typeof signUpFormSchema>> = async (
     values
   ) => {
+    const exists = await checkIfUserExists(values.email);
+    if (exists) {
+      toast.error('User with this email already exists.');
+      return;
+    }
+
     const payload = { ...values };
 
     const res = await createUser(payload);

@@ -19,7 +19,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Skill } from '@/types';
 import { skillDefaultValues } from '@/lib/constants';
-import { upsertSkill } from '@/lib/actions/skill.actions';
+import { checkIfSkillExists, upsertSkill } from '@/lib/actions/skill.actions';
 import {
   Select,
   SelectTrigger,
@@ -84,6 +84,16 @@ const SkillForm = ({
   const onSubmit: SubmitHandler<z.infer<typeof upsertSkillSchema>> = async (
     values
   ) => {
+    if (type === 'Create') {
+      const exists = await checkIfSkillExists(
+        values.skillName,
+        values.categoryId
+      );
+      if (exists) {
+        toast.error('Skill with this name and category already exists.');
+        return;
+      }
+    }
     const payload = { ...values, id: type === 'Update' && id ? id : undefined };
 
     const res = await upsertSkill(payload);

@@ -98,6 +98,24 @@ export const upsertProject = async (
   }
 };
 
+export const checkIfProjectExists = async (name: string) => {
+  try {
+    const existing = await prisma.project.findFirst({
+      where: {
+        projectName: {
+          equals: name,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return !!existing;
+  } catch (error) {
+    console.error('Error checking for existing project:', error);
+    return false;
+  }
+};
+
 export const getAllProjects = async () => {
   try {
     const projects = await prisma.project.findMany({

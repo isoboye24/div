@@ -27,7 +27,10 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { getAllCategory } from '@/lib/actions/category.actions';
-import { upsertProject } from '@/lib/actions/project.actions';
+import {
+  checkIfProjectExists,
+  upsertProject,
+} from '@/lib/actions/project.actions';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import Image from 'next/image';
@@ -106,6 +109,13 @@ const ProjectForm = ({
   const onSubmit: SubmitHandler<z.infer<typeof upsertProjectSchema>> = async (
     values
   ) => {
+    if (type === 'Create') {
+      const exists = await checkIfProjectExists(values.projectName);
+      if (exists) {
+        toast.error('Project with this name already exists.');
+        return;
+      }
+    }
     const payload = { ...values, id: type === 'Update' && id ? id : undefined };
 
     const res = await upsertProject(payload);

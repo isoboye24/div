@@ -49,6 +49,28 @@ export const upsertSkill = async (data: z.infer<typeof upsertSkillSchema>) => {
   }
 };
 
+export const checkIfSkillExists = async (
+  skillName: string,
+  categoryId: string
+) => {
+  try {
+    const existing = await prisma.skill.findFirst({
+      where: {
+        skillName: {
+          equals: skillName,
+          mode: 'insensitive', //case-insensitive
+        },
+        categoryId,
+      },
+    });
+
+    return !!existing;
+  } catch (error) {
+    console.error('Error checking for existing skill:', error);
+    return false;
+  }
+};
+
 export const getAllSkill = async () => {
   try {
     const skillData = await prisma.skill.findMany({
