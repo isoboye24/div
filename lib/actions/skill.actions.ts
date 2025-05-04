@@ -17,7 +17,7 @@ export const upsertSkill = async (data: z.infer<typeof upsertSkillSchema>) => {
     };
   }
 
-  const { id, skillName, categoryId, level } = parsed.data;
+  const { id, skillName, categoryId, level, publish } = parsed.data;
 
   try {
     let skillData;
@@ -26,12 +26,12 @@ export const upsertSkill = async (data: z.infer<typeof upsertSkillSchema>) => {
     if (id) {
       skillData = await prisma.skill.upsert({
         where: { id },
-        update: { skillName, categoryId, level },
-        create: { skillName, categoryId, level },
+        update: { skillName, categoryId, level, publish },
+        create: { skillName, categoryId, level, publish },
       });
     } else {
       skillData = await prisma.skill.create({
-        data: { skillName, categoryId, level },
+        data: { skillName, categoryId, level, publish },
       });
     }
 
@@ -74,9 +74,7 @@ export const checkIfSkillExists = async (
 export const getAllSkill = async () => {
   try {
     const skillData = await prisma.skill.findMany({
-      orderBy: {
-        level: 'desc',
-      },
+      orderBy: [{ publish: 'desc' }, { level: 'desc' }],
     });
 
     return {
@@ -97,7 +95,7 @@ export const getAllFilterSkills = async ({
 }: {
   activeType: string;
 }) => {
-  const categoryFilter = ['Frontend', 'Backend'];
+  const categoryFilter = ['Frontend', 'Backend', 'Graphics'];
 
   const whereCondition =
     activeType === 'All'

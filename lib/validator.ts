@@ -26,6 +26,7 @@ export const upsertSkillSchema = z.object({
     .optional(),
   skillName: z.string().min(1, 'Skill name is required'),
   level: z.number(),
+  publish: z.boolean(),
   categoryId: z.string().min(1, 'Project name is required'),
 });
 

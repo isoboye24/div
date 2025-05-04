@@ -44,6 +44,7 @@ const Skills = async () => {
               <TableHead>Skill</TableHead>
               <TableHead>Level</TableHead>
               <TableHead>Category</TableHead>
+              <TableHead>Publish</TableHead>
               <TableHead className="w-[200px]">ACTIONS</TableHead>
             </TableRow>
           </TableHeader>
@@ -58,6 +59,9 @@ const Skills = async () => {
                   <TableCell>{skill.skillName}</TableCell>
                   <TableCell>{skill.level}</TableCell>
                   <TableCell>{category?.name || 'unknown category'}</TableCell>
+                  <TableCell>
+                    {skill.publish ? 'Published' : 'Unpublished'}
+                  </TableCell>
                   <TableCell className="flex gap-5">
                     <Link href={`/admin/skills/${skill.id}`}>
                       <Button>Edit</Button>

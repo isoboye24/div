@@ -28,6 +28,7 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { getAllCategory } from '@/lib/actions/category.actions';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const SkillForm = ({
   type,
@@ -58,11 +59,11 @@ const SkillForm = ({
   // Reset form values when skill prop changes
   useEffect(() => {
     if (skill && type === 'Update') {
-      console.log('Form values:', form.getValues());
       form.reset({
         skillName: skill.skillName,
         categoryId: skill.categoryId,
         level: skill.level,
+        publish: skill.publish,
       });
     }
   }, [skill, type, form]);
@@ -177,6 +178,24 @@ const SkillForm = ({
                         </SelectContent>
                       </Select>
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="mb-6">
+              <FormField
+                control={form.control}
+                name="publish"
+                render={({ field }) => (
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <Checkbox
+                        checked={!!field.value}
+                        onCheckedChange={(checked) => field.onChange(!!checked)}
+                      />
+                    </FormControl>
+                    <FormLabel className="mb-0">Publish?</FormLabel>
                     <FormMessage />
                   </FormItem>
                 )}

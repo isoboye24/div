@@ -11,7 +11,7 @@ const About = async () => {
   return (
     <div>
       <PageTopSection pageName="About Me" bgColor="teal-500" />
-      <AllSkills tab={['All', 'Frontend', 'Backend']} types="All" />
+      <AllSkills tab={['All', 'Frontend', 'Backend', 'Graphics']} types="All" />
     </div>
   );
 };

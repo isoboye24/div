@@ -20,6 +20,7 @@ model Skill {
   categoryId String
   date       DateTime @default(now()) @db.Timestamp(6)
   level      Int      @default(50)
+  publish    Boolean  @default(false)
   category   Category @relation(fields: [categoryId], references: [id])
 }
 

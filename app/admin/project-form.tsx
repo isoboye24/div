@@ -334,11 +334,11 @@ const ProjectForm = ({
                   <FormItem className="flex items-center space-x-2">
                     <FormControl>
                       <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
+                        checked={!!field.value}
+                        onCheckedChange={(checked) => field.onChange(!!checked)}
                       />
                     </FormControl>
-                    <FormLabel className="mb-0">Publish ?</FormLabel>
+                    <FormLabel className="mb-0">Publish?</FormLabel>
                     <FormMessage />
                   </FormItem>
                 )}
