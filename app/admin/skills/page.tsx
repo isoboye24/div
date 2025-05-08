@@ -17,13 +17,20 @@ import {
 import { getAllCategory } from '@/lib/actions/category.actions';
 import Link from 'next/link';
 import DeleteDialog from '@/components/ui/shared/delete-dialog';
+import Pagination from '@/components/ui/shared/pagination';
 
 export const metadata: Metadata = {
   title: 'List of Skills',
 };
 
-const Skills = async () => {
-  const skills = await getAllSkill();
+const Skills = async ({
+  searchParams,
+}: {
+  searchParams?: { page?: string };
+}) => {
+  const page = Number(searchParams?.page) || 1;
+
+  const skills = await getAllSkill({ page });
   const allCategory = await getAllCategory();
   const total = await getTotalSkills();
 
@@ -73,6 +80,12 @@ const Skills = async () => {
             })}
           </TableBody>
         </Table>
+        {skills.totalPages && skills.totalPages > 1 && (
+          <Pagination
+            page={Number(page) || 1}
+            totalPages={skills?.totalPages}
+          />
+        )}
       </div>
       <div className="mt-10 text-end pr-4 md:pr-8 text-green-500">
         Total Skills: {total.total}

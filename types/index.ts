@@ -32,3 +32,9 @@ export type CarouselProps = {
 };
 
 export type User = z.infer<typeof signUpFormSchema>;
+
+export type PaginationProps = {
+  page?: number | string;
+  totalPages?: number;
+  urlParamName?: string;
+};

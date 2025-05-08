@@ -5,6 +5,7 @@ import { upsertSkillSchema } from '../validator';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { formatError } from '../utils';
+import { PAGE_SIZE } from '../constants';
 
 export const upsertSkill = async (data: z.infer<typeof upsertSkillSchema>) => {
   const parsed = upsertSkillSchema.safeParse(data);
@@ -71,15 +72,26 @@ export const checkIfSkillExists = async (
   }
 };
 
-export const getAllSkill = async () => {
+export const getAllSkill = async ({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) => {
   try {
     const skillData = await prisma.skill.findMany({
       orderBy: [{ publish: 'desc' }, { level: 'desc' }],
+      take: limit,
+      skip: (page - 1) * limit,
     });
+
+    const dataCount = await prisma.skill.count();
 
     return {
       success: true,
       data: skillData,
+      totalPages: Math.ceil(dataCount / limit),
     };
   } catch (error) {
     console.error('Error fetching skill:', error);
@@ -97,20 +109,12 @@ export const getAllFilterSkills = async ({
 }) => {
   const categoryFilter = ['Frontend', 'Backend', 'Graphics'];
 
-  const whereCondition =
-    activeType === 'All'
-      ? {
-          category: {
-            name: {
-              in: categoryFilter,
-            },
-          },
-        }
-      : {
-          category: {
-            name: activeType,
-          },
-        };
+  const whereCondition = {
+    publish: true,
+    category: {
+      name: activeType === 'All' ? { in: categoryFilter } : activeType,
+    },
+  };
 
   const allFilteredSkills = await prisma.skill.findMany({
     where: whereCondition,
