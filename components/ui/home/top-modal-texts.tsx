@@ -21,10 +21,11 @@ const TopModalTexts = () => {
             </div>
             <div className="flex gap-2">
               <div className="">
-                <Button className="bg-black hover:bg-gray-800 text-gray-50">
-                  {' '}
-                  <Download size={16} /> Download CV
-                </Button>
+                <a href="/Dan-Obu-cv.pdf" download>
+                  <Button className="bg-black hover:bg-gray-800 text-gray-50 flex items-center gap-2">
+                    <Download size={16} /> Download CV
+                  </Button>
+                </a>
               </div>
               <div className="">
                 <Link href={'/contact'}>
