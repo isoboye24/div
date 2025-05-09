@@ -15,13 +15,13 @@ import Link from 'next/link';
 import DeleteDialog from '@/components/ui/shared/delete-dialog';
 import { PAGE_SIZE } from '@/lib/constants';
 import NewPagination from '@/components/ui/shared/new-pagination';
-import { PageProps } from '@/interfaces';
+import { PagesProps } from '@/interfaces';
 
 export const metadata: Metadata = {
   title: 'List of Skills',
 };
 
-const Skills = async ({ searchParams }: PageProps) => {
+const Skills = async ({ searchParams }: PagesProps) => {
   const pageString = (await searchParams?.page) ?? '1';
   const page = parseInt(pageString, PAGE_SIZE);
 

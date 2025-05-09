@@ -51,6 +51,6 @@ export interface TabSectionProps<T extends string = string> {
   types: T;
 }
 
-export interface PageProps {
+export interface PagesProps {
   searchParams?: { page?: string };
 }
