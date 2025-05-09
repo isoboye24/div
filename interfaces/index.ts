@@ -50,3 +50,7 @@ export interface TabSectionProps<T extends string = string> {
   tab: T[];
   types: T;
 }
+
+export interface PageProps {
+  searchParams?: { page?: string };
+}

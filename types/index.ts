@@ -38,3 +38,13 @@ export type PaginationProps = {
   totalPages?: number;
   urlParamName?: string;
 };
+
+export type GetAllSkillsParams = {
+  page?: number;
+  limit?: number;
+};
+
+export type NewPaginationProps = {
+  currentPage: number;
+  totalPages: number;
+};

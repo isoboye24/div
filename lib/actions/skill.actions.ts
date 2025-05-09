@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { formatError } from '../utils';
 import { PAGE_SIZE } from '../constants';
+import { GetAllSkillsParams } from '@/types';
 
 export const upsertSkill = async (data: z.infer<typeof upsertSkillSchema>) => {
   const parsed = upsertSkillSchema.safeParse(data);
@@ -102,6 +103,29 @@ export const getAllSkill = async ({
   }
 };
 
+export async function getAllSkills({
+  page = 1,
+  limit = PAGE_SIZE,
+}: GetAllSkillsParams) {
+  const skip = (page - 1) * limit;
+
+  const [skills, total] = await Promise.all([
+    prisma.skill.findMany({
+      skip,
+      take: limit,
+      orderBy: [{ publish: 'desc' }, { level: 'desc' }],
+    }),
+    prisma.skill.count(),
+  ]);
+
+  return {
+    skills,
+    total,
+    currentPage: page,
+    totalPages: Math.ceil(total / limit),
+  };
+}
+
 export const getAllFilterSkills = async ({
   activeType,
 }: {
@@ -175,13 +199,3 @@ export async function deleteSkill(id: string) {
     return { success: false, message: formatError(error) };
   }
 }
-
-export const getTotalSkills = async () => {
-  try {
-    const total = await prisma.skill.count();
-    return { success: true, total };
-  } catch (error) {
-    console.error('Error calculating total skills:', error);
-    return { success: false, message: 'Failed to count skills' };
-  }
-};

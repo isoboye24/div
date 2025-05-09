@@ -9,30 +9,27 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Metadata } from 'next';
-import {
-  getAllSkill,
-  deleteSkill,
-  getTotalSkills,
-} from '@/lib/actions/skill.actions';
+import { getAllSkills, deleteSkill } from '@/lib/actions/skill.actions';
 import { getAllCategory } from '@/lib/actions/category.actions';
 import Link from 'next/link';
 import DeleteDialog from '@/components/ui/shared/delete-dialog';
-import Pagination from '@/components/ui/shared/pagination';
+import { PAGE_SIZE } from '@/lib/constants';
+import NewPagination from '@/components/ui/shared/new-pagination';
+import { PageProps } from '@/interfaces';
 
 export const metadata: Metadata = {
   title: 'List of Skills',
 };
 
-const Skills = async ({
-  searchParams,
-}: {
-  searchParams?: { page?: string };
-}) => {
-  const page = Number(searchParams?.page) || 1;
+const Skills = async ({ searchParams }: PageProps) => {
+  const pageString = (await searchParams?.page) ?? '1';
+  const page = parseInt(pageString, PAGE_SIZE);
 
-  const skills = await getAllSkill({ page });
+  const { skills, totalPages, currentPage, total } = await getAllSkills({
+    page,
+    limit: PAGE_SIZE,
+  });
   const allCategory = await getAllCategory();
-  const total = await getTotalSkills();
 
   return (
     <div className="space-y-2">
@@ -56,7 +53,7 @@ const Skills = async ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {skills?.data?.map((skill) => {
+            {skills?.map((skill) => {
               const category = allCategory?.data?.find(
                 (category) => category.id === skill.categoryId
               );
@@ -71,7 +68,7 @@ const Skills = async ({
                   </TableCell>
                   <TableCell className="flex gap-5">
                     <Link href={`/admin/skills/${skill.id}`}>
-                      <Button>Edit</Button>
+                      <Button className="bg-teal-500">Edit</Button>
                     </Link>
                     <DeleteDialog id={skill.id} action={deleteSkill} />
                   </TableCell>
@@ -80,15 +77,12 @@ const Skills = async ({
             })}
           </TableBody>
         </Table>
-        {skills.totalPages && skills.totalPages > 1 && (
-          <Pagination
-            page={Number(page) || 1}
-            totalPages={skills?.totalPages}
-          />
-        )}
+        <div className="text-center mt-5">
+          <NewPagination currentPage={currentPage} totalPages={totalPages} />
+        </div>
       </div>
       <div className="mt-10 text-end pr-4 md:pr-8 text-green-500">
-        Total Skills: {total.total}
+        Total Skills: {total}
       </div>
     </div>
   );
