@@ -13,21 +13,21 @@ import { getAllSkills, deleteSkill } from '@/lib/actions/skill.actions';
 import { getAllCategory } from '@/lib/actions/category.actions';
 import Link from 'next/link';
 import DeleteDialog from '@/components/ui/shared/delete-dialog';
-import { PAGE_SIZE } from '@/lib/constants';
-import NewPagination from '@/components/ui/shared/new-pagination';
-import { PagesProps } from '@/interfaces';
+// import { PAGE_SIZE } from '@/lib/constants';
+// import NewPagination from '@/components/ui/shared/new-pagination';
+// import { PagesProps } from '@/interfaces';
 
 export const metadata: Metadata = {
   title: 'List of Skills',
 };
 
-const Skills = async ({ searchParams }: PagesProps) => {
-  const pageString = (await searchParams?.page) ?? '1';
-  const page = parseInt(pageString, PAGE_SIZE);
+const Skills = async () => {
+  // const pageString = (await searchParams?.page) ?? '1';
+  // const page = parseInt(pageString, PAGE_SIZE);
 
-  const { skills, totalPages, currentPage, total } = await getAllSkills({
-    page,
-    limit: PAGE_SIZE,
+  const { skills, total } = await getAllSkills({
+    // page,
+    // limit: PAGE_SIZE,
   });
   const allCategory = await getAllCategory();
 
@@ -77,9 +77,9 @@ const Skills = async ({ searchParams }: PagesProps) => {
             })}
           </TableBody>
         </Table>
-        <div className="text-center mt-5">
+        {/* <div className="text-center mt-5">
           <NewPagination currentPage={currentPage} totalPages={totalPages} />
-        </div>
+        </div> */}
       </div>
       <div className="mt-10 text-end pr-4 md:pr-8 text-green-500">
         Total Skills: {total}
