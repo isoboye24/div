@@ -2,6 +2,7 @@
 
 import { Skill } from '@/types';
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Skills = ({ skills }: { skills?: Skill[] }) => {
   return (
@@ -14,7 +15,11 @@ const Skills = ({ skills }: { skills?: Skill[] }) => {
               <span className="text-sm text-gray-500">{skill.level}%</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2 md:h-3">
-              <div
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                viewport={{ once: false, amount: 0.3 }}
                 className={`h-2 md:h-3 rounded-full ${
                   skill.level >= 90
                     ? 'bg-amber-500'
@@ -23,7 +28,7 @@ const Skills = ({ skills }: { skills?: Skill[] }) => {
                     : 'bg-red-400'
                 }`}
                 style={{ width: `${skill.level}%` }}
-              ></div>
+              ></motion.div>
             </div>
           </div>
         ))}

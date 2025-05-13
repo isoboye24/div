@@ -6,6 +6,7 @@ import ProjectCard from '../project/project-card';
 import { Project } from '@/types';
 import { TabSectionProps } from '@/interfaces';
 import { getFilterProjects } from '@/lib/actions/old-project.actions';
+import { motion } from 'framer-motion';
 
 const ProjectCarousel = <T extends string>({
   tab,
@@ -38,7 +39,11 @@ const ProjectCarousel = <T extends string>({
       <div className="block xl:hidden">
         <CustomCarousel>
           {filteredProjects.map((project: Project) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, x: 150 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              viewport={{ once: false, amount: 0.3 }}
               key={project.id}
               className="text-white rounded-xl h-[300px] flex items-center justify-center text-xl shadow-base"
             >
@@ -49,7 +54,7 @@ const ProjectCarousel = <T extends string>({
                 type={project.type}
                 size={200}
               />
-            </div>
+            </motion.div>
           ))}
         </CustomCarousel>
       </div>
@@ -58,7 +63,11 @@ const ProjectCarousel = <T extends string>({
       <div className="hidden xl:block mt-4">
         <CustomCarousel>
           {filteredProjects.map((project: Project) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, x: 150 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              viewport={{ once: false, amount: 0.3 }}
               key={project.id}
               className="text-white rounded-xl h-[400px] flex items-center justify-center text-xl shadow-base"
             >
@@ -69,7 +78,7 @@ const ProjectCarousel = <T extends string>({
                 type={project.type}
                 size={300}
               />
-            </div>
+            </motion.div>
           ))}
         </CustomCarousel>
       </div>

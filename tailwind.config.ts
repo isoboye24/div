@@ -4,7 +4,22 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        'float-in': {
+          '0%': { opacity: '0', transform: 'translateY(130px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'slide-in': {
+          '0%': { opacity: '0', transform: 'translateY(130px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'float-in': 'float-in 0.8s ease-out forwards',
+        'slide-in': 'slide-in 0.8s ease-out forwards',
+      },
+    },
   },
   plugins: [],
 };

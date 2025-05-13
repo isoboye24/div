@@ -5,6 +5,7 @@ import ProjectCard from '../project/project-card';
 import { Project } from '@/types';
 import { TabSectionProps } from '@/interfaces';
 import { getAllFilterProjects } from '@/lib/actions/old-project.actions';
+import { motion } from 'framer-motion';
 
 const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
   const [activeType, setActiveType] = useState<TabSectionProps['types']>(types);
@@ -31,7 +32,13 @@ const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
       </div>
 
       {/* Mobile */}
-      <div className="grid md:hidden grid-cols-2 gap-4 w-[70vw]">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        viewport={{ once: false, amount: 0.3 }}
+        className="grid md:hidden grid-cols-2 gap-4 w-[70vw]"
+      >
         {filteredProjects.map((project: Project) => (
           <a
             key={project.id}
@@ -47,10 +54,16 @@ const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
             />
           </a>
         ))}
-      </div>
+      </motion.div>
 
       {/* Desktop */}
-      <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+      <motion.div
+        initial={{ opacity: 0, x: -150 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        viewport={{ once: false, amount: 0.3 }}
+        className="hidden md:grid md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-8"
+      >
         {filteredProjects.map((project: Project) => (
           <a
             key={project.id}
@@ -66,7 +79,7 @@ const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
             />
           </a>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

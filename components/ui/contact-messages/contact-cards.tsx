@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { motion } from 'framer-motion';
 
 import { Phone, Mail, CalendarDaysIcon, MapPinned } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../card';
@@ -6,7 +9,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '../card';
 const ContactCards = () => {
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-15 md:mb-20 lg:mb-0">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        viewport={{ once: false, amount: 0.3 }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-15 md:mb-20 lg:mb-0"
+      >
         <div className="">
           <Card className="w-full max-w-lg">
             <CardHeader className="flex justify-center items-center ">
@@ -62,7 +71,7 @@ const ContactCards = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

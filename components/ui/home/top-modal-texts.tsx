@@ -3,6 +3,7 @@ import { Button } from '../button';
 import { Download } from 'lucide-react';
 import RoundedButtonWithLink from './rounded-button';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 const TopModalTexts = () => {
   return (
@@ -10,13 +11,13 @@ const TopModalTexts = () => {
       <div className="grid grid-rows-[4fr, 1fr] items-center md:bg-teal-600 justify-center z-12 mt-7 sm:mt-0 mb-10 sm:mb-0 rounded-tr-4xl rounded-br-4xl">
         <div className="flex items-center justify-center">
           <div className="grid text-center ">
-            <div className="font-light text-center custom-text-black sm:text-xs md:text-sm">
+            <div className="font-light text-center text-amber-200 sm:text-xs md:text-sm">
               Hello, I am
             </div>
-            <div className="font-bold custom-text-black sm:text-lg md:text-2xl">
-              Isoboye Vincent Isoboye
+            <div className="font-bold custom-text-white sm:text-lg md:text-2xl">
+              Isoboye Vincent Dan-Obu
             </div>
-            <div className="font-light custom-text-black text-base lg:text-2xl mb-5 sm:mb-7">
+            <div className="font-semibold custom-text-black text-base lg:text-2xl mb-5 sm:mb-7">
               Full Stack Developer
             </div>
             <div className="flex gap-2">
@@ -38,7 +39,13 @@ const TopModalTexts = () => {
           </div>
         </div>
         <div className="hidden md:block lg:hidden">
-          <div className="flex gap-2 lg:gap-4 items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, x: 130 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.3 }}
+            className="flex gap-2 lg:gap-4 items-center justify-center"
+          >
             <RoundedButtonWithLink
               size={80}
               bgColor="bg-amber-600"
@@ -63,10 +70,16 @@ const TopModalTexts = () => {
               url="#skills"
               text="Skills"
             />
-          </div>
+          </motion.div>
         </div>
         <div className="hidden lg:block xl:hidden">
-          <div className="flex gap-2 lg:gap-4">
+          <motion.div
+            initial={{ opacity: 0, x: 130 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.3 }}
+            className="flex gap-2 lg:gap-4"
+          >
             <RoundedButtonWithLink
               size={100}
               bgColor="bg-amber-600"
@@ -99,10 +112,16 @@ const TopModalTexts = () => {
               url="#skills"
               text="Skills"
             />
-          </div>
+          </motion.div>
         </div>
         <div className="hidden xl:block">
-          <div className="flex gap-2 lg:gap-4">
+          <motion.div
+            initial={{ opacity: 0, x: 130 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.3 }}
+            className="flex gap-2 lg:gap-4"
+          >
             <RoundedButtonWithLink
               size={120}
               bgColor="bg-amber-600"
@@ -135,7 +154,7 @@ const TopModalTexts = () => {
               url="#skills"
               text="Skills"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </>

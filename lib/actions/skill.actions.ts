@@ -105,14 +105,14 @@ export const getAllSkill = async ({
 
 export async function getAllSkills({
   page = 1,
-  limit = PAGE_SIZE,
-}: GetAllSkillsParams) {
-  const skip = (page - 1) * limit;
+}: // limit = PAGE_SIZE,
+GetAllSkillsParams) {
+  // const skip = (page - 1) * limit;
 
   const [skills, total] = await Promise.all([
     prisma.skill.findMany({
-      skip,
-      take: limit,
+      // skip,
+      // take: limit,
       orderBy: [{ publish: 'desc' }, { level: 'desc' }],
     }),
     prisma.skill.count(),
@@ -122,7 +122,7 @@ export async function getAllSkills({
     skills,
     total,
     currentPage: page,
-    totalPages: Math.ceil(total / limit),
+    // totalPages: Math.ceil(total / limit),
   };
 }
 
