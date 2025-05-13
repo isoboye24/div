@@ -7,14 +7,12 @@ const AboutTexts = () => {
       <div className="pr-0 md:pr-5 lg:pr-10">
         <SectionTitle title="About Me" />
         <p className="text-justify">
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-          ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-          sadipscing elitr,{' '}
-          <a href="/about" className="text-amber-500 underline italic">
-            ...more
+          I am a Software Developer graduated at Belarussian State University of
+          Informatics and Radio-electronics, Minsk, Belarus and currently
+          located in Baunatal, Hessen, Germany. I am looking to take on more
+          work to increase my skills as a Software Developer
+          <a href="/about" className="text-amber-500 underline italic ml-1">
+            ... more
           </a>
         </p>
       </div>

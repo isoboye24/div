@@ -23,7 +23,7 @@ const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
               className={`transition-colors duration-200 ${
                 activeType === t
                   ? 'text-amber-500 font-semibold'
-                  : 'text-gray-100 hover:text-gray-200'
+                  : 'text-gray-500 hover:text-gray-600'
               }`}
             >
               {t}
@@ -32,15 +32,13 @@ const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
       </div>
 
       {/* Mobile */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        viewport={{ once: false, amount: 0.3 }}
-        className="grid md:hidden grid-cols-2 gap-4 w-[70vw]"
-      >
+      <div className="grid md:hidden grid-cols-2 gap-4 w-[70vw]">
         {filteredProjects.map((project: Project) => (
-          <a
+          <motion.a
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.3 }}
             key={project.id}
             className="flex text-white rounded-xl h-[165px] justify-center shadow-base text-xs"
             href="/projects/single-project"
@@ -52,9 +50,9 @@ const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
               type={project.type}
               size={120}
             />
-          </a>
+          </motion.a>
         ))}
-      </motion.div>
+      </div>
 
       {/* Desktop */}
       <motion.div

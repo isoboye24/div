@@ -27,11 +27,9 @@ const Footer = () => {
               />
             </div>
             <p className="px-2 lg:px-15 text-justify text-base lg:text-xl">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.
+              Are you working on something great? I would love to help make it
+              happen! Drop me a letter and start your project right now! Just do
+              it.
             </p>
           </div>
           <div className=" hidden md:block">

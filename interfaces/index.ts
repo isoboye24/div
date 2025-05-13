@@ -25,7 +25,8 @@ export interface SocialMediaProps {
   icon: IconProp;
   size: number;
   url: string;
-  bgColor?: string; // Tailwind class like 'bg-amber-500'
+  bgColor?: string;
+  hoverColor?: string;
 }
 
 export interface PolygonPictureFrameProps {

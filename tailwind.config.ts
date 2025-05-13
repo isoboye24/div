@@ -19,6 +19,11 @@ module.exports = {
         'float-in': 'float-in 0.8s ease-out forwards',
         'slide-in': 'slide-in 0.8s ease-out forwards',
       },
+      screens: {
+        android: {
+          raw: '(max-width: 480px) and (pointer: coarse) and (hover: none)',
+        },
+      },
     },
   },
   plugins: [],

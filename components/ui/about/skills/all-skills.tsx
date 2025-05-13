@@ -34,7 +34,7 @@ const AllSkills = <T extends string>({ tab, types }: TabSectionProps<T>) => {
             className={`transition-colors duration-200 ${
               activeType === t
                 ? 'text-amber-500 font-semibold'
-                : 'text-gray-100 hover:text-gray-200'
+                : 'text-gray-500 hover:text-gray-600'
             }`}
           >
             {t}

@@ -40,8 +40,8 @@ const TopModalTexts = () => {
         </div>
         <div className="hidden md:block lg:hidden">
           <motion.div
-            initial={{ opacity: 0, x: 130 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -130 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             viewport={{ once: false, amount: 0.3 }}
             className="flex gap-2 lg:gap-4 items-center justify-center"
@@ -67,15 +67,15 @@ const TopModalTexts = () => {
               bgColor="bg-white"
               textColor="text-black"
               hoverColor="hover:bg-gray-300"
-              url="#skills"
+              url="/about#skills"
               text="Skills"
             />
           </motion.div>
         </div>
         <div className="hidden lg:block xl:hidden">
           <motion.div
-            initial={{ opacity: 0, x: 130 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -130 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             viewport={{ once: false, amount: 0.3 }}
             className="flex gap-2 lg:gap-4"
@@ -109,15 +109,15 @@ const TopModalTexts = () => {
               bgColor="bg-lime-700"
               textColor="text-gray-50"
               hoverColor="hover:bg-lime-800"
-              url="#skills"
+              url="/about#skills"
               text="Skills"
             />
           </motion.div>
         </div>
         <div className="hidden xl:block">
           <motion.div
-            initial={{ opacity: 0, x: 130 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -130 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             viewport={{ once: false, amount: 0.3 }}
             className="flex gap-2 lg:gap-4"
@@ -151,7 +151,7 @@ const TopModalTexts = () => {
               bgColor="bg-lime-700"
               textColor="text-gray-50"
               hoverColor="hover:bg-lime-800"
-              url="#skills"
+              url="/about#skills"
               text="Skills"
             />
           </motion.div>

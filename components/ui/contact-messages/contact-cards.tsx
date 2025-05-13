@@ -25,7 +25,7 @@ const ContactCards = () => {
             </CardHeader>
             <CardContent className="text-center">
               <h1 className="text-xl font-bold mb-4">Phone</h1>
-              <p>+49 151 205 68192</p>
+              <p className="text-gray-500">+49 151 205 68192</p>
             </CardContent>
           </Card>
         </div>
@@ -38,7 +38,9 @@ const ContactCards = () => {
             </CardHeader>
             <CardContent className="text-center">
               <h1 className="text-xl font-bold mb-4">Email</h1>
-              <p className="break-words">isoboyedanobu@gmail.com</p>
+              <p className="break-words text-gray-500">
+                isoboyedanobu@gmail.com
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -51,8 +53,8 @@ const ContactCards = () => {
             </CardHeader>
             <CardContent className="text-center">
               <h1 className="text-xl font-bold mb-4">Available</h1>
-              <p>Mondays - Fridays</p>
-              <p>8:30 - 19:00</p>
+              <p className="text-gray-500">Mondays - Fridays</p>
+              <p className="text-gray-500">8:30 - 19:00</p>
             </CardContent>
           </Card>
         </div>
@@ -65,7 +67,7 @@ const ContactCards = () => {
             </CardHeader>
             <CardContent className="text-center">
               <h1 className="text-xl font-bold mb-4">Location</h1>
-              <p className="break-words">
+              <p className="break-words text-gray-500">
                 Akazienallee 68, 34225 Baunatal, Hessen, Germany
               </p>
             </CardContent>

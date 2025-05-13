@@ -92,10 +92,12 @@ const ContactForm = ({
       <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle>
-            <SectionTitle title="Send me a message" />
+            <SectionTitle title="Let's Work Together" />
           </CardTitle>
           <CardDescription>
-            Fill out the form below and send your message.
+            Are you working on something great? I would love to help make it
+            happen! Drop me a letter and start your project right now! Just do
+            it.
           </CardDescription>
         </CardHeader>
         <CardContent>

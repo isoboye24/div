@@ -6,7 +6,7 @@ const PolygonPictureFrame: React.FC<PolygonPictureFrameProps> = ({
   src,
   sides = 6,
   size = 300,
-  borderColor = '#f7aa05',
+  borderColor = '#ffffff',
   borderWidth = 8,
 }) => {
   const generatePolygonClipPath = (sides: number) => {
