@@ -1,16 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
-import ProjectCard from '../project/project-card';
-import { Project } from '@/types';
+import React, { useEffect, useState } from 'react';
+
 import { TabSectionProps } from '@/interfaces';
-import { getAllFilterProjects } from '@/lib/actions/old-project.actions';
-import { motion } from 'framer-motion';
+import ProjectComponent from './project';
+import { getAllFilterProjects } from '@/lib/actions/project.actions';
+import { Category, Project } from '@prisma/client';
 
 const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
-  const [activeType, setActiveType] = useState<TabSectionProps['types']>(types);
+  const [activeType, setActiveType] = useState<T>(types);
+  const [filteredProjects, setFilteredProjects] = useState<
+    (Project & { category: Category })[] | null
+  >(null);
 
-  const filteredProjects = getAllFilterProjects({ activeType });
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchFilteredProjects = async () => {
+      setLoading(true);
+      const projects = await getAllFilterProjects({ activeType });
+      setFilteredProjects(projects);
+      setLoading(false);
+    };
+
+    fetchFilteredProjects();
+  }, [activeType]);
 
   return (
     <div className="justify-items-center">
@@ -31,53 +45,11 @@ const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
           ))}
       </div>
 
-      {/* Mobile */}
-      <div className="grid md:hidden grid-cols-2 gap-4 w-[70vw]">
-        {filteredProjects.map((project: Project) => (
-          <motion.a
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: false, amount: 0.3 }}
-            key={project.id}
-            className="flex text-white rounded-xl h-[165px] justify-center shadow-base text-xs"
-            href="/projects/single-project"
-          >
-            <ProjectCard
-              name={project.name}
-              image={project.image}
-              codeUrl={project.codeUrl}
-              type={project.type}
-              size={120}
-            />
-          </motion.a>
-        ))}
-      </div>
-
-      {/* Desktop */}
-      <motion.div
-        initial={{ opacity: 0, x: -150 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        viewport={{ once: false, amount: 0.3 }}
-        className="hidden md:grid md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-8"
-      >
-        {filteredProjects.map((project: Project) => (
-          <a
-            key={project.id}
-            className=" text-white rounded-xl h-[300px] flex items-center justify-center text-xl shadow-base"
-            href="/projects/single-project"
-          >
-            <ProjectCard
-              name={project.name}
-              image={project.image}
-              codeUrl={project.codeUrl}
-              type={project.type}
-              size={200}
-            />
-          </a>
-        ))}
-      </motion.div>
+      {loading ? (
+        <div className="text-center">Loading skills...</div>
+      ) : (
+        <ProjectComponent projects={filteredProjects || []} />
+      )}
     </div>
   );
 };

@@ -202,11 +202,20 @@ export const getAllFilterProjects = async ({
 }: {
   activeType: string;
 }) => {
-  const categories = await prisma.category.findMany({
-    orderBy: [{ name: 'asc' }],
-  });
+  const categoryFilter = ['Web', 'Desktop'];
 
-  const projects = await prisma.project.findMany({
+  const whereCondition = {
+    publish: true,
+    category: {
+      name: activeType === 'All' ? { in: categoryFilter } : activeType,
+    },
+  };
+
+  const allFilteredSkills = await prisma.project.findMany({
+    where: whereCondition,
+    include: {
+      category: true,
+    },
     orderBy: [
       { publish: 'desc' },
       { rate: 'desc' },
@@ -215,12 +224,7 @@ export const getAllFilterProjects = async ({
     ],
   });
 
-  const filteredProjects = projects.filter((project) => {
-    const category = categories.find((cat) => cat.id === project.categoryId);
-    return activeType === 'All' || category?.name === activeType;
-  });
-
-  return filteredProjects.slice(0, 3);
+  return allFilteredSkills;
 };
 
 export const getFilterProjects = async ({
@@ -228,23 +232,25 @@ export const getFilterProjects = async ({
 }: {
   activeType: string;
 }) => {
-  const categories = await prisma.category.findMany({
-    orderBy: [{ name: 'asc' }],
-  });
-
-  const projects = await prisma.project.findMany({
+  const takeCount = 3;
+  const filteredProjects = await prisma.project.findMany({
+    where: {
+      publish: true,
+      category: {
+        name: activeType,
+      },
+    },
+    include: {
+      category: true,
+    },
     orderBy: [
       { publish: 'desc' },
       { rate: 'desc' },
       { createdAt: 'desc' },
       { projectName: 'asc' },
     ],
+    take: takeCount,
   });
 
-  const allFilteredProjects = projects.filter((project) => {
-    const category = categories.find((cat) => cat.id === project.categoryId);
-    return activeType === 'All' ? true : category?.name === activeType;
-  });
-
-  return allFilteredProjects;
+  return filteredProjects;
 };

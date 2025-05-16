@@ -15,10 +15,12 @@ const About = async () => {
       <div className="my-10">
         <AboutMe />
       </div>
-      <AllSkills
-        tab={['All', 'Frontend', 'Backend', 'UX/UI Design']}
-        types="All"
-      />
+      <div className="mb-20">
+        <AllSkills
+          tab={['All', 'Frontend', 'Backend', 'UX/UI Design']}
+          types="All"
+        />
+      </div>
     </div>
   );
 };

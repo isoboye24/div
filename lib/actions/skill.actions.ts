@@ -131,7 +131,7 @@ export const getAllFilterSkills = async ({
 }: {
   activeType: string;
 }) => {
-  const categoryFilter = ['Frontend', 'Backend', 'Graphics'];
+  const categoryFilter = ['Frontend', 'Backend', 'UX/UI Design'];
 
   const whereCondition = {
     publish: true,
@@ -143,7 +143,7 @@ export const getAllFilterSkills = async ({
   const allFilteredSkills = await prisma.skill.findMany({
     where: whereCondition,
     include: {
-      category: true, // optional, if you want to access category info in results
+      category: true,
     },
     orderBy: {
       level: 'desc',
