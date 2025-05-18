@@ -1,7 +1,18 @@
-import React from 'react';
+// app/projects/[id]/page.tsx
+import { notFound } from 'next/navigation';
+import SingleProject from '@/components/ui/shared/single-project';
+import { getProjectById } from '@/lib/actions/project.actions';
 
-const SingleProject = () => {
-  return <div>SingleProject</div>;
-};
+export default async function ProjectPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const result = await getProjectById(params.id);
 
-export default SingleProject;
+  if (!result.success || !result.data) {
+    return notFound();
+  }
+
+  return <SingleProject project={result?.data} />;
+}

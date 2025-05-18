@@ -55,3 +55,9 @@ export interface TabSectionProps<T extends string = string> {
 export interface PagesProps {
   searchParams?: { page?: string };
 }
+
+export interface ProjectPageProps {
+  params: {
+    id: string;
+  };
+}
