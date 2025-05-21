@@ -3,12 +3,13 @@ import { notFound } from 'next/navigation';
 import SingleProject from '@/components/ui/shared/single-project';
 import { getProjectById } from '@/lib/actions/project.actions';
 
-type Props = {
-  params: { id: string };
-};
-
-export default async function ProjectPage({ params }: Props) {
-  const result = await getProjectById(params.id);
+export default async function ProjectPage(props: {
+  params: Promise<{
+    id: string;
+  }>;
+}) {
+  const { id } = await props.params;
+  const result = await getProjectById(id);
 
   if (!result.success || !result.data) {
     return notFound();
