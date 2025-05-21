@@ -211,7 +211,7 @@ export const getAllFilterProjects = async ({
     },
   };
 
-  const allFilteredSkills = await prisma.project.findMany({
+  const allFilteredProjects = await prisma.project.findMany({
     where: whereCondition,
     include: {
       category: true,
@@ -224,7 +224,40 @@ export const getAllFilterProjects = async ({
     ],
   });
 
-  return allFilteredSkills;
+  return allFilteredProjects;
+};
+export const getAllSimilarProjects = async ({
+  categoryId,
+  currentProjectId,
+}: {
+  categoryId: string;
+  currentProjectId: string;
+}) => {
+  const takeCount = 3;
+
+  const allSimilarProjects = await prisma.project.findMany({
+    where: {
+      publish: true,
+      category: {
+        id: categoryId,
+      },
+      NOT: {
+        id: currentProjectId, // exclude the current project
+      },
+    },
+    include: {
+      category: true,
+    },
+    orderBy: [
+      { publish: 'desc' },
+      { rate: 'desc' },
+      { createdAt: 'desc' },
+      { projectName: 'asc' },
+    ],
+    take: takeCount,
+  });
+
+  return allSimilarProjects;
 };
 
 export const getFilterProjects = async ({
