@@ -73,10 +73,10 @@ const SingleProject = async ({ project }: { project: Project }) => {
             </div>
           ))}
         </div>
-        <div className="flex md:hidden mt-10 gap-5">
+        <div className="flex md:hidden mt-10 gap-5 justify-center items-center">
           <CustomCarousel>
             {similarProjects.map((similarProj) => (
-              <div key={similarProj.id}>
+              <div key={similarProj.id} className="w-[95%]">
                 <ProjectCard projectData={similarProj} size={150} />
               </div>
             ))}

@@ -53,7 +53,25 @@ const ProjectCarousel = <T extends string>({
         <div className="text-center">Loading skills...</div>
       ) : (
         <>
-          <div className="block xl:hidden">
+          <div className="block md:hidden">
+            <CustomCarousel>
+              {filteredProjects?.map((project: Project) => (
+                <motion.div
+                  initial={{ opacity: 0, x: 150 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  viewport={{ once: false, amount: 0.3 }}
+                  key={project.id}
+                  className="text-white  rounded-xl h-[300px] flex items-center justify-center text-xl shadow-base"
+                >
+                  <div className="w-[80%]">
+                    <ProjectCard projectData={project} size={200} />
+                  </div>
+                </motion.div>
+              ))}
+            </CustomCarousel>
+          </div>
+          <div className="hidden md:block xl:hidden">
             <CustomCarousel>
               {filteredProjects?.map((project: Project) => (
                 <motion.div
