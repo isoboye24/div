@@ -96,3 +96,16 @@ export const updateUserFormSchema = z.object({
   image: z.string().min(3, 'Image must be at least 3 characters'),
   role: z.string(),
 });
+
+export const upsertCVDownloaderSchema = z.object({
+  id: z
+    .string()
+    .min(1, 'If provided, category id is should be at least 1 character')
+    .optional(),
+  email: z
+    .string()
+    .min(3, 'Email must be at least 3 characters')
+    .email('Invalid email address'),
+  company: z.string().min(2, 'Company must be at least 2 characters'),
+  numberOfDownload: z.number().int().min(1, 'number of download is required'),
+});

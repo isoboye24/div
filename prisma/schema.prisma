@@ -76,6 +76,14 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
+model CVDownloader {
+  id               String   @id @default(uuid()) @db.Uuid
+  email            String   @unique(map: "CVDownloader_email_idx")
+  company          String?
+  numberOfDownload Int
+  createdAt        DateTime @default(now()) @db.Timestamp(6)
+}
+
 enum Role {
   user
   admin
