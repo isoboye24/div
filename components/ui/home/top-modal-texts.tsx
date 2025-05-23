@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from '../button';
-import { Download } from 'lucide-react';
 import RoundedButtonWithLink from './rounded-button';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import CVDownloaderForm from './cv-downloader-form';
 
 const TopModalTexts = () => {
   return (
@@ -22,11 +22,9 @@ const TopModalTexts = () => {
             </div>
             <div className="flex gap-2">
               <div className="">
-                <a href="/Dan-Obu-cv.pdf" download>
-                  <Button className="bg-black hover:bg-gray-800 text-gray-50 flex items-center gap-2">
-                    <Download size={16} /> Download CV
-                  </Button>
-                </a>
+                <CVDownloaderForm />
+                {/* <a href="/Dan-Obu-cv.pdf" download>
+                </a> */}
               </div>
               <div className="">
                 <Link href={'/contact'}>

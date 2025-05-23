@@ -27,6 +27,12 @@ export const categoryDefaultValues = {
   name: '',
 };
 
+export const cvDownloaderDefaultValues = {
+  company: '',
+  email: '',
+  numberOfDownload: 0,
+};
+
 export const contactMessageDefaultValues = {
   senderName: '',
   senderEmail: '',
