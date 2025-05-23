@@ -4,6 +4,7 @@ import {
   upsertProjectSchema,
   upsertSkillSchema,
   signUpFormSchema,
+  upsertDataViewerSchema,
 } from '@/lib/validator';
 // import { StaticImageData } from 'next/image';
 import { z } from 'zod';
@@ -11,6 +12,7 @@ import { z } from 'zod';
 export type Category = z.infer<typeof upsertCategorySchema>;
 
 export type ContactMessage = z.infer<typeof upsertContactMessageSchema>;
+export type ViewerData = z.infer<typeof upsertDataViewerSchema>;
 
 export type Skill = z.infer<typeof upsertSkillSchema>;
 export type Project = z.infer<typeof upsertProjectSchema>;

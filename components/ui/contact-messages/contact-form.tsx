@@ -54,10 +54,9 @@ const ContactForm = ({
       : contactMessageDefaultValues,
   });
 
-  // Reset form values when category prop changes
+  // Reset form values when contact prop changes
   useEffect(() => {
     if (contactMessage && type === 'Update') {
-      console.log('Form values:', form.getValues());
       form.reset({
         senderName: contactMessage.senderName,
         senderEmail: contactMessage.senderEmail,

@@ -61,3 +61,9 @@ export interface ProjectPageProps {
     id: string;
   };
 }
+
+export interface Attachment {
+  filename: string;
+  content: string;
+  type: string;
+}

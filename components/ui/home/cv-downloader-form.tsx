@@ -26,21 +26,52 @@ import { cvDownloaderDefaultValues } from '@/lib/constants';
 import { upsertDataViewerSchema } from '@/lib/validator';
 import { z } from 'zod';
 import { Download } from 'lucide-react';
-
-type CVDownloaderType = z.infer<typeof upsertDataViewerSchema>;
+import { upsertDataViewer } from '@/lib/actions/data-viewer.actions';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { sendCVToEmail } from '@/lib/actions/email-cv';
 
 const CVDownloaderForm = () => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
-  const form = useForm<CVDownloaderType>({
+  const form = useForm<z.infer<typeof upsertDataViewerSchema>>({
     resolver: zodResolver(upsertDataViewerSchema),
     defaultValues: cvDownloaderDefaultValues,
   });
 
   // Form submit handler
-  const onSubmit: SubmitHandler<CVDownloaderType> = async () => {
-    setOpen(false);
+  const onSubmit: SubmitHandler<
+    z.infer<typeof upsertDataViewerSchema>
+  > = async (values) => {
+    const res = await upsertDataViewer({
+      email: values.email,
+      company: values.company,
+    });
+    console.log('Submitting form with values:', values);
+
+    if (res.success) {
+      const emailResult = await sendCVToEmail(values.email);
+      if (emailResult.success) {
+        toast.success('CV sent to your email!');
+
+        // Trigger download manually
+        const link = document.createElement('a');
+        link.href = '/Dan-Obu-cv.pdf';
+        link.download = 'Dan-Obu-cv.pdf';
+        link.click();
+
+        form.reset();
+        router.push('/');
+      } else {
+        toast.error(emailResult.message || 'Email failed to send');
+      }
+    } else {
+      toast.error(res.message);
+    }
   };
+
+  console.log(form.formState.errors);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -53,7 +84,10 @@ const CVDownloaderForm = () => {
       </Button>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
-          <form method="post" onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid gap-4 py-4"
+          >
             <DialogHeader>
               <DialogTitle className="text-center">
                 Please Fill In The Form
@@ -62,55 +96,38 @@ const CVDownloaderForm = () => {
                 Fill in the form to download my CV
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="company"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter your company's name"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="numberOfDownload"
-                render={({ field }) => <input type="hidden" {...field} />}
-              />
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => <input type="hidden" {...field} />}
-              />
-            </div>
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="company"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Company</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your company's name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <DialogFooter className="mt-5">
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full"
-                disabled={form.formState.isSubmitting}
-              >
-                {form.formState.isSubmitting ? 'Submitting...' : 'Submit'}
+              <Button type="submit" className="w-full">
+                Submit
               </Button>
             </DialogFooter>
           </form>

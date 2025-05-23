@@ -23,8 +23,6 @@ const TopModalTexts = () => {
             <div className="flex gap-2">
               <div className="">
                 <CVDownloaderForm />
-                {/* <a href="/Dan-Obu-cv.pdf" download>
-                </a> */}
               </div>
               <div className="">
                 <Link href={'/contact'}>

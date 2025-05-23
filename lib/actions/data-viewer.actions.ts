@@ -17,21 +17,33 @@ export const upsertDataViewer = async (
     };
   }
 
-  const { id, email, company, viewerStatus, numberOfDownload } = parsed.data;
+  const { id, email, company } = parsed.data;
 
   try {
+    // Upsert the Viewer
+    const existingViewer = await prisma.dataViewer.findUnique({
+      where: { email },
+    });
+
     let viewer;
 
-    // Upsert the Viewer
-    if (id) {
-      viewer = await prisma.dataViewer.upsert({
-        where: { id },
-        update: { email, company, viewerStatus, numberOfDownload },
-        create: { email, company, viewerStatus, numberOfDownload },
+    if (existingViewer) {
+      viewer = await prisma.dataViewer.update({
+        where: { email },
+        data: {
+          company,
+          numberOfDownload: {
+            increment: 1,
+          },
+        },
       });
     } else {
       viewer = await prisma.dataViewer.create({
-        data: { email, company, viewerStatus, numberOfDownload },
+        data: {
+          email,
+          company,
+          numberOfDownload: 1,
+        },
       });
     }
 

@@ -77,12 +77,11 @@ model VerificationToken {
 }
 
 model DataViewer {
-  id               String   @id @db.Uuid
+  id               String   @id @default(uuid())
   email            String   @unique(map: "DataViewer_email_idx")
   company          String
-  numberOfDownload Int
+  numberOfDownload Int      @default(0)
   createdAt        DateTime @default(now()) @db.Timestamp(6)
-  viewerStatus     String
 }
 
 enum Role {
