@@ -100,13 +100,15 @@ export const updateUserFormSchema = z.object({
 export const upsertDataViewerSchema = z.object({
   id: z
     .string()
-    .min(1, 'If provided, category id is should be at least 1 character')
+    .min(1, 'If provided, dataview id is should be at least 1 character')
     .optional(),
   email: z
     .string()
     .min(3, 'Email must be at least 3 characters')
     .email('Invalid email address'),
   company: z.string().min(2, 'Company must be at least 2 characters'),
-  status: z.string().min(2, 'Status must be at least 2 characters'),
+  viewerStatus: z
+    .string()
+    .min(2, 'Viewer status must be at least 2 characters'),
   numberOfDownload: z.number().int().min(1, 'number of download is required'),
 });

@@ -4,7 +4,7 @@ import { prisma } from '@/db/prisma';
 import { upsertDataViewerSchema } from '../validator';
 import { z } from 'zod';
 
-export const upsertCVDownloader = async (
+export const upsertDataViewer = async (
   data: z.infer<typeof upsertDataViewerSchema>
 ) => {
   const parsed = upsertDataViewerSchema.safeParse(data);
@@ -12,41 +12,41 @@ export const upsertCVDownloader = async (
   if (!parsed.success) {
     return {
       success: false,
-      message: 'Invalid CV Downloader data',
+      message: 'Invalid viewer data',
       errors: parsed.error.flatten().fieldErrors,
     };
   }
 
-  const { id, company, email, numberOfDownload } = parsed.data;
+  const { id, email, company, viewerStatus, numberOfDownload } = parsed.data;
 
   try {
-    let downloader;
+    let viewer;
 
-    // Upsert the CV Downloader
+    // Upsert the Viewer
     if (id) {
-      downloader = await prisma.cVDownloader.upsert({
+      viewer = await prisma.dataViewer.upsert({
         where: { id },
-        update: { company, email, numberOfDownload },
-        create: { company, email, numberOfDownload },
+        update: { email, company, viewerStatus, numberOfDownload },
+        create: { email, company, viewerStatus, numberOfDownload },
       });
     } else {
-      downloader = await prisma.cVDownloader.create({
-        data: { company, email, numberOfDownload },
+      viewer = await prisma.dataViewer.create({
+        data: { email, company, viewerStatus, numberOfDownload },
       });
     }
 
     return {
       success: true,
       message: id
-        ? 'CV downloader updated successfully'
-        : 'CV download successful',
-      data: downloader,
+        ? 'Viewer updated successfully'
+        : 'data downloaded successfully',
+      data: viewer,
     };
   } catch (error) {
-    console.error('Upsert CV download error:', error);
+    console.error('Upsert data viewer error:', error);
     return {
       success: false,
-      message: 'Failed to upsert CV download',
+      message: 'Failed to upsert data viewer',
     };
   }
 };
