@@ -21,15 +21,16 @@ export const upsertDataViewer = async (
 
   try {
     // Upsert the Viewer
-    const existingViewer = await prisma.dataViewer.findUnique({
-      where: { email },
+    const existingViewer = await prisma.dataViewer.findFirst({
+      where: { email, company },
     });
 
     let viewer;
 
     if (existingViewer) {
+      const { id } = existingViewer;
       viewer = await prisma.dataViewer.update({
-        where: { email },
+        where: { id },
         data: {
           company,
           numberOfDownload: {
