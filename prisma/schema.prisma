@@ -80,7 +80,7 @@ model DataViewer {
   id               String   @id @default(uuid())
   email            String   @unique(map: "DataViewer_email_idx")
   company          String
-  numberOfDownload Int      @default(0)
+  numberOfDownload Int?     @default(0)
   createdAt        DateTime @default(now()) @db.Timestamp(6)
 }
 

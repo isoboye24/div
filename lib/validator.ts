@@ -107,9 +107,4 @@ export const upsertDataViewerSchema = z.object({
     .min(3, 'Email must be at least 3 characters')
     .email('Invalid email address'),
   company: z.string().min(2, 'Company must be at least 2 characters'),
-  numberOfDownload: z
-    .number()
-    .int()
-    .min(1, 'number of download is required')
-    .optional(),
 });

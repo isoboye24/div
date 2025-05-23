@@ -21,7 +21,7 @@ export const sendCVToEmail = async (email: string) => {
 
   try {
     await resend.emails.send({
-      from: 'isoboyedanobu@gmail.com',
+      from: 'Dan-Obu CV Bot <onboarding@resend.dev>',
       to: email,
       subject: 'Your requested CV',
       html: '<p>Thanks for your interest. Please find the CV attached.</p>',
@@ -30,7 +30,7 @@ export const sendCVToEmail = async (email: string) => {
 
     return { success: true };
   } catch (err) {
-    console.error('Failed to send CV:', err);
+    console.error('Failed to send CV:', JSON.stringify(err, null, 2));
     return { success: false, message: 'Failed to send email.' };
   }
 };

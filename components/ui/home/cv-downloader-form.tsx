@@ -44,31 +44,27 @@ const CVDownloaderForm = () => {
   const onSubmit: SubmitHandler<
     z.infer<typeof upsertDataViewerSchema>
   > = async (values) => {
+    console.log('Submitting form with values:', values);
+
+    const emailResult = await sendCVToEmail(values.email);
+    if (!emailResult.success) {
+      toast.error(emailResult.message || 'Failed to send CV to email');
+      return;
+    }
+
     const res = await upsertDataViewer({
       email: values.email,
       company: values.company,
     });
-    console.log('Submitting form with values:', values);
 
-    if (res.success) {
-      const emailResult = await sendCVToEmail(values.email);
-      if (emailResult.success) {
-        toast.success('CV sent to your email!');
-
-        // Trigger download manually
-        const link = document.createElement('a');
-        link.href = '/Dan-Obu-cv.pdf';
-        link.download = 'Dan-Obu-cv.pdf';
-        link.click();
-
-        form.reset();
-        router.push('/');
-      } else {
-        toast.error(emailResult.message || 'Email failed to send');
-      }
-    } else {
-      toast.error(res.message);
+    if (!res.success) {
+      toast.error(res.message || 'Failed to save viewer data');
+      return;
     }
+
+    toast.success('CV sent to your email!');
+    form.reset();
+    router.push('/');
   };
 
   console.log(form.formState.errors);
@@ -126,7 +122,11 @@ const CVDownloaderForm = () => {
             />
 
             <DialogFooter className="mt-5">
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full"
+                onClick={() => setOpen(false)}
+              >
                 Submit
               </Button>
             </DialogFooter>
