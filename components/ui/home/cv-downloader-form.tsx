@@ -23,17 +23,17 @@ import {
 import { Input } from '@/components/ui/input';
 
 import { cvDownloaderDefaultValues } from '@/lib/constants';
-import { upsertCVDownloaderSchema } from '@/lib/validator';
+import { upsertDataViewerSchema } from '@/lib/validator';
 import { z } from 'zod';
 import { Download } from 'lucide-react';
 
-type CVDownloaderType = z.infer<typeof upsertCVDownloaderSchema>;
+type CVDownloaderType = z.infer<typeof upsertDataViewerSchema>;
 
 const CVDownloaderForm = () => {
   const [open, setOpen] = useState(false);
 
   const form = useForm<CVDownloaderType>({
-    resolver: zodResolver(upsertCVDownloaderSchema),
+    resolver: zodResolver(upsertDataViewerSchema),
     defaultValues: cvDownloaderDefaultValues,
   });
 
@@ -95,6 +95,11 @@ const CVDownloaderForm = () => {
               <FormField
                 control={form.control}
                 name="numberOfDownload"
+                render={({ field }) => <input type="hidden" {...field} />}
+              />
+              <FormField
+                control={form.control}
+                name="status"
                 render={({ field }) => <input type="hidden" {...field} />}
               />
             </div>

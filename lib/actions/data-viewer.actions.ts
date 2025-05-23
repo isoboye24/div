@@ -1,13 +1,13 @@
 'use server';
 
 import { prisma } from '@/db/prisma';
-import { upsertCVDownloaderSchema } from '../validator';
+import { upsertDataViewerSchema } from '../validator';
 import { z } from 'zod';
 
 export const upsertCVDownloader = async (
-  data: z.infer<typeof upsertCVDownloaderSchema>
+  data: z.infer<typeof upsertDataViewerSchema>
 ) => {
-  const parsed = upsertCVDownloaderSchema.safeParse(data);
+  const parsed = upsertDataViewerSchema.safeParse(data);
 
   if (!parsed.success) {
     return {

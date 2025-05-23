@@ -97,7 +97,7 @@ export const updateUserFormSchema = z.object({
   role: z.string(),
 });
 
-export const upsertCVDownloaderSchema = z.object({
+export const upsertDataViewerSchema = z.object({
   id: z
     .string()
     .min(1, 'If provided, category id is should be at least 1 character')
@@ -107,5 +107,6 @@ export const upsertCVDownloaderSchema = z.object({
     .min(3, 'Email must be at least 3 characters')
     .email('Invalid email address'),
   company: z.string().min(2, 'Company must be at least 2 characters'),
+  status: z.string().min(2, 'Status must be at least 2 characters'),
   numberOfDownload: z.number().int().min(1, 'number of download is required'),
 });

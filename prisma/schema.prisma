@@ -76,10 +76,11 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-model CVDownloader {
+model DataViewer {
   id               String   @id @default(uuid()) @db.Uuid
   email            String   @unique(map: "CVDownloader_email_idx")
   company          String?
+  status           String?
   numberOfDownload Int
   createdAt        DateTime @default(now()) @db.Timestamp(6)
 }
