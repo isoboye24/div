@@ -17,6 +17,7 @@ import {
   ReceiptText,
   UserPen,
   Newspaper,
+  DownloadIcon,
 } from 'lucide-react';
 
 const links = [
@@ -30,6 +31,11 @@ const links = [
   },
   { href: '/admin/skills', label: 'Skills', icon: <Brain size={20} /> },
   { href: '/admin/messages', label: 'Messages', icon: <MailCheck size={20} /> },
+  {
+    href: '/admin/cv-downloader',
+    label: 'CV Downloader ',
+    icon: <DownloadIcon size={20} />,
+  },
 ];
 
 const frontendLinks = [
