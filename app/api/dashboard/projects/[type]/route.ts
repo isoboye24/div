@@ -3,12 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { type: string } }
-) {
-  const awaitedParam = await params;
-  const categoryType = decodeURIComponent(awaitedParam.type);
+export async function GET(req: NextRequest) {
+  const type = req.nextUrl.pathname.split('/').pop(); // or use searchParams if it's a query param
+  const categoryType = decodeURIComponent(type ?? '');
 
   try {
     const total = await getTotalProjects({ activeType: categoryType });
