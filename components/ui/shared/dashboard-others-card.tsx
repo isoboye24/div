@@ -1,12 +1,13 @@
 'use client';
 
-import { Boxes, Download } from 'lucide-react';
+import { Boxes, Download, MailIcon } from 'lucide-react';
 import DownloadCardItem from './download-card-item';
 import { useEffect, useState } from 'react';
 
 const DashboardOthersCard = () => {
   const [categoryCount, setCategoryCount] = useState<number>(0);
   const [cvDownloadCount, setCvDownloadCount] = useState<number>(0);
+  const [messagesCount, setMessagesCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -19,6 +20,10 @@ const DashboardOthersCard = () => {
       );
       const cvDownloaderData = await cvDownloaderRes.json();
       setCvDownloadCount(cvDownloaderData.total);
+
+      const contactMessagesRes = await fetch('/api/dashboard/others/messages');
+      const messagesData = await contactMessagesRes.json();
+      setMessagesCount(messagesData.total);
     };
 
     fetchCounts();
@@ -42,6 +47,13 @@ const DashboardOthersCard = () => {
             icon={Download}
             itemTitle="CV Downloads"
             amount={cvDownloadCount}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <DownloadCardItem
+            icon={MailIcon}
+            itemTitle="Messages"
+            amount={messagesCount}
           />
         </div>
       </div>

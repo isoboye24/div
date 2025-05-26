@@ -8,8 +8,12 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '../button';
+import { getSomeContactMessages } from '@/lib/actions/message.actions';
+import { ContactMessage } from '@/types';
+import Link from 'next/link';
 
 const DashboardMessagesCard = async () => {
+  const topContactMessages = await getSomeContactMessages();
   return (
     <div className="bg-white shadow-md rounded-xl p-6 w-full mx-auto">
       <h2 className="text-center text-lg font-semibold text-gray-700 mb-4">
@@ -28,17 +32,19 @@ const DashboardMessagesCard = async () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>Isoboye Vincent</TableCell>
-              <TableCell>isoboyedanobu@gmail.com</TableCell>
-              <TableCell>Web app inquiry</TableCell>
-              <TableCell>I am looking for a web developer.</TableCell>
-              <TableCell className="flex gap-5">
-                {/* <Link href={`/admin/projects/${project.id}`}> */}
-                <Button>Edit</Button>
-                {/* </Link> */}
-              </TableCell>
-            </TableRow>
+            {topContactMessages?.data?.map((contactMessage: ContactMessage) => (
+              <TableRow key={contactMessage.id}>
+                <TableCell>{contactMessage.senderName}</TableCell>
+                <TableCell>{contactMessage.senderEmail}</TableCell>
+                <TableCell>{contactMessage.subject}</TableCell>
+                <TableCell>{contactMessage.messageText}</TableCell>
+                <TableCell className="flex gap-5">
+                  <Link href={`/admin/messages/${contactMessage.id}`}>
+                    <Button>View</Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

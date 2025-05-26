@@ -1,8 +1,7 @@
-// import DashboardMessagesCard from '@/components/ui/shared/dashboard-messages-card';
+import DashboardMessagesCard from '@/components/ui/shared/dashboard-messages-card';
 import DashboardOthersCard from '@/components/ui/shared/dashboard-others-card';
 import DashboardProjectsCard from '@/components/ui/shared/dashboard-project-card';
 import DashboardSkillCard from '@/components/ui/shared/dashboard-skill-card';
-// import { User } from '@/types';
 import React from 'react';
 
 const DashboardContent = () => {
@@ -18,12 +17,15 @@ const DashboardContent = () => {
         <div className="">
           <DashboardOthersCard />
         </div>
+        <div className="block lg:hidden">
+          <DashboardMessagesCard />
+        </div>
       </div>
-      {/* <div className="flex items-center justify-center">
+      <div className="hidden lg:block">
         <div className="w-[70%]">
           <DashboardMessagesCard />
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

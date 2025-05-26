@@ -74,6 +74,29 @@ export const getAllContactMessages = async () => {
   }
 };
 
+export const getSomeContactMessages = async () => {
+  const takeCount = 6;
+  try {
+    const contactMessageData = await prisma.contactMessage.findMany({
+      orderBy: {
+        date: 'desc',
+      },
+      take: takeCount,
+    });
+
+    return {
+      success: true,
+      data: contactMessageData,
+    };
+  } catch (error) {
+    console.error('Error fetching contact messages:', error);
+    return {
+      success: false,
+      message: 'Failed to fetch contact messages',
+    };
+  }
+};
+
 export const getContactMessageById = async (id: string) => {
   try {
     const contactMessageData = await prisma.contactMessage.findFirst({

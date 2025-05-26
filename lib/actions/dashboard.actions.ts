@@ -43,6 +43,11 @@ export const getTotalCategories = async () => {
   return totalFilteredCategories;
 };
 
+export const getTotalMessages = async () => {
+  const totalFilteredContactMessages = await prisma.contactMessage.count();
+  return totalFilteredContactMessages;
+};
+
 export const getTotalCVDownloader = async () => {
   const result = await prisma.dataViewer.aggregate({
     _sum: {
