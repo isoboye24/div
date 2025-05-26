@@ -21,7 +21,7 @@ const About = async () => {
       </div>
       <div className="mb-20">
         <AllSkills
-          tab={['All', 'Frontend', 'Backend', 'UX/UI Design']}
+          tab={['All', 'Frontend', 'Backend', 'Database', 'UX-UI Design']}
           types="All"
         />
       </div>

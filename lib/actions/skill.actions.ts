@@ -131,7 +131,7 @@ export const getAllFilterSkills = async ({
 }: {
   activeType: string;
 }) => {
-  const categoryFilter = ['Frontend', 'Backend', 'UX/UI Design'];
+  const categoryFilter = ['Frontend', 'Backend', 'Database', 'UX-UI Design'];
 
   const whereCondition = {
     publish: true,

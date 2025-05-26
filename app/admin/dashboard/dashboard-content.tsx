@@ -1,5 +1,3 @@
-'use client';
-
 // import DashboardMessagesCard from '@/components/ui/shared/dashboard-messages-card';
 import DashboardOthersCard from '@/components/ui/shared/dashboard-others-card';
 import DashboardProjectsCard from '@/components/ui/shared/dashboard-project-card';
