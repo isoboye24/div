@@ -1,6 +1,7 @@
 // app/admin/main-admin-nav.tsx
 import UserButton from '@/components/ui/admin/user-button';
-import { Menu, Bell, Sun, Moon } from 'lucide-react';
+import NotificationBell from '@/components/ui/shared/notification-bell';
+import { Menu, Sun, Moon } from 'lucide-react';
 
 type MainAdminNavProps = {
   toggleSidebar: () => void;
@@ -38,7 +39,7 @@ export default function MainAdminNav({
           <Sun className="w-5 h-5 text-gray-800 dark:hidden" />
           <Moon className="w-5 h-5 text-gray-200 hidden dark:block" />
         </button>
-        <Bell className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+        <NotificationBell />
         <UserButton />
       </div>
     </header>

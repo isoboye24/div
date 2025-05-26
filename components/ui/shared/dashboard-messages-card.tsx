@@ -37,7 +37,11 @@ const DashboardMessagesCard = async () => {
                 <TableCell>{contactMessage.senderName}</TableCell>
                 <TableCell>{contactMessage.senderEmail}</TableCell>
                 <TableCell>{contactMessage.subject}</TableCell>
-                <TableCell>{contactMessage.messageText}</TableCell>
+                <TableCell>
+                  {contactMessage.messageText.length > 20
+                    ? contactMessage.messageText.slice(0, 20) + '…'
+                    : contactMessage.messageText}
+                </TableCell>
                 <TableCell className="flex gap-5">
                   <Link href={`/admin/messages/${contactMessage.id}`}>
                     <Button>View</Button>

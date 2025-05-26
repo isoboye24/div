@@ -79,6 +79,7 @@ const ContactForm = ({
       toast.success(res.message);
       if (type === 'Send') {
         form.reset();
+        localStorage.setItem('hasNewMessage', 'true');
         router.push('/contact');
       } else {
         router.push('/admin/messages');
