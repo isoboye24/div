@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
-  const type = req.nextUrl.pathname.split('/').pop(); // or use searchParams if it's a query param
+  const type = req.nextUrl.pathname.split('/').pop();
   const categoryType = decodeURIComponent(type ?? '');
 
   try {

@@ -15,15 +15,15 @@ import Link from 'next/link';
 const DashboardMessagesCard = async () => {
   const topContactMessages = await getSomeContactMessages();
   return (
-    <div className="bg-white shadow-md rounded-xl p-6 w-full mx-auto">
-      <h2 className="text-center text-lg font-semibold text-gray-700 mb-4">
+    <div className="bg-white dark:bg-gray-700 shadow-md rounded-xl p-6 w-full mx-auto">
+      <h2 className="text-center text-lg font-semibold text-gray-700 dark:text-gray-200 mb-4">
         Recent Messages
       </h2>
 
       <div className="mt-7 overflow-x-auto">
         <Table>
           <TableHeader>
-            <TableRow className="text-gray-700">
+            <TableRow className="text-gray-700 dark:text-gray-200">
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Subject</TableHead>
@@ -31,7 +31,7 @@ const DashboardMessagesCard = async () => {
               <TableHead className="w-[100px]">ACTIONS</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="text-gray-700 dark:text-gray-200">
             {topContactMessages?.data?.map((contactMessage: ContactMessage) => (
               <TableRow key={contactMessage.id}>
                 <TableCell>{contactMessage.senderName}</TableCell>

@@ -30,11 +30,11 @@ const DashboardOthersCard = () => {
   }, []);
 
   return (
-    <div className="bg-white shadow-md rounded-xl p-6 w-full max-w-md mx-auto">
-      <h2 className="text-center text-lg font-semibold text-gray-700 mb-4">
+    <div className="bg-white dark:bg-gray-700 shadow-md rounded-xl p-6 w-full max-w-md mx-auto">
+      <h2 className="text-center text-lg font-semibold text-gray-700 dark:text-gray-200 mb-4">
         Others
       </h2>
-      <div className="flex justify-around text-center text-sm text-gray-700">
+      <div className="flex justify-around text-center text-sm text-gray-700 dark:text-gray-200">
         <div className="flex flex-col items-center">
           <DownloadCardItem
             icon={Boxes}
