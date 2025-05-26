@@ -1,4 +1,4 @@
-import { Globe2Icon, Code2Icon, DatabaseIcon } from 'lucide-react';
+import { PanelsTopLeft, MonitorStop, Smartphone } from 'lucide-react';
 import DownloadCardItem from './download-card-item';
 
 const DashboardProjectsCard = () => {
@@ -9,15 +9,23 @@ const DashboardProjectsCard = () => {
       </h2>
       <div className="flex justify-around text-center text-sm text-gray-700">
         <div className="flex flex-col items-center">
-          <DownloadCardItem icon={Globe2Icon} itemTitle="Frontend" amount={5} />
-        </div>
-        <div className="flex flex-col items-center">
-          <DownloadCardItem icon={Code2Icon} itemTitle="Backend" amount={8} />
+          <DownloadCardItem
+            icon={PanelsTopLeft}
+            itemTitle="Web Apps"
+            amount={5}
+          />
         </div>
         <div className="flex flex-col items-center">
           <DownloadCardItem
-            icon={DatabaseIcon}
-            itemTitle="Database"
+            icon={MonitorStop}
+            itemTitle="Desktop Apps"
+            amount={8}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <DownloadCardItem
+            icon={Smartphone}
+            itemTitle="Android Apps"
             amount={3}
           />
         </div>

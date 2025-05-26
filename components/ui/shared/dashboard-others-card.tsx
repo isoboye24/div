@@ -1,4 +1,4 @@
-import { Globe2Icon, Code2Icon, DatabaseIcon } from 'lucide-react';
+import { Boxes, Download } from 'lucide-react';
 import DownloadCardItem from './download-card-item';
 
 const DashboardOthersCard = () => {
@@ -9,16 +9,13 @@ const DashboardOthersCard = () => {
       </h2>
       <div className="flex justify-around text-center text-sm text-gray-700">
         <div className="flex flex-col items-center">
-          <DownloadCardItem icon={Globe2Icon} itemTitle="Frontend" amount={5} />
-        </div>
-        <div className="flex flex-col items-center">
-          <DownloadCardItem icon={Code2Icon} itemTitle="Backend" amount={8} />
+          <DownloadCardItem icon={Boxes} itemTitle="Categories" amount={5} />
         </div>
         <div className="flex flex-col items-center">
           <DownloadCardItem
-            icon={DatabaseIcon}
-            itemTitle="Database"
-            amount={3}
+            icon={Download}
+            itemTitle="CV Downloads"
+            amount={8}
           />
         </div>
       </div>
