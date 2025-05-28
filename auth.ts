@@ -12,7 +12,7 @@ export const config = {
   },
   session: {
     strategy: 'jwt' as const,
-    maxAge: 30,
+    maxAge: 30 * 24 * 60 * 60,
   },
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -54,9 +54,13 @@ export const config = {
     ...authConfig.callbacks,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async session({ session, user, trigger, token }: any) {
-      session.user.id = token.sub;
-      session.user.role = token.role;
-      session.user.name = token.name;
+      session.user = {
+        ...session.user,
+        id: token.id ?? null, // <-- use token.id here, NOT token.sub
+        role: token.role ?? 'user',
+        name: token.name ?? '',
+        image: token.image ?? null,
+      };
 
       if (trigger === 'update') {
         session.user.name = user.name;
@@ -80,7 +84,6 @@ export const config = {
         }
       }
 
-      // Handle session updates
       if (session?.user.name && trigger === 'update') {
         token.name = session.user.name;
         token.id = session.user.id;

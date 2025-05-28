@@ -1,14 +1,14 @@
 'use client';
 
+import { useActionState, useEffect } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { signInWithCredentials } from '@/lib/actions/user.actions';
 import { signInDefaultValues } from '@/lib/constants';
 import Link from 'next/link';
-import { useActionState } from 'react';
-import { useFormStatus } from 'react-dom';
-import { signInWithCredentials } from '@/lib/actions/user.actions';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const CredentialsSignInForm = () => {
   const [data, action] = useActionState(signInWithCredentials, {
@@ -16,8 +16,16 @@ const CredentialsSignInForm = () => {
     success: false,
   });
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+  // Redirect after successful sign in
+  useEffect(() => {
+    if (data.success) {
+      router.push(callbackUrl);
+    }
+  }, [data.success, router, callbackUrl]);
 
   const SignInButton = () => {
     const { pending } = useFormStatus();

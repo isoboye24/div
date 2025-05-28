@@ -43,3 +43,14 @@ export type ImageCarouselProps = {
   images: string[];
   interval?: number;
 };
+
+export type UserProps = {
+  session: {
+    user: {
+      image?: string;
+      name?: string;
+      email?: string;
+      role?: string;
+    };
+  } | null;
+};
