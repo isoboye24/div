@@ -3,49 +3,54 @@ import { Bell } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const NotificationBell = () => {
-  const [hasNotification, setHasNotification] = useState(false);
+  const [newMessageCount, setNewMessageCount] = useState(0);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showContent, setShowContent] = useState(false);
 
-  // Initial check for notification
+  // Check message count on mount
   useEffect(() => {
-    const hasNewMessage = localStorage.getItem('hasNewMessage');
-    if (hasNewMessage === 'true') {
-      setHasNotification(true);
+    const storedCount = parseInt(
+      localStorage.getItem('newMessageCount') || '0',
+      10
+    );
+    if (storedCount > 0) {
+      setNewMessageCount(storedCount);
+      setShowContent(true);
     }
   }, []);
 
-  // Hide notification when dropdown is closed
+  const handleMouseEnter = () => {
+    setShowDropdown(true);
+    setNewMessageCount(0);
+    localStorage.setItem('newMessageCount', '0');
+  };
+
   const handleMouseLeave = () => {
     setShowDropdown(false);
-    setHasNotification(false);
-    localStorage.setItem('hasNewMessage', 'false');
+    setShowContent(false);
   };
 
   return (
     <div
       className="relative group"
-      onMouseEnter={() => {
-        setShowDropdown(true);
-        setHasNotification(false);
-        localStorage.setItem('hasNewMessage', 'false');
-      }}
-      onMouseLeave={() => {
-        setShowDropdown(false);
-        handleMouseLeave();
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <button className="relative p-2 text-gray-300 hover:text-gray-100">
         <Bell className="w-6 h-6" />
-        {hasNotification && (
-          <span className="absolute top-1.5 right-1.5 inline-block w-2.5 h-2.5 bg-red-500 rounded-full" />
+        {newMessageCount > 0 && (
+          <span className="absolute top-0.5 right-0.5 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+            {newMessageCount}
+          </span>
         )}
       </button>
 
-      {showDropdown && (
+      {showDropdown && showContent && (
         <div className="absolute right-0 mt-2 w-64 bg-white text-gray-800 text-sm rounded-lg shadow-lg p-4 z-50">
           <p className="font-semibold">New Contact Message</p>
           <p className="text-gray-600 mt-1">
-            You’ve received a new message via the contact form.
+            You’ve received {newMessageCount} new message
+            {newMessageCount > 1 ? 's' : ''} via the contact form.
           </p>
         </div>
       )}

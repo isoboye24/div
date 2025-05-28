@@ -79,7 +79,12 @@ const ContactForm = ({
       toast.success(res.message);
       if (type === 'Send') {
         form.reset();
-        localStorage.setItem('hasNewMessage', 'true');
+        const currentCount = parseInt(
+          localStorage.getItem('newMessageCount') || '0',
+          10
+        );
+        localStorage.setItem('newMessageCount', (currentCount + 1).toString());
+
         router.push('/contact');
       } else {
         router.push('/admin/messages');
