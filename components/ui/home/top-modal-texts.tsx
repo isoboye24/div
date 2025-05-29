@@ -11,10 +11,10 @@ const TopModalTexts = () => {
       <div className="grid grid-rows-[4fr, 1fr] items-center md:bg-teal-600 justify-center z-12 mt-7 sm:mt-0 mb-10 sm:mb-0 rounded-tr-4xl rounded-br-4xl">
         <div className="flex items-center justify-center">
           <div className="grid text-center ">
-            <div className="font-light text-center text-amber-200 sm:text-xs md:text-sm">
+            <div className="font-light text-center text-black md:text-amber-300 sm:text-xs md:text-sm">
               Hello, I am
             </div>
-            <div className="font-bold custom-text-white sm:text-lg md:text-2xl">
+            <div className="font-bold text-amber-800 md:text-white sm:text-lg md:text-2xl">
               Isoboye Vincent Dan-Obu
             </div>
             <div className="font-semibold custom-text-black text-base lg:text-2xl mb-5 sm:mb-7">
