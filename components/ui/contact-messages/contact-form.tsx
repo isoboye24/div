@@ -30,6 +30,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../card';
+import { triggerNotification } from '@/utility/notify';
 
 const ContactForm = ({
   type,
@@ -79,12 +80,7 @@ const ContactForm = ({
       toast.success(res.message);
       if (type === 'Send') {
         form.reset();
-        const currentCount = parseInt(
-          localStorage.getItem('newMessageCount') || '0',
-          10
-        );
-        localStorage.setItem('newMessageCount', (currentCount + 1).toString());
-
+        triggerNotification('contact');
         router.push('/contact');
       } else {
         router.push('/admin/messages');

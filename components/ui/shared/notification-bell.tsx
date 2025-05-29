@@ -6,8 +6,10 @@ const NotificationBell = () => {
   const [newMessageCount, setNewMessageCount] = useState(0);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const [notificationType, setNotificationType] = useState<
+    'contact' | 'download'
+  >('contact');
 
-  // Check message count on mount
   useEffect(() => {
     const storedCount = parseInt(
       localStorage.getItem('newMessageCount') || '0',
@@ -17,12 +19,26 @@ const NotificationBell = () => {
       setNewMessageCount(storedCount);
       setShowContent(true);
     }
+
+    const handler = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const { type, count = 1 } = customEvent.detail;
+
+      console.log('[NotificationBell] Event received:', type, count);
+
+      setNewMessageCount(count);
+      setNotificationType(type);
+      setShowContent(true);
+    };
+
+    window.addEventListener('notify', handler);
+    return () => window.removeEventListener('notify', handler);
   }, []);
 
   const handleMouseEnter = () => {
     setShowDropdown(true);
-    setNewMessageCount(0);
     localStorage.setItem('newMessageCount', '0');
+    setNewMessageCount(0);
   };
 
   const handleMouseLeave = () => {
@@ -47,10 +63,15 @@ const NotificationBell = () => {
 
       {showDropdown && showContent && (
         <div className="absolute right-0 mt-2 w-64 bg-white text-gray-800 text-sm rounded-lg shadow-lg p-4 z-50">
-          <p className="font-semibold">New Contact Message</p>
+          <p className="font-semibold">
+            {notificationType === 'contact'
+              ? 'New Contact Message'
+              : 'File Download Complete'}
+          </p>
           <p className="text-gray-600 mt-1">
-            You’ve received {newMessageCount} new message
-            {newMessageCount > 1 ? 's' : ''} via the contact form.
+            {notificationType === 'contact'
+              ? `You’ve received ${newMessageCount} new message${newMessageCount > 1 ? 's' : ''} via the contact form.`
+              : `You’ve downloaded ${newMessageCount} file${newMessageCount > 1 ? 's' : ''}.`}
           </p>
         </div>
       )}
