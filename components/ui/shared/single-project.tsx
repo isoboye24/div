@@ -23,7 +23,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
         <div className="flex flex-col justify-between">
           <div>
             <h1 className="text-xl md:text-3xl">{project?.projectName}</h1>
-            <p className="mt-10 mb-30 text-base text-gray-400">
+            <p className="mt-10 mb-5 text-base text-gray-400 text-justify">
               {project?.description}
             </p>
           </div>
@@ -36,7 +36,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
             <div>
               {project?.siteLink && (
                 <a target="_blank" href={`${project.siteLink}`}>
-                  <Button>Visit Site</Button>
+                  <Button className="px-5 md:px-8">Visit Site</Button>
                 </a>
               )}
             </div>
@@ -49,7 +49,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
             >
               {project?.codeLink && (
                 <a target="_blank" href={`${project.codeLink}`}>
-                  <Button>Code</Button>
+                  <Button className="px-5 md:px-8">Code</Button>
                 </a>
               )}
             </div>
@@ -57,7 +57,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
         </div>
       </div>
 
-      <div className="mb-30">
+      <div className="mb-15 md:mb-30">
         {similarProjects.length === 0 ? (
           ''
         ) : (
@@ -74,13 +74,17 @@ const SingleProject = async ({ project }: { project: Project }) => {
           ))}
         </div>
         <div className="flex md:hidden mt-10 gap-5 justify-center items-center">
-          <CustomCarousel>
-            {similarProjects.map((similarProj) => (
-              <div key={similarProj.id} className="w-[95%]">
-                <ProjectCard projectData={similarProj} size={150} />
-              </div>
-            ))}
-          </CustomCarousel>
+          {similarProjects.length > 0 ? (
+            <CustomCarousel>
+              {similarProjects.map((similarProj) => (
+                <div key={similarProj.id} className="w-[95%]">
+                  <ProjectCard projectData={similarProj} size={150} />
+                </div>
+              ))}
+            </CustomCarousel>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </div>
