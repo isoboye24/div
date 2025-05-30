@@ -1,13 +1,11 @@
-export const triggerNotification = (type: 'contact' | 'download') => {
-  const currentCount = parseInt(
-    localStorage.getItem('newMessageCount') || '0',
-    10
-  );
+export const notify = (type: 'contact' | 'download') => {
+  const key = type === 'contact' ? 'contactCount' : 'downloadCount';
+  const currentCount = parseInt(localStorage.getItem(key) || '0', 10);
   const newCount = currentCount + 1;
 
-  console.log(`[triggerNotification] ${type} count: ${newCount}`); // 🔍 debug
+  console.log(`[triggerNotification] ${type} count: ${newCount}`);
 
-  localStorage.setItem('newMessageCount', newCount.toString());
+  localStorage.setItem(key, newCount.toString());
 
   const event = new CustomEvent('notify', {
     detail: {
@@ -15,5 +13,6 @@ export const triggerNotification = (type: 'contact' | 'download') => {
       count: newCount,
     },
   });
+
   window.dispatchEvent(event);
 };

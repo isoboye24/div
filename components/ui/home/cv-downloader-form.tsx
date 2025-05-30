@@ -30,7 +30,7 @@ import { upsertDataViewer } from '@/lib/actions/data-viewer.actions';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { sendCVToEmail } from '@/lib/actions/email-cv';
-import { triggerNotification } from '@/utility/notify';
+import { notify } from '@/utility/notify';
 
 const CVDownloaderForm = () => {
   const [open, setOpen] = useState(false);
@@ -62,14 +62,12 @@ const CVDownloaderForm = () => {
       toast.error(res.message || 'Failed to save viewer data');
       return;
     } else {
-      triggerNotification('download');
+      notify('download');
       toast.success('CV sent to your email!');
       form.reset();
       router.push('/');
     }
   };
-
-  console.log(form.formState.errors);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
