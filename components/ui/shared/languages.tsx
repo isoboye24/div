@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Flag from 'react-world-flags';
 
 const languages = [
@@ -10,16 +12,28 @@ const languages = [
 ];
 
 export default function LanguageDropdown() {
-  const [selected, setSelected] = useState('en');
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useParams(); // for current locale
+
   const [open, setOpen] = useState(false);
 
+  const selected = (params?.locale as string) || 'en';
   const selectedLang = languages.find((lang) => lang.code === selected);
+
+  const changeLanguage = (lang: string) => {
+    const segments = pathname.split('/');
+    segments[1] = lang; // update the locale part
+    const newPath = segments.join('/');
+    router.push(newPath);
+    setOpen(false);
+  };
 
   return (
     <div className="relative inline-block text-left">
       <button
         onClick={() => setOpen(!open)}
-        className="inline-flex items-center justify-between w-16 px-2 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 focus:outline-none"
+        className="inline-flex items-center justify-between w-16 px-2 py-2 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 hover:dark:bg-gray-800 focus:outline-none"
         title={selectedLang?.label}
       >
         <Flag
@@ -50,10 +64,7 @@ export default function LanguageDropdown() {
             {languages.map((lang) => (
               <button
                 key={lang.code}
-                onClick={() => {
-                  setSelected(lang.code);
-                  setOpen(false);
-                }}
+                onClick={() => changeLanguage(lang.code)}
                 className="block w-full px-2 py-2 text-center hover:bg-gray-100"
                 title={lang.label}
               >
