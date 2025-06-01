@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu as MenuIcon, Globe } from 'lucide-react';
+import { Menu as MenuIcon } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -12,6 +12,7 @@ import ModeToggle from './mode-toggle';
 import { MobileNav } from './navbar';
 import UserButton from '../../admin/user-button';
 import { useEffect, useState } from 'react';
+import Languages from '../languages';
 
 const Menu = () => {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
@@ -31,7 +32,7 @@ const Menu = () => {
 
   return (
     <div className="flex justify-center gap-3">
-      <Globe size={16} className="mt-2.5" />
+      <Languages />
       <ModeToggle />
 
       {isSignedIn === null ? null : isSignedIn ? <UserButton /> : ''}

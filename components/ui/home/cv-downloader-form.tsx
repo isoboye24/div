@@ -51,21 +51,21 @@ const CVDownloaderForm = () => {
     if (!emailResult.success) {
       toast.error(emailResult.message || 'Failed to send CV to email');
       return;
-    }
-
-    const res = await upsertDataViewer({
-      email: values.email,
-      company: values.company,
-    });
-
-    if (!res.success) {
-      toast.error(res.message || 'Failed to save viewer data');
-      return;
     } else {
-      notify('download');
-      toast.success('CV sent to your email!');
-      form.reset();
-      router.push('/');
+      const res = await upsertDataViewer({
+        email: values.email,
+        company: values.company,
+      });
+
+      if (!res.success) {
+        toast.error(res.message || 'Failed to save viewer data');
+        return;
+      } else {
+        notify('download');
+        toast.success('CV sent to your email!');
+        form.reset();
+        router.push('/');
+      }
     }
   };
 
