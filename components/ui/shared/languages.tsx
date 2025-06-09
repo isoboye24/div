@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useParams } from 'next/navigation';
+import { useRouter, usePathname, useParams } from 'next/navigation';
 import Flag from 'react-world-flags';
 
 const languages = [

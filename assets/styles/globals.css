@@ -220,6 +220,10 @@
   color: #ffffff !important;
 }
 
+.upload-field .text-white {
+  color: #000 !important;
+}
+
 .custom-bg-black {
   color: #000 !important;
 }

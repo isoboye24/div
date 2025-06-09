@@ -136,8 +136,8 @@ const ProjectForm = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4">
-            <div className="mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-6">
+            <div className="">
               <FormField
                 control={form.control}
                 name="projectName"
@@ -152,7 +152,7 @@ const ProjectForm = ({
                 )}
               />
             </div>
-            <div className="mb-6">
+            <div className="">
               <FormField
                 control={form.control}
                 name="siteLink"
@@ -167,7 +167,7 @@ const ProjectForm = ({
                 )}
               />
             </div>
-            <div className="mb-6">
+            <div className="">
               <FormField
                 control={form.control}
                 name="codeLink"
@@ -182,7 +182,7 @@ const ProjectForm = ({
                 )}
               />
             </div>
-            <div className="mb-6">
+            <div className="">
               <FormField
                 control={form.control}
                 name="slug"
@@ -217,7 +217,7 @@ const ProjectForm = ({
                 )}
               />
             </div>
-            <div className="mb-6">
+            <div className="">
               <div className="upload-field flex flex-col gap-5 md:flex-row">
                 {/* Thumbnail */}
                 <FormField
@@ -267,7 +267,7 @@ const ProjectForm = ({
                 />
               </div>
             </div>
-            <div className="mb-6">
+            <div className="">
               <div className="upload-field flex flex-col gap-5 md:flex-row">
                 {/* Images */}
                 <FormField
@@ -326,7 +326,7 @@ const ProjectForm = ({
                 />
               </div>
             </div>
-            <div className="mb-6">
+            <div className="">
               <FormField
                 control={form.control}
                 name="publish"
@@ -345,7 +345,7 @@ const ProjectForm = ({
               />
             </div>
 
-            <div className="mb-6">
+            <div className="">
               <FormField
                 control={form.control}
                 name="rate"
@@ -366,7 +366,7 @@ const ProjectForm = ({
               />
             </div>
 
-            <div className="mb-6">
+            <div className="">
               <FormField
                 control={form.control}
                 name="categoryId"
@@ -398,7 +398,7 @@ const ProjectForm = ({
                 )}
               />
             </div>
-            <div className="mb-6">
+            <div className="">
               <FormField
                 control={form.control}
                 name="description"
