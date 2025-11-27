@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import Picture from '@/public/images/vincent.jpg';
+import Picture from '@/public/images/vincent.png';
 import {
   DropdownMenu,
   DropdownMenuContent,

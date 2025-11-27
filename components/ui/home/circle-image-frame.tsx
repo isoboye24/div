@@ -14,24 +14,17 @@ const CircleImageFrame = ({
 }) => {
   return (
     <div
-      className={`rounded-full ${color} flex justify-center items-center relative`}
+      className={`bg-gray-50 rounded-full ${color} flex justify-center items-center relative`}
       style={{ width: `${size}px`, height: `${size}px` }}
     >
       <div
-        className={`rounded-full ${innerColor} absolute`}
+        className={`bg-gray-50 rounded-full ${innerColor} absolute`}
         style={{
           width: `${size && size / 1.08}px`,
-          height: `${size && size / 1.08}px`,
+          height: `${size && size / 0.9}px`,
         }}
       >
-        {imageUrl && (
-          <Image
-            src={imageUrl}
-            alt="imageUrl"
-            fill
-            className="rounded-full object-cover"
-          />
-        )}
+        {imageUrl && <Image src={imageUrl} alt="imageUrl" fill className=" " />}
       </div>
     </div>
   );
