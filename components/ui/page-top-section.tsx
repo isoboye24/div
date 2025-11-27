@@ -9,10 +9,10 @@ const PageTopSection = ({
 }) => {
   return (
     <div
-      className={`bg-${bgColor} mb-10 h-[10vh] xl:h-[10vh] w-[100vw]`}
+      className={`bg-${bgColor} mb-10 h-[10vh] lg:h-[16vh] xl:h-[24vh] w-screen flex items-center`}
       style={{ backgroundColor: `${bgColor}` }}
     >
-      <div className="text-lg md:text-1xl lg:text-3xl pt-5 wrapper">
+      <div className="text-lg md:text-1xl lg:text-3xl pt-5 wrapper text-gray-50">
         {pageName}
       </div>
     </div>
