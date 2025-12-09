@@ -1,5 +1,4 @@
 import { Project } from '@prisma/client';
-import React from 'react';
 import { Button } from '../button';
 import ImageCarousel from './image-carousel';
 import { getAllSimilarProjects } from '@/lib/actions/project.actions';
@@ -29,7 +28,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
           </div>
 
           <div
-            className={`mt-10 px-10 md:p-0 grid ${
+            className={`px-10 md:p-0 grid items-center justify-center ${
               project?.siteLink ? 'grid-cols-2' : 'grid-cols-1'
             }`}
           >
@@ -40,7 +39,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
                 </a>
               )}
             </div>
-            <div
+            {/* <div
               className={`${
                 project?.siteLink
                   ? 'flex justify-end'
@@ -52,7 +51,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
                   <Button className="px-5 md:px-8">Code</Button>
                 </a>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
