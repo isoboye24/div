@@ -67,3 +67,11 @@ export interface Attachment {
   content: string;
   type: string;
 }
+
+export interface SocialMediaProps {
+  icon: IconProp;
+  size: number;
+  url: string;
+  bgColor?: string;
+  hoverColor?: string;
+}

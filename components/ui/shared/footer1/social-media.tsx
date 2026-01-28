@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SocialMediaProps } from '@/interfaces';
 
@@ -12,7 +11,7 @@ const SocialMedia: React.FC<SocialMediaProps> = ({
   return (
     <a
       href={url}
-      // target="_blank"
+      target="_blank"
       rel="noopener noreferrer"
       className={`flex items-center justify-center rounded-full`}
       style={{
@@ -20,14 +19,11 @@ const SocialMedia: React.FC<SocialMediaProps> = ({
         height: `${size}px`,
       }}
     >
-      <div className="w-full flex justify-center items-center relative h-full border border-gray-400 rounded-full hover:bg-teal-600 transition duration-700 ease-in-out">
-        <FontAwesomeIcon
-          color={bgColor}
-          icon={icon}
-          style={{ fontSize: `${size * 0.5}px` }}
-          className="absolute"
-        />
-      </div>
+      <FontAwesomeIcon
+        color={bgColor}
+        icon={icon}
+        style={{ fontSize: `${size * 0.5}px` }}
+      />
     </a>
   );
 };

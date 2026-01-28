@@ -4,7 +4,7 @@ import {
   faInstagram,
   faXing,
 } from '@fortawesome/free-brands-svg-icons';
-import SocialMedia from '../shared/footer/social-media';
+import SocialMedia from '../shared/footer1/social-media';
 
 const AboutMeText = () => {
   const color = '#05bd9e';

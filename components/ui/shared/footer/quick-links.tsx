@@ -6,20 +6,17 @@ const QuickLinks = () => {
     <>
       <h2 className="text-gray-300 mb-6">Quick Links</h2>
       <div className="">
-        <p className="mb-3 ">
-          <QuickLink linkText="About Me" url="/about" />
+        <p className="mb-1">
+          <QuickLink linkText="About LN" url="/about" />
         </p>
-        <p className="mb-3">
-          <QuickLink linkText="Contact Me" url="/contact" />
+        <p className="mb-1">
+          <QuickLink linkText="Contact Us" url="/contact" />
         </p>
-        <p className="mb-3">
-          <QuickLink linkText="My Projects" url="/projects" />
+        <p className="mb-1">
+          <QuickLink linkText="FAQ" url="/faq" />
         </p>
-        <p className="mb-3">
-          <QuickLink linkText="My Skills" url="/about" />
-        </p>
-        <p className="mb-3">
-          <QuickLink linkText="Blog" url="/blog" />
+        <p className="mb-1">
+          <QuickLink linkText="Get Started" url="/documentation" />
         </p>
       </div>
     </>

@@ -5,7 +5,7 @@ import SocialMedia from './social-media';
 import {
   faFacebookF,
   faInstagram,
-  faXTwitter,
+  faXing,
 } from '@fortawesome/free-brands-svg-icons';
 import Legal from './legal';
 import QuickLinks from './quick-links';
@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <>
       <footer className="border-t footer-bg md:px-9 sm:px-4 pt-9 pb-1">
-        <div className="grid gap-4 flex-rows-3 md:grid-cols-5 px-4 mb-6">
+        <div className="grid gap-4 flex-rows-3 md:grid-cols-5 p-4 mb-6">
           <div className="text-gray-400  px-3 mb-5 sm:mb-0 md:col-span-2">
             <div className="flex justify-center items-center">
               <Image
@@ -26,11 +26,10 @@ const Footer = () => {
                 className="mb-8"
               />
             </div>
-            <p className="px-2 lg:px-15 text-justify text-sm md:text-md lg:text-lg">
-              LangNote is a platform for increasing your vocabulary learning at
-              anywhere and anytime on different devices by serving you with the
-              opportunity to create your language books, groups and save your
-              words or sentences.
+            <p className="px-2 lg:px-15 text-justify text-base lg:text-xl">
+              Are you working on something great? I would love to help make it
+              happen! Drop me a letter and start your project right now! Just do
+              it.
             </p>
           </div>
           <div className=" hidden md:block">
@@ -54,45 +53,25 @@ const Footer = () => {
           </div>
           <div className="text-center ">
             <div className="justify-center">
-              <h2 className="mb-6 text-gray-300">Follow on:</h2>
-              <div className="hidden md:flex items-center justify-center gap-5">
+              <h2 className="mb-6 text-gray-300">Follow me on:</h2>
+              <div className="flex items-center justify-center gap-5">
                 <SocialMedia
                   icon={faFacebookF}
                   bgColor={color}
-                  size={40}
-                  url=""
+                  size={20}
+                  url="https://www.facebook.com/isoboye.vincent/"
                 />
                 <SocialMedia
                   icon={faInstagram}
                   bgColor={color}
-                  size={40}
-                  url=""
+                  size={20}
+                  url="https://www.instagram.com/isoboye_vincent/"
                 />
                 <SocialMedia
-                  icon={faXTwitter}
+                  icon={faXing}
                   bgColor={color}
-                  size={40}
-                  url=""
-                />
-              </div>
-              <div className="flex md:hidden items-center justify-center gap-5">
-                <SocialMedia
-                  icon={faFacebookF}
-                  bgColor={color}
-                  size={30}
-                  url=""
-                />
-                <SocialMedia
-                  icon={faInstagram}
-                  bgColor={color}
-                  size={30}
-                  url=""
-                />
-                <SocialMedia
-                  icon={faXTwitter}
-                  bgColor={color}
-                  size={30}
-                  url=""
+                  size={20}
+                  url="https://www.xing.com/profile/IsoboyeVincent_DanObu/"
                 />
               </div>
             </div>
