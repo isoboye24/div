@@ -89,7 +89,7 @@ const CVDownloaderForm = () => {
                 Please Fill In The Form
               </DialogTitle>
               <DialogDescription className="text-center">
-                Fill in the form to download my CV
+                To download my CV
               </DialogDescription>
             </DialogHeader>
 
@@ -123,9 +123,23 @@ const CVDownloaderForm = () => {
 
             <DialogFooter className="mt-5">
               <Button
-                type="submit"
+                type="button"
                 className="w-full"
-                onClick={() => setOpen(false)}
+                onClick={form.handleSubmit(async (values) => {
+                  // Run your submit logic
+                  await onSubmit(values);
+
+                  // Only download if fields are valid
+                  const link = document.createElement('a');
+                  link.href = '/Lebenslauf_Isoboye_Vincent_Dan-Obu.pdf';
+                  link.download = 'Lebenslauf_Isoboye_Vincent_Dan-Obu.pdf';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+
+                  // Close dialog
+                  setOpen(false);
+                })}
               >
                 Submit
               </Button>
