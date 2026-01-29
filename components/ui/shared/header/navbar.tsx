@@ -10,20 +10,12 @@ const links = [
     href: '/',
   },
   {
-    title: 'About',
-    href: '/about',
-  },
-  {
     title: 'Projects',
     href: '/projects',
   },
   {
     title: 'Contact',
     href: '/contact',
-  },
-  {
-    title: 'Blog',
-    href: '/blog',
   },
 ];
 
@@ -44,7 +36,7 @@ export function MainNav({
           href={item.href}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary',
-            pathname.includes(item.href) ? '' : 'text-muted-foreground'
+            pathname.includes(item.href) ? '' : 'text-muted-foreground',
           )}
         >
           {item.title}
@@ -68,7 +60,7 @@ export function MobileNav({
           href={item.href}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary',
-            pathname.includes(item.href) ? '' : 'text-muted-foreground'
+            pathname.includes(item.href) ? '' : 'text-muted-foreground',
           )}
         >
           {item.title}
