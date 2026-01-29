@@ -32,7 +32,7 @@ const ProjectCarousel = <T extends string>({
 
   return (
     <div>
-      <div className="flex justify-end text-base md:text-lg xl:text-2xl gap-4 md:gap-8 mb-4">
+      <div className="flex justify-center gap-8 mt-12 text-lg">
         {tab &&
           tab.map((t) => (
             <button
@@ -40,9 +40,9 @@ const ProjectCarousel = <T extends string>({
               onClick={() => setActiveType(t)}
               className={`transition-colors duration-200 ${
                 activeType === t
-                  ? 'text-amber-500 font-semibold'
+                  ? 'text-amber-300 font-semibold border-b-2 border-amber-300'
                   : 'text-gray-100 hover:text-gray-200'
-              }`}
+              }   `}
             >
               {t}
             </button>
@@ -50,10 +50,10 @@ const ProjectCarousel = <T extends string>({
       </div>
 
       {loading ? (
-        <div className="text-center">Loading skills...</div>
+        <div className="text-center text-amber-300">Loading skills...</div>
       ) : (
         <>
-          <div className="block md:hidden">
+          <div className="block md:hidden mt-8">
             <CustomCarousel>
               {filteredProjects?.map((project: Project) => (
                 <motion.div
@@ -64,14 +64,14 @@ const ProjectCarousel = <T extends string>({
                   key={project.id}
                   className="text-white  rounded-xl h-[300px] flex items-center justify-center text-xl shadow-base"
                 >
-                  <div className="w-[80%]">
-                    <ProjectCard projectData={project} size={200} />
+                  <div className="w-full py-5">
+                    <ProjectCard projectData={project} />
                   </div>
                 </motion.div>
               ))}
             </CustomCarousel>
           </div>
-          <div className="hidden md:block xl:hidden">
+          <div className="hidden md:block xl:hidden mt-12">
             <CustomCarousel>
               {filteredProjects?.map((project: Project) => (
                 <motion.div
@@ -82,7 +82,9 @@ const ProjectCarousel = <T extends string>({
                   key={project.id}
                   className="text-white rounded-xl h-[300px] flex items-center justify-center text-xl shadow-base"
                 >
-                  <ProjectCard projectData={project} size={200} />
+                  <div className="w-full">
+                    <ProjectCard projectData={project} />
+                  </div>
                 </motion.div>
               ))}
             </CustomCarousel>
@@ -99,7 +101,9 @@ const ProjectCarousel = <T extends string>({
                   key={project.id}
                   className="text-white rounded-xl h-[400px] flex items-center justify-center text-xl shadow-base"
                 >
-                  <ProjectCard projectData={project} size={200} />
+                  <div className="w-full">
+                    <ProjectCard projectData={project} />
+                  </div>
                 </motion.div>
               ))}
             </CustomCarousel>

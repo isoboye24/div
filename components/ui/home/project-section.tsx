@@ -1,22 +1,30 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '../button';
 import ProjectCarousel from '../project/project-carousel';
-import SectionTitle from '../shared/section-title';
 
 const ProjectSection = () => {
   return (
     <div className="wrapper">
-      <SectionTitle title="My projects" />
+      <div className="text-center max-w-2xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-white inline-block">
+          Projects
+          <span className="block h-1 w-14 bg-orange-500 mx-auto mt-3"></span>
+        </h2>
+        <p className="mt-6 text-gray-200">
+          A selection of projects demonstrating my experience in web and desktop
+          application development.
+        </p>
+      </div>
       <div className="pt-10 overflow-hidden">
         <ProjectCarousel tab={['Web', 'Desktop']} types="Web" />
       </div>
-      <div className="flex justify-center mt-0 xl:mt-10">
-        <Link href="/projects">
-          <Button className="bg-amber-500 hover:bg-amber-400 text-gray-900 px-6 py-4 xl:px-10 xl:py-6 text-base md:text-lg xl:text-2xl">
-            View All
-          </Button>
+      <div className="text-center mt-16">
+        <Link
+          href="/projects"
+          className="inline-block px-8 py-4 bg-orange-500 text-black font-semibold rounded-xl hover:bg-orange-400 transition"
+        >
+          View All Projects
         </Link>
       </div>
     </div>

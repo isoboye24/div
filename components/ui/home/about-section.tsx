@@ -15,7 +15,7 @@ export default function About() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* TEXT CONTENT */}
-          <div>
+          <div className="">
             <h2 className="text-3xl md:text-4xl font-bold text-white relative inline-block">
               About Me
               <span className="block h-1 w-14 bg-orange-500 mt-3"></span>

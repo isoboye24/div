@@ -7,7 +7,7 @@ const ProjectComponent = ({ projects }: { projects?: Project[] }) => {
   return (
     <>
       {/* Mobile */}
-      <div className="grid md:hidden grid-cols-2 gap-4 w-[70vw]">
+      <div className="grid md:hidden grid-cols-1 gap-4">
         {projects?.map((project: Project) => (
           <motion.a
             initial={{ opacity: 0, y: 50 }}
@@ -15,9 +15,9 @@ const ProjectComponent = ({ projects }: { projects?: Project[] }) => {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             viewport={{ once: false, amount: 0.3 }}
             key={project.id}
-            className="flex text-white rounded-xl h-[165px] justify-center shadow-base text-xs"
+            className="flex text-white rounded-xl justify-center shadow-base text-xs"
           >
-            <ProjectCard projectData={project} size={120} />
+            <ProjectCard projectData={project} />
           </motion.a>
         ))}
       </div>
@@ -28,14 +28,14 @@ const ProjectComponent = ({ projects }: { projects?: Project[] }) => {
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
         viewport={{ once: false, amount: 0.3 }}
-        className="hidden md:grid md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-8"
+        className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
       >
         {projects?.map((project: Project) => (
           <a
             key={project.id}
-            className=" text-white rounded-xl h-[300px] flex items-center justify-center text-xl shadow-base"
+            className=" text-white rounded-xl flex items-center justify-center text-xl shadow-base"
           >
-            <ProjectCard projectData={project} size={200} />
+            <ProjectCard projectData={project} />
           </a>
         ))}
       </motion.div>
