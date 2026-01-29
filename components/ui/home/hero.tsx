@@ -60,7 +60,6 @@ const Hero = () => {
               {[
                 { label: 'About', color: 'bg-orange-500' },
                 { label: 'Projects', color: 'bg-white text-teal-700' },
-                { label: 'Experience', color: 'bg-black' },
                 { label: 'Skills', color: 'bg-lime-600' },
               ].map((item) => (
                 <a
