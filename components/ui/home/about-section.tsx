@@ -11,7 +11,7 @@ import Picture3 from '@/public/images/family3.jpg';
 
 export default function About() {
   return (
-    <section className="relative bg-linear-to-b from-[#050a1a] to-[#030614] py-24">
+    <section className="relative bg-linear-to-b from-[#050a1a] to-[#030614] py-24 lg:py-40">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* TEXT CONTENT */}
