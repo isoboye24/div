@@ -15,7 +15,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
     <div className="wrapper">
       <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-5">
         <div className="justify-items-center">
-          <div className="w-[100%] lg:w-[100%]">
+          <div className="w-full">
             <ImageCarousel images={project.images} />
           </div>
         </div>
@@ -68,7 +68,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
         <div className="hidden md:flex mt-10 gap-5">
           {similarProjects.map((similarProj) => (
             <div key={similarProj.id} className="">
-              <ProjectCard projectData={similarProj} size={150} />
+              <ProjectCard projectData={similarProj} />
             </div>
           ))}
         </div>
@@ -77,7 +77,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
             <CustomCarousel>
               {similarProjects.map((similarProj) => (
                 <div key={similarProj.id} className="w-[95%]">
-                  <ProjectCard projectData={similarProj} size={150} />
+                  <ProjectCard projectData={similarProj} />
                 </div>
               ))}
             </CustomCarousel>

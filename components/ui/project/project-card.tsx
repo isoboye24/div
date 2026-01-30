@@ -22,8 +22,8 @@ const ProjectCard = ({ projectData }: { projectData?: Project }) => {
         />
       </div>
 
-      <div className="py-6 px-2">
-        <h3 className=" md:text-base lg:text-xl lg:font-semibold mb-1 text-xl font-semibold text-white">
+      <div className="py-6 px-4">
+        <h3 className=" text-base lg:text-xl lg:font-semibold mb-1 font-semibold text-white">
           {projectData.projectName}
         </h3>
 

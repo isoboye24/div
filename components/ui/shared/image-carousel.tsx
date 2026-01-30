@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { ImageCarouselProps } from '@/types';
 import { Card, CardFooter, CardHeader } from '../card';
@@ -13,21 +13,23 @@ export default function ImageCarousel({
   const [activeIndex, setActiveIndex] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  const stopAutoplay = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, []);
+
+  const startAutoplay = useCallback(() => {
+    stopAutoplay();
+    timerRef.current = setTimeout(() => {
+      setActiveIndex((prev) => (prev + 1) % images.length);
+    }, interval);
+  }, [images.length, interval, stopAutoplay]);
+
   useEffect(() => {
     startAutoplay();
     return () => stopAutoplay();
-  }, [activeIndex]);
-
-  const startAutoplay = () => {
-    stopAutoplay();
-    timerRef.current = setTimeout(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, interval);
-  };
-
-  const stopAutoplay = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-  };
+  }, [activeIndex, startAutoplay, stopAutoplay]);
 
   const handleThumbnailClick = (index: number) => {
     stopAutoplay();
@@ -36,7 +38,7 @@ export default function ImageCarousel({
 
   const goToPrevious = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1,
     );
   };
 
