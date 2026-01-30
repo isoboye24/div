@@ -32,7 +32,7 @@ const ProjectCarousel = <T extends string>({
 
   return (
     <div>
-      <div className="flex justify-center gap-8 mt-12 text-lg">
+      <div className="flex justify-center gap-8 mt-12 text-lg mb-0 lg:mb-12">
         {tab &&
           tab.map((t) => (
             <button

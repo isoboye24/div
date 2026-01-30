@@ -16,7 +16,7 @@ const ProjectSection = () => {
           application development.
         </p>
       </div>
-      <div className="pt-10 overflow-hidden">
+      <div className="overflow-hidden">
         <ProjectCarousel tab={['Web', 'Desktop']} types="Web" />
       </div>
       <div className="text-center mt-16 mb-5">
