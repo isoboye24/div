@@ -21,24 +21,25 @@ model Skill {
   level      Int       @default(50)
   publish    Boolean   @default(false)
   category   Category  @relation(fields: [categoryId], references: [id])
-  projects   Project[]
+  projects   Project[] @relation("ProjectSkills")
 }
 
 model Project {
-  id               String   @id @default(uuid())
-  projectName      String
-  projectThumbnail String
-  siteLink         String?
-  codeLink         String?
-  description      String?
-  categoryId       String
-  slug             String   @unique(map: "project_slug_idx") @default("")
-  createdAt        DateTime @default(now()) @db.Timestamp(6)
-  images           String[]
-  publish          Boolean
-  rate             Int
-  category         Category @relation(fields: [categoryId], references: [id])
-  skills           Skill[]
+  id                String   @id @default(uuid())
+  projectName       String
+  projectThumbnail  String
+  siteLink          String?
+  codeLink          String?
+  description       String?
+  short_description String?
+  categoryId        String
+  slug              String   @unique(map: "project_slug_idx") @default("")
+  createdAt         DateTime @default(now()) @db.Timestamp(6)
+  images            String[]
+  publish           Boolean
+  rate              Int
+  category          Category @relation(fields: [categoryId], references: [id])
+  skills            Skill[]  @relation("ProjectSkills")
 }
 
 model ContactMessage {

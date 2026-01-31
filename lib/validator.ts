@@ -15,8 +15,20 @@ export const upsertProjectSchema = z.object({
   images: z.array(z.string().min(1, 'Project must have at least one image')),
   categoryId: z.string().min(1, 'Project name is required'),
   description: z.string().optional().or(z.literal('')),
+  short_description: z.preprocess(
+    (val) => (typeof val === 'string' ? val.trim() || undefined : val),
+    z
+      .string()
+      .max(30, 'Short description must be at most 30 characters')
+      .optional(),
+  ),
   publish: z.boolean(),
   rate: z.number().int().min(1, 'rate is required'),
+
+  // MANY-TO-MANY
+  skills: z
+    .array(z.string().uuid('Invalid skill id'))
+    .min(1, 'At least one skill is required'),
 });
 
 export const upsertSkillSchema = z.object({

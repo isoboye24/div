@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { formatError } from '../utils';
 
 export const upsertProject = async (
-  data: z.infer<typeof upsertProjectSchema>
+  data: z.infer<typeof upsertProjectSchema>,
 ) => {
   const parsed = upsertProjectSchema.safeParse(data);
 
@@ -27,10 +27,12 @@ export const upsertProject = async (
     codeLink,
     images,
     slug,
+    short_description,
     description,
     categoryId,
     publish,
     rate,
+    skills,
   } = parsed.data;
 
   try {
@@ -48,9 +50,13 @@ export const upsertProject = async (
           images,
           slug,
           description,
+          short_description,
           categoryId,
           publish,
           rate,
+          skills: skills?.length
+            ? { set: skills.map((id) => ({ id })) }
+            : { set: [] },
         },
         create: {
           projectName,
@@ -60,24 +66,13 @@ export const upsertProject = async (
           images,
           slug,
           description,
+          short_description,
           categoryId,
           publish,
           rate,
-        },
-      });
-    } else {
-      project = await prisma.project.create({
-        data: {
-          projectName,
-          projectThumbnail,
-          siteLink,
-          codeLink,
-          images,
-          slug,
-          description,
-          categoryId,
-          publish,
-          rate,
+          skills: {
+            connect: skills.map((id) => ({ id })),
+          },
         },
       });
     }
