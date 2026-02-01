@@ -73,21 +73,18 @@ const Projects = async () => {
 
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      <TableCell>
-                        {project.skills && project.skills.length > 0
-                          ? project.skills
-                              .map((id) => skillMap.get(id))
-                              .filter(Boolean)
-                              .join(', ')
-                          : '—'}
-                    </TableCell>
-
+                      {project.skills && project.skills.length > 0
+                        ? project.skills
+                            .map((id) => skillMap.get(id))
+                            .filter(Boolean)
+                            .join(', ')
+                        : '—'}
                     </div>
                   </TableCell>
 
                   <TableCell>{project.short_description}</TableCell>
                   <TableCell className="flex gap-5">
-                    <Link href={`/admin/projects/${project.id}`}>
+                    <Link href={`/admin/projects/${project.id}/edit`}>
                       <Button>Edit</Button>
                     </Link>
                     <DeleteDialog id={project.id} action={deleteProject} />
