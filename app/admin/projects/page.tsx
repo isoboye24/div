@@ -17,6 +17,7 @@ import {
   getAllProjects,
   getTotalProjects,
 } from '@/lib/actions/project.actions';
+import { getAllSkillsForDropdown } from '@/lib/actions/skill.actions';
 
 export const metadata: Metadata = {
   title: 'List of Projects',
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
 const Projects = async () => {
   const projects = await getAllProjects();
   const categories = await getAllCategory();
+  const allSkills = await getAllSkillsForDropdown();
   const total = await getTotalProjects();
 
   return (
@@ -45,7 +47,9 @@ const Projects = async () => {
               <TableHead>Category</TableHead>
               <TableHead>Publish</TableHead>
               <TableHead>Rate</TableHead>
-              <TableHead className="w-[200px]">ACTIONS</TableHead>
+              <TableHead>Skills</TableHead>
+              <TableHead>S. Description</TableHead>
+              <TableHead className="w-50">ACTIONS</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -53,6 +57,12 @@ const Projects = async () => {
               const category = categories?.data?.find(
                 (category) => category.id === project.categoryId
               );
+
+              const skillMap = new Map(
+  allSkills?.data?.map((s) => [s.id, s.skillName]) ?? []
+);
+
+
 
               return (
                 <TableRow key={project.id}>
@@ -62,6 +72,18 @@ const Projects = async () => {
                     {project.publish ? 'Published' : 'Unpublished'}
                   </TableCell>
                   <TableCell>{project.rate}</TableCell>
+
+                  <TableCell>
+  <div className="flex flex-wrap gap-1">
+    {project.skills?.map((id) => (
+      <span key={id} className="px-2 py-1 text-xs rounded bg-muted">
+        {skillMap.get(id)}
+      </span>
+    ))}
+  </div>
+</TableCell>
+
+                  <TableCell>{project.short_description}</TableCell>
                   <TableCell className="flex gap-5">
                     <Link href={`/admin/projects/${project.id}`}>
                       <Button>Edit</Button>

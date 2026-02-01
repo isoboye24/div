@@ -111,8 +111,16 @@ export const checkIfProjectExists = async (name: string) => {
 };
 
 export const getAllProjects = async () => {
+  
   try {
     const projects = await prisma.project.findMany({
+          include: {
+        skills: {
+          select: {
+            id: true,
+          },
+        },
+      },
       orderBy: [
         { publish: 'desc' },
         { rate: 'desc' },
@@ -217,6 +225,11 @@ export const getAllFilterProjects = async ({
     where: whereCondition,
     include: {
       category: true,
+      skills: {
+      select: {
+        id: true,
+      },
+    },
     },
     orderBy: [
       { publish: 'desc' },
@@ -249,6 +262,11 @@ export const getAllSimilarProjects = async ({
     },
     include: {
       category: true,
+      skills: {
+      select: {
+        id: true,
+      },
+    },
     },
     orderBy: [
       { publish: 'desc' },
