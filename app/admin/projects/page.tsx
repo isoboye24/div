@@ -84,7 +84,7 @@ const Projects = async () => {
 
                   <TableCell>{project.short_description}</TableCell>
                   <TableCell className="flex gap-5">
-                    <Link href={`/admin/projects/${project.id}/edit`}>
+                    <Link href={`/admin/projects/${project.id}`}>
                       <Button>Edit</Button>
                     </Link>
                     <DeleteDialog id={project.id} action={deleteProject} />
