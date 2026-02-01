@@ -103,6 +103,7 @@ const form = useForm<z.infer<typeof upsertProjectSchema>>({
         description: project.description,
         short_description: project.short_description,
         projectThumbnail: project.projectThumbnail,
+        skills: project.skills ?? [],
       });
     }
   }, [project, type, form]);
