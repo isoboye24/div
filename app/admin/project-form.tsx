@@ -446,22 +446,23 @@ useEffect(() => {
                         const selected = field.value?.includes(skill.id);
 
                         return (
-                          <Select
-                              onValueChange={(value) =>
-                                field.onChange([...(field.value ?? []), value])
+                          <Button
+                            key={skill.id}
+                            type="button"
+                            variant={selected ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => {
+                              if (selected) {
+                                field.onChange(
+                                  field.value?.filter((id) => id !== skill.id),
+                                );
+                              } else {
+                                field.onChange([...(field.value ?? []), skill.id]);
                               }
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select skills" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {skills.map((skill) => (
-                                  <SelectItem key={skill.id} value={skill.id}>
-                                    {skill.skillName}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            }}
+                          >
+                            {skill.skillName}
+                          </Button>
                         );
                       })}
                     </div>
@@ -471,6 +472,7 @@ useEffect(() => {
                 </FormItem>
               )}
             />
+
 
             <div className="">
               <FormField
