@@ -85,7 +85,7 @@ const form = useForm<z.infer<typeof upsertProjectSchema>>({
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     [],
   );
-  const [skills, setSkills] = useState<{ id: string; name: string }[]>([]);
+  const [skills, setSkills] = useState<{ id: string; skillName: string }[]>([]);
 
   // Reset form values when project prop changes
   useEffect(() => {
@@ -123,26 +123,22 @@ const form = useForm<z.infer<typeof upsertProjectSchema>>({
 
   const selectedCategoryId = form.watch('categoryId');
 
-  useEffect(() => {
-    if (!selectedCategoryId) {
+useEffect(() => {
+  const fetchSkills = async () => {
+    const res = await getAllSkillsForDropdown();
+
+    if (res?.success && Array.isArray(res.data)) {
+      setSkills(res.data);
+    } else {
       setSkills([]);
-      form.setValue('skills', []);
-      return;
+      toast.error('Failed to fetch skills');
     }
+  };
 
-    const fetchSkills = async () => {
-      const res = await getAllSkillsForDropdown();
+  fetchSkills();
+}, []);
 
-      if (Array.isArray(res)) {
-        setSkills(res);
-        form.setValue('skills', []); // reset when category changes
-      } else {
-        toast.error('Failed to fetch skills');
-      }
-    };
 
-    fetchSkills();
-  }, [selectedCategoryId, form]);
 
   const onSubmit: SubmitHandler<z.infer<typeof upsertProjectSchema>> = async (
     values,
@@ -450,26 +446,22 @@ const form = useForm<z.infer<typeof upsertProjectSchema>>({
                         const selected = field.value?.includes(skill.id);
 
                         return (
-                          <Button
-                            key={skill.id}
-                            type="button"
-                            variant={selected ? 'default' : 'outline'}
-                            size="sm"
-                            onClick={() => {
-                              if (selected) {
-                                field.onChange(
-                                  field.value?.filter((id) => id !== skill.id),
-                                );
-                              } else {
-                                field.onChange([
-                                  ...(field.value ?? []),
-                                  skill.id,
-                                ]);
+                          <Select
+                              onValueChange={(value) =>
+                                field.onChange([...(field.value ?? []), value])
                               }
-                            }}
-                          >
-                            {skill.name}
-                          </Button>
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select skills" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {skills.map((skill) => (
+                                  <SelectItem key={skill.id} value={skill.id}>
+                                    {skill.skillName}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
                         );
                       })}
                     </div>
