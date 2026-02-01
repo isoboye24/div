@@ -73,11 +73,15 @@ const Projects = async () => {
 
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {project.skills?.map((id) => (
-                        <span key={id} className="px-2 py-1 text-xs rounded bg-muted">
-                          {skillMap.get(id)}
-                        </span>
-                      ))}
+                      <TableCell>
+                        {project.skills && project.skills.length > 0
+                          ? project.skills
+                              .map((id) => skillMap.get(id))
+                              .filter(Boolean)
+                              .join(', ')
+                          : '—'}
+                    </TableCell>
+
                     </div>
                   </TableCell>
 
