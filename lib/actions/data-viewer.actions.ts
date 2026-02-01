@@ -1,13 +1,13 @@
 'use server';
 
-import { prisma } from '@/db/prisma';
+import { prisma } from '@/lib/prisma';
 import { upsertDataViewerSchema } from '../validator';
 import { z } from 'zod';
 import { formatError } from '../utils';
 import { revalidatePath } from 'next/cache';
 
 export const upsertDataViewer = async (
-  data: z.infer<typeof upsertDataViewerSchema>
+  data: z.infer<typeof upsertDataViewerSchema>,
 ) => {
   const parsed = upsertDataViewerSchema.safeParse(data);
 

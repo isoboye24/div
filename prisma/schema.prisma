@@ -27,17 +27,17 @@ model Skill {
 model Project {
   id                String   @id @default(uuid())
   projectName       String
-  projectThumbnail  String
+  projectThumbnail  String?
   siteLink          String?
   codeLink          String?
   description       String?
-  short_description String?
   categoryId        String
   slug              String   @unique(map: "project_slug_idx") @default("")
   createdAt         DateTime @default(now()) @db.Timestamp(6)
   images            String[]
   publish           Boolean
-  rate              Int
+  rate              Int?
+  short_description String?
   category          Category @relation(fields: [categoryId], references: [id])
   skills            Skill[]  @relation("ProjectSkills")
 }

@@ -55,8 +55,10 @@ export const projectDefaultValues = {
   rate: 0,
   siteLink: '',
   codeLink: '',
+  short_description: '',
   description: '',
   projectThumbnail: '',
+  skills: [],
 };
 
 export const userDefault = {

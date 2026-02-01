@@ -1,6 +1,6 @@
 'use server';
 
-import { prisma } from '@/db/prisma';
+import { prisma } from '@/lib/prisma';
 
 export const getTotalSkills = async ({
   activeType,

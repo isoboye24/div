@@ -1,6 +1,6 @@
 'use server';
 
-import { prisma } from '@/db/prisma';
+import { prisma } from '@/lib/prisma';
 import { upsertSkillSchema } from '../validator';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -53,7 +53,7 @@ export const upsertSkill = async (data: z.infer<typeof upsertSkillSchema>) => {
 
 export const checkIfSkillExists = async (
   skillName: string,
-  categoryId: string
+  categoryId: string,
 ) => {
   try {
     const existing = await prisma.skill.findFirst({
@@ -103,16 +103,9 @@ export const getAllSkill = async ({
   }
 };
 
-export async function getAllSkills({
-  page = 1,
-}: // limit = PAGE_SIZE,
-GetAllSkillsParams) {
-  // const skip = (page - 1) * limit;
-
+export async function getAllSkills({ page = 1 }: GetAllSkillsParams) {
   const [skills, total] = await Promise.all([
     prisma.skill.findMany({
-      // skip,
-      // take: limit,
       orderBy: [{ publish: 'desc' }, { level: 'desc' }],
     }),
     prisma.skill.count(),
@@ -122,7 +115,6 @@ GetAllSkillsParams) {
     skills,
     total,
     currentPage: page,
-    // totalPages: Math.ceil(total / limit),
   };
 }
 
@@ -199,3 +191,28 @@ export async function deleteSkill(id: string) {
     return { success: false, message: formatError(error) };
   }
 }
+
+export const getAllSkillsForDropdown = async () => {
+  try {
+    const skillData = await prisma.skill.findMany({
+      select: {
+        id: true,
+        skillName: true,
+      },
+      orderBy: {
+        skillName: 'asc',
+      },
+    });
+
+    return {
+      success: true,
+      data: skillData,
+    };
+  } catch (error) {
+    console.error('Error fetching skills:', error);
+    return {
+      success: false,
+      message: 'Failed to fetch skills',
+    };
+  }
+};

@@ -1,13 +1,13 @@
 'use server';
 
-import { prisma } from '@/db/prisma';
+import { prisma } from '@/lib/prisma';
 import { upsertContactMessageSchema } from '../validator';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { formatError } from '../utils';
 
 export const upsertContactMessage = async (
-  data: z.infer<typeof upsertContactMessageSchema>
+  data: z.infer<typeof upsertContactMessageSchema>,
 ) => {
   const parsed = upsertContactMessageSchema.safeParse(data);
 

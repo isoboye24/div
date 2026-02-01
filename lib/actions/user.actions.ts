@@ -9,13 +9,13 @@ import {
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { formatError } from '../utils';
 import { hashSync } from 'bcrypt-ts-edge';
-import { prisma } from '@/db/prisma';
+import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 
 export async function signInWithCredentials(
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
   try {
     const email = formData.get('email')?.toString() || '';
@@ -73,7 +73,7 @@ export const createUser = async (data: z.infer<typeof signUpFormSchema>) => {
 };
 
 export const updateUser = async (
-  data: z.infer<typeof updateUserFormSchema>
+  data: z.infer<typeof updateUserFormSchema>,
 ) => {
   const parsed = updateUserFormSchema.safeParse(data);
   if (!parsed.success) {

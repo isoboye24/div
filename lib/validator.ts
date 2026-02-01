@@ -10,20 +10,14 @@ export const upsertProjectSchema = z.object({
   codeLink: z.string().url().optional().or(z.literal('')),
   projectThumbnail: z
     .string()
-    .min(1, 'Project must have at least one thumbnail'),
+    .optional(),
   slug: z.string().min(3, 'Slug must be at least 3 characters'),
   images: z.array(z.string().min(1, 'Project must have at least one image')),
   categoryId: z.string().min(1, 'Project name is required'),
   description: z.string().optional().or(z.literal('')),
-  short_description: z.preprocess(
-    (val) => (typeof val === 'string' ? val.trim() || undefined : val),
-    z
-      .string()
-      .max(30, 'Short description must be at most 30 characters')
-      .optional(),
-  ),
+  short_description: z.string().optional().or(z.literal('')),
   publish: z.boolean(),
-  rate: z.number().int().min(1, 'rate is required'),
+  rate: z.number().int().optional(),
 
   // MANY-TO-MANY
   skills: z

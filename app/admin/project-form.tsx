@@ -39,6 +39,7 @@ import { UploadButton } from '@uploadthing/react';
 import type { ClientUploadedFileData } from 'uploadthing/types';
 import { OurFileRouter } from '@/lib/uploadthing';
 import slugify from 'slugify';
+import { getAllSkillsForDropdown } from '@/lib/actions/skill.actions';
 
 const ProjectForm = ({
   type,
@@ -51,27 +52,31 @@ const ProjectForm = ({
 }) => {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof upsertProjectSchema>>({
-    resolver: zodResolver(upsertProjectSchema),
-    defaultValues: project
-      ? {
-          projectName: project.projectName,
-          categoryId: project.categoryId,
-          publish: project.publish,
-          images: project.images,
-          slug: project.slug,
-          rate: project.rate,
-          siteLink: project.siteLink,
-          codeLink: project.codeLink,
-          description: project.description,
-          projectThumbnail: project.projectThumbnail,
-        }
-      : projectDefaultValues,
-  });
+const form = useForm<z.infer<typeof upsertProjectSchema>>({
+  resolver: zodResolver(upsertProjectSchema),
+  defaultValues: project
+    ? {
+        projectName: project.projectName,
+        categoryId: project.categoryId,
+        publish: project.publish,
+        images: project.images,
+        slug: project.slug,
+        rate: project.rate,
+        siteLink: project.siteLink,
+        codeLink: project.codeLink,
+        short_description: project.short_description,
+        description: project.description,
+        projectThumbnail: project.projectThumbnail,
+        skills: project.skills ?? [],
+      }
+    : projectDefaultValues,
+});
+
 
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
-    []
+    [],
   );
+  const [skills, setSkills] = useState<{ id: string; name: string }[]>([]);
 
   // Reset form values when project prop changes
   useEffect(() => {
@@ -87,6 +92,7 @@ const ProjectForm = ({
         siteLink: project.siteLink,
         codeLink: project.codeLink,
         description: project.description,
+        short_description: project.short_description,
         projectThumbnail: project.projectThumbnail,
       });
     }
@@ -106,8 +112,31 @@ const ProjectForm = ({
     fetchCategories();
   }, []);
 
+  const selectedCategoryId = form.watch('categoryId');
+
+  useEffect(() => {
+    if (!selectedCategoryId) {
+      setSkills([]);
+      form.setValue('skills', []);
+      return;
+    }
+
+    const fetchSkills = async () => {
+      const res = await getAllSkillsForDropdown();
+
+      if (Array.isArray(res)) {
+        setSkills(res);
+        form.setValue('skills', []); // reset when category changes
+      } else {
+        toast.error('Failed to fetch skills');
+      }
+    };
+
+    fetchSkills();
+  }, [selectedCategoryId, form]);
+
   const onSubmit: SubmitHandler<z.infer<typeof upsertProjectSchema>> = async (
-    values
+    values,
   ) => {
     if (type === 'Create') {
       const exists = await checkIfProjectExists(values.projectName);
@@ -204,7 +233,7 @@ const ProjectForm = ({
                               'slug',
                               slugify(form.getValues('projectName'), {
                                 lower: true,
-                              })
+                              }),
                             );
                           }}
                         >
@@ -298,7 +327,7 @@ const ProjectForm = ({
                                 onClientUploadComplete={(
                                   res:
                                     | ClientUploadedFileData<null>[]
-                                    | undefined
+                                    | undefined,
                                 ) => {
                                   const uploadedUrls = res
                                     ?.map((r) => r.ufsUrl)
@@ -398,6 +427,50 @@ const ProjectForm = ({
                 )}
               />
             </div>
+
+            <FormField
+              control={form.control}
+              name="skills"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Skills ({field.value?.length ?? 0})</FormLabel>
+
+                  <FormControl>
+                    <div className="flex flex-wrap gap-2 border rounded-md p-2">
+                      {skills.map((skill) => {
+                        const selected = field.value?.includes(skill.id);
+
+                        return (
+                          <Button
+                            key={skill.id}
+                            type="button"
+                            variant={selected ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => {
+                              if (selected) {
+                                field.onChange(
+                                  field.value?.filter((id) => id !== skill.id),
+                                );
+                              } else {
+                                field.onChange([
+                                  ...(field.value ?? []),
+                                  skill.id,
+                                ]);
+                              }
+                            }}
+                          >
+                            {skill.name}
+                          </Button>
+                        );
+                      })}
+                    </div>
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className="">
               <FormField
                 control={form.control}
@@ -408,6 +481,25 @@ const ProjectForm = ({
                     <FormControl>
                       <Textarea
                         placeholder="Describe the project"
+                        {...field}
+                        className="h-40"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="">
+              <FormField
+                control={form.control}
+                name="short_description"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Short Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Describe the project shortly"
                         {...field}
                         className="h-40"
                       />

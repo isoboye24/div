@@ -1,6 +1,6 @@
 'use server';
 
-import { prisma } from '@/db/prisma';
+import { prisma } from '@/lib/prisma';
 import { upsertProjectSchema } from '../validator';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -36,46 +36,45 @@ export const upsertProject = async (
   } = parsed.data;
 
   try {
-    let project;
-
     // Upsert the project
-    if (id) {
-      project = await prisma.project.upsert({
-        where: { id },
-        update: {
-          projectName,
-          projectThumbnail,
-          siteLink,
-          codeLink,
-          images,
-          slug,
-          description,
-          short_description,
-          categoryId,
-          publish,
-          rate,
-          skills: skills?.length
-            ? { set: skills.map((id) => ({ id })) }
-            : { set: [] },
-        },
-        create: {
-          projectName,
-          projectThumbnail,
-          siteLink,
-          codeLink,
-          images,
-          slug,
-          description,
-          short_description,
-          categoryId,
-          publish,
-          rate,
-          skills: {
-            connect: skills.map((id) => ({ id })),
+    const project = id
+      ? await prisma.project.update({
+          where: { id },
+          data: {
+            projectName,
+            projectThumbnail,
+            siteLink,
+            codeLink,
+            images,
+            slug,
+            description,
+            short_description,
+            categoryId,
+            publish,
+            rate,
+            skills: {
+              set: skills.map((id) => ({ id })),
+            },
           },
-        },
-      });
-    }
+        })
+      : await prisma.project.create({
+          data: {
+            projectName,
+            projectThumbnail,
+            siteLink,
+            codeLink,
+            images,
+            slug,
+            description,
+            short_description,
+            categoryId,
+            publish,
+            rate,
+            skills: {
+              connect: skills.map((id) => ({ id })),
+            },
+          },
+        });
 
     return {
       success: true,
