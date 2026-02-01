@@ -15,7 +15,7 @@ const ProjectCard = ({ projectData }: { projectData?: Project }) => {
     >
       <div className="relative h-56">
         <Image
-          src={projectData.projectThumbnail}
+          src={projectData.projectThumbnail!}
           alt={projectData.projectName}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           fill
