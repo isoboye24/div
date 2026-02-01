@@ -75,7 +75,7 @@ export const upsertProject = async (
             },
           },
         });
-
+        
     return {
       success: true,
       message: id
@@ -129,9 +129,15 @@ export const getAllProjects = async () => {
       ],
     });
 
+    const normalizedProjects = projects.map((project) => ({
+  ...project,
+  skills: project.skills.map((s) => s.id),
+}));
+
+
     return {
       success: true,
-      data: projects,
+      data: normalizedProjects,
     };
   } catch (error) {
     console.error('Error fetching projects:', error);

@@ -59,10 +59,8 @@ const Projects = async () => {
               );
 
               const skillMap = new Map(
-  allSkills?.data?.map((s) => [s.id, s.skillName]) ?? []
-);
-
-
+                allSkills?.data?.map((s) => [s.id, s.skillName]) ?? []
+              );
 
               return (
                 <TableRow key={project.id}>
@@ -74,14 +72,14 @@ const Projects = async () => {
                   <TableCell>{project.rate}</TableCell>
 
                   <TableCell>
-  <div className="flex flex-wrap gap-1">
-    {project.skills?.map((id) => (
-      <span key={id} className="px-2 py-1 text-xs rounded bg-muted">
-        {skillMap.get(id)}
-      </span>
-    ))}
-  </div>
-</TableCell>
+                    <div className="flex flex-wrap gap-1">
+                      {project.skills?.map((id) => (
+                        <span key={id} className="px-2 py-1 text-xs rounded bg-muted">
+                          {skillMap.get(id)}
+                        </span>
+                      ))}
+                    </div>
+                  </TableCell>
 
                   <TableCell>{project.short_description}</TableCell>
                   <TableCell className="flex gap-5">
