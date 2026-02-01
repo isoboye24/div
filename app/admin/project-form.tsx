@@ -41,15 +41,24 @@ import { OurFileRouter } from '@/lib/uploadthing';
 import slugify from 'slugify';
 import { getAllSkillsForDropdown } from '@/lib/actions/skill.actions';
 
-const ProjectForm = ({
-  type,
-  project,
-  id,
-}: {
-  type: 'Create' | 'Update';
-  project?: Project;
-  id?: string;
-}) => {
+type CreateProps = {
+  type: 'Create';
+};
+
+type UpdateProps = {
+  type: 'Update';
+  project: Project;
+  id: string;
+};
+
+type ProjectFormProps = CreateProps | UpdateProps;
+
+
+const ProjectForm = (props: ProjectFormProps) => {
+  const { type } = props;
+  const project = type === 'Update' ? props.project : undefined;
+  const id = type === 'Update' ? props.id : undefined;
+
   const router = useRouter();
 
 const form = useForm<z.infer<typeof upsertProjectSchema>>({

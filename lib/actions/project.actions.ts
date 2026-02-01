@@ -138,6 +138,13 @@ export const getProjectById = async (id: string) => {
   try {
     const project = await prisma.project.findFirst({
       where: { id },
+    include: {
+      skills: {
+        select: {
+          id: true,
+        },
+      },
+    },
     });
 
     if (!project) {
@@ -150,6 +157,7 @@ export const getProjectById = async (id: string) => {
     return {
       success: true,
       data: project,
+      skills: project.skills.map((s) => s.id),
     };
   } catch (error) {
     console.error('Error fetching project:', error);
