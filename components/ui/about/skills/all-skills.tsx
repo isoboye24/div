@@ -26,18 +26,21 @@ const AllSkills = <T extends string>({ tab, types }: TabSectionProps<T>) => {
     <div className="wrapper">
       <h2 className="text-2xl font-bold text-center mb-6">My Skills</h2>
 
-      <div className="flex justify-center md:justify-end text-base md:text-lg xl:text-2xl gap-4 md:gap-8 mb-12 lg:mb-25">
+      <div className="flex flex-wrap justify-center md:justify-end gap-6 mb-14">
         {tab?.map((t) => (
           <button
             key={t}
             onClick={() => setActiveType(t)}
-            className={`transition-colors duration-200 ${
+            className={`relative text-sm md:text-base transition-all ${
               activeType === t
                 ? 'text-amber-500 font-semibold'
-                : 'text-gray-500 hover:text-gray-600'
+                : 'text-gray-500 hover:text-gray-700'
             }`}
           >
             {t}
+            {activeType === t && (
+              <span className="absolute -bottom-2 left-0 h-0.5 w-full bg-amber-500 rounded-full" />
+            )}
           </button>
         ))}
       </div>

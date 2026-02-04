@@ -3,7 +3,7 @@ import AboutSection from '../../components/ui/home/about-section';
 import ProjectSection from '@/components/ui/home/project-section';
 import { Metadata } from 'next';
 import Hero from '@/components/ui/home/hero';
-import Skills from '@/components/ui/shared/skills';
+import AllSkills from '@/components/ui/about/skills/all-skills';
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -21,8 +21,11 @@ const HomePage = () => {
       <section className=" xl:pt-25 xl:pb-40 bg-teal-600" id="projects">
         <ProjectSection />
       </section>
-      <section className="bg-amber-50 py-24">
-        <Skills />
+      <section className=" py-24">
+        <AllSkills
+          tab={['All', 'Frontend', 'Backend', 'Database', 'UX-UI Design']}
+          types="All"
+        />
       </section>
     </div>
   );
