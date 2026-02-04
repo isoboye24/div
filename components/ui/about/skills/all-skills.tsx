@@ -24,7 +24,15 @@ const AllSkills = <T extends string>({ tab, types }: TabSectionProps<T>) => {
 
   return (
     <div className="wrapper">
-      <h2 className="text-2xl font-bold text-center mb-6">My Skills</h2>
+      <div className="mb-16 text-center">
+        <h2 className="text-4xl font-bold text-black dark:text-gray-100">
+          Skills & Technologies
+        </h2>
+        <p className="mt-4 text-black/80 max-w-2xl mx-auto dark:text-gray-300">
+          Technologies I use to design, build, and scale modern web
+          applications.
+        </p>
+      </div>
 
       <div className="flex flex-wrap justify-center md:justify-end gap-6 mb-14">
         {tab?.map((t) => (
@@ -34,7 +42,7 @@ const AllSkills = <T extends string>({ tab, types }: TabSectionProps<T>) => {
             className={`relative text-sm md:text-base transition-all ${
               activeType === t
                 ? 'text-amber-500 font-semibold'
-                : 'text-gray-500 hover:text-gray-700'
+                : 'text-gray-700 hover:text-gray-400'
             }`}
           >
             {t}

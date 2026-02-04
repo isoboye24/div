@@ -32,7 +32,7 @@ const SkillCircle = ({ name, level }: SkillCircleProps) => {
             cy="50%"
             r={radius}
             strokeWidth="30"
-            className="stroke-gray-900 dark:stroke-gray-800"
+            className="stroke-gray-800 dark:stroke-gray-900"
             fill="transparent"
           />
 
