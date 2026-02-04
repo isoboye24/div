@@ -29,7 +29,7 @@ const AllSkills = <T extends string>({ tab, types }: TabSectionProps<T>) => {
           Skills & Technologies
         </h2>
         <p className="mt-4 text-black/80 max-w-2xl mx-auto dark:text-gray-300">
-          Technologies I use to design, build, and scale modern web
+          Technologies I use to design, build, and scale modern web and desktop
           applications.
         </p>
       </div>

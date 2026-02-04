@@ -21,7 +21,7 @@ const HomePage = () => {
       <section className=" xl:pt-25 xl:pb-40 bg-teal-600" id="projects">
         <ProjectSection />
       </section>
-      <section className=" py-24">
+      <section className="py-24">
         <AllSkills
           tab={['All', 'Frontend', 'Backend', 'Database', 'UX-UI Design']}
           types="All"
