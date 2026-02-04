@@ -1,6 +1,6 @@
 // components/footer.tsx
 import Link from 'next/link';
-import { Facebook, Instagram, X } from 'lucide-react';
+import { Facebook, Instagram, Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -81,14 +81,23 @@ export default function Footer() {
 
           {/* Social */}
           <div className="flex items-center gap-5">
-            <Link href="#" aria-label="Facebook">
+            <Link
+              href="https://www.facebook.com/isoboye.vincent"
+              aria-label="Facebook"
+            >
               <Facebook className="h-5 w-5 hover:text-white" />
             </Link>
-            <Link href="#" aria-label="Instagram">
+            <Link
+              href="https://www.instagram.com/isoboye_vincent/"
+              aria-label="Instagram"
+            >
               <Instagram className="h-5 w-5 hover:text-white" />
             </Link>
-            <Link href="#" aria-label="X">
-              <X className="h-5 w-5 hover:text-white" />
+            <Link
+              href="https://www.linkedin.com/in/isoboye-dan-obu-04a892360/"
+              aria-label="X"
+            >
+              <Linkedin className="h-5 w-5 hover:text-white" />
             </Link>
           </div>
         </div>
