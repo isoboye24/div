@@ -1,6 +1,6 @@
 'use client';
 
-import Skills from '@/app/(root)/about/skills';
+import Skills from '@/components/ui/shared/skills';
 import { TabSectionProps } from '@/interfaces';
 import { getAllFilterSkills } from '@/lib/actions/skill.actions';
 import { useEffect, useState } from 'react';
@@ -42,7 +42,7 @@ const AllSkills = <T extends string>({ tab, types }: TabSectionProps<T>) => {
             className={`relative text-sm md:text-base transition-all ${
               activeType === t
                 ? 'text-amber-500 font-semibold'
-                : 'text-gray-700 hover:text-gray-400'
+                : 'text-gray-700 hover:text-gray-400 dark:text-gray-300 dark:hover:text-gray-400'
             }`}
           >
             {t}
