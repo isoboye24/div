@@ -49,20 +49,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/about" className="hover:text-white">
-                  About
-                </Link>
-              </li>
-              <li>
                 <Link href="/projects" className="hover:text-white">
                   Projects
                 </Link>
               </li>
-              <li>
-                <Link href="/skills" className="hover:text-white">
-                  Skills
-                </Link>
-              </li>
+
               <li>
                 <Link href="/contact" className="hover:text-white">
                   Contact
