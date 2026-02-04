@@ -8,7 +8,6 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import Legal from './legal';
 import QuickLinks from './quick-links';
-import logoWhite from '@/public/images/logo-white.png';
 import logoDark from '@/public/images/logo-dark.png';
 
 const Footer = () => {
@@ -20,18 +19,11 @@ const Footer = () => {
           <div className="text-gray-400  px-3 mb-5 sm:mb-0 md:col-span-2">
             <div className="flex justify-center items-center">
               <Image
-                src={logoWhite}
-                width={50}
-                height={50}
-                alt="Logo"
-                className="mb-8 block dark:hidden"
-              />
-              <Image
                 src={logoDark}
                 width={50}
                 height={50}
                 alt="Logo"
-                className="mb-8 hidden dark:block"
+                className="mb-8"
               />
             </div>
             <p className="px-2 lg:px-15 text-justify text-sm md:text-md lg:text-lg">
