@@ -1,95 +1,98 @@
-import BottomFooter from './bottom-footer';
-import Image from 'next/image';
-import SocialMedia from './social-media';
-import {
-  faFacebookF,
-  faInstagram,
-  faXing,
-} from '@fortawesome/free-brands-svg-icons';
-import Legal from './legal';
-import QuickLinks from './quick-links';
-import logoWhite from '@/public/images/logo-white.png';
-import logoDark from '@/public/images/logo-dark.png';
+// components/footer.tsx
+import Link from 'next/link';
+import { Facebook, Instagram, X } from 'lucide-react';
 
-const Footer = () => {
-  const color = '#e78d00';
+export default function Footer() {
   return (
-    <>
-      <footer className="border-t footer-bg md:px-9 sm:px-4 pt-9 pb-1">
-        <div className="grid gap-4 flex-rows-3 md:grid-cols-5 p-4 mb-6">
-          <div className="text-gray-400  px-3 mb-5 sm:mb-0 md:col-span-2">
-            <div className="flex justify-center items-center">
-              <Image
-                src={logoWhite}
-                width={50}
-                height={50}
-                alt="Logo"
-                className="mb-8 block dark:hidden"
-              />
-              <Image
-                src={logoDark}
-                width={50}
-                height={50}
-                alt="Logo"
-                className="mb-8 hidden dark:block"
-              />
-            </div>
-            <p className="px-2 lg:px-15 text-justify text-base lg:text-xl">
-              Are you working on something great? I would love to help make it
-              happen! Drop me a letter and start your project right now! Just do
-              it.
+    <footer className="bg-[#020617] text-slate-300">
+      <div className="mx-auto max-w-7xl px-6 py-16">
+        <div className="grid gap-12 md:grid-cols-4">
+          {/* Brand / CTA */}
+          <div className="md:col-span-2">
+            <h3 className="text-lg font-semibold text-white">
+              Let’s build something meaningful
+            </h3>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-400">
+              Have an idea or a project in mind? I’m always open to discussing
+              new opportunities and collaborations.
             </p>
           </div>
-          <div className=" hidden md:block">
-            <Legal />
-          </div>
-          <div className=" hidden md:block">
-            <div className="text-start">
-              <QuickLinks />
-            </div>
-          </div>
-          <div className="sm:block md:hidden grid gap-2 grid-cols-2 px-5 md:px-0 lg:px-10">
-            <div className="">
-              <Legal />
-            </div>
 
-            <div className="px-5 sm:px-0 lg:text-center">
-              <div className="text-start">
-                <QuickLinks />
-              </div>
-            </div>
+          {/* Legal */}
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
+              Legal
+            </h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link href="/privacy-policy" className="hover:text-white">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/data-protection" className="hover:text-white">
+                  Data Protection
+                </Link>
+              </li>
+            </ul>
           </div>
-          <div className="text-center ">
-            <div className="justify-center">
-              <h2 className="mb-6 text-gray-300">Follow me on:</h2>
-              <div className="flex items-center justify-center gap-5">
-                <SocialMedia
-                  icon={faFacebookF}
-                  bgColor={color}
-                  size={20}
-                  url="https://www.facebook.com/isoboye.vincent/"
-                />
-                <SocialMedia
-                  icon={faInstagram}
-                  bgColor={color}
-                  size={20}
-                  url="https://www.instagram.com/isoboye_vincent/"
-                />
-                <SocialMedia
-                  icon={faXing}
-                  bgColor={color}
-                  size={20}
-                  url="https://www.xing.com/profile/IsoboyeVincent_DanObu/"
-                />
-              </div>
-            </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
+              Quick Links
+            </h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link href="/about" className="hover:text-white">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/projects" className="hover:text-white">
+                  Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/skills" className="hover:text-white">
+                  Skills
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white">
+                  Contact
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <BottomFooter />
-      </footer>
-    </>
-  );
-};
+        {/* Divider */}
+        <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-slate-800 pt-8 md:flex-row">
+          {/* Copyright */}
+          <p className="text-xs text-slate-500">
+            © {new Date().getFullYear()} DIV. All rights reserved.
+          </p>
 
-export default Footer;
+          {/* Social */}
+          <div className="flex items-center gap-5">
+            <Link href="#" aria-label="Facebook">
+              <Facebook className="h-5 w-5 hover:text-white" />
+            </Link>
+            <Link href="#" aria-label="Instagram">
+              <Instagram className="h-5 w-5 hover:text-white" />
+            </Link>
+            <Link href="#" aria-label="X">
+              <X className="h-5 w-5 hover:text-white" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
