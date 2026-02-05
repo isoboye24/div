@@ -37,7 +37,12 @@ const UpdateProject = async ({ params }: { params: { id: string } }) => {
     <div className="space-y-8 max-w-5xl mx-auto">
       <h1 className="h2-bold">Update Project</h1>
 
-      <ProjectForm type="Update" project={projectData} id={project.data!.id} />
+      <ProjectForm
+        type="Update"
+        project={projectData}
+        id={project.data!.id}
+        key={project.data!.id}
+      />
     </div>
   );
 };

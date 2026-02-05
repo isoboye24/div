@@ -53,7 +53,6 @@ type UpdateProps = {
 
 type ProjectFormProps = CreateProps | UpdateProps;
 
-
 const ProjectForm = (props: ProjectFormProps) => {
   const { type } = props;
   const project = type === 'Update' ? props.project : undefined;
@@ -61,26 +60,25 @@ const ProjectForm = (props: ProjectFormProps) => {
 
   const router = useRouter();
 
-const form = useForm<z.infer<typeof upsertProjectSchema>>({
-  resolver: zodResolver(upsertProjectSchema),
-  defaultValues: project
-    ? {
-        projectName: project.projectName,
-        categoryId: project.categoryId,
-        publish: project.publish,
-        images: project.images,
-        slug: project.slug,
-        rate: project.rate,
-        siteLink: project.siteLink,
-        codeLink: project.codeLink,
-        short_description: project.short_description,
-        description: project.description,
-        projectThumbnail: project.projectThumbnail,
-        skills: project.skills ?? [],
-      }
-    : projectDefaultValues,
-});
-
+  const form = useForm<z.infer<typeof upsertProjectSchema>>({
+    resolver: zodResolver(upsertProjectSchema),
+    defaultValues: project
+      ? {
+          projectName: project.projectName,
+          categoryId: project.categoryId,
+          publish: project.publish,
+          images: project.images,
+          slug: project.slug,
+          rate: project.rate,
+          siteLink: project.siteLink,
+          codeLink: project.codeLink,
+          short_description: project.short_description,
+          description: project.description,
+          projectThumbnail: project.projectThumbnail,
+          skills: project.skills ?? [],
+        }
+      : projectDefaultValues,
+  });
 
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     [],
@@ -122,24 +120,20 @@ const form = useForm<z.infer<typeof upsertProjectSchema>>({
     fetchCategories();
   }, []);
 
-  const selectedCategoryId = form.watch('categoryId');
+  useEffect(() => {
+    const fetchSkills = async () => {
+      const res = await getAllSkillsForDropdown();
 
-useEffect(() => {
-  const fetchSkills = async () => {
-    const res = await getAllSkillsForDropdown();
+      if (res?.success && Array.isArray(res.data)) {
+        setSkills(res.data);
+      } else {
+        setSkills([]);
+        toast.error('Failed to fetch skills');
+      }
+    };
 
-    if (res?.success && Array.isArray(res.data)) {
-      setSkills(res.data);
-    } else {
-      setSkills([]);
-      toast.error('Failed to fetch skills');
-    }
-  };
-
-  fetchSkills();
-}, []);
-
-
+    fetchSkills();
+  }, []);
 
   const onSubmit: SubmitHandler<z.infer<typeof upsertProjectSchema>> = async (
     values,
@@ -458,7 +452,10 @@ useEffect(() => {
                                   field.value?.filter((id) => id !== skill.id),
                                 );
                               } else {
-                                field.onChange([...(field.value ?? []), skill.id]);
+                                field.onChange([
+                                  ...(field.value ?? []),
+                                  skill.id,
+                                ]);
                               }
                             }}
                           >
@@ -473,7 +470,6 @@ useEffect(() => {
                 </FormItem>
               )}
             />
-
 
             <div className="">
               <FormField

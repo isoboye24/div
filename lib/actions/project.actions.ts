@@ -2,7 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { upsertProjectSchema } from '../validator';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, unstable_noStore } from 'next/cache';
 import { z } from 'zod';
 import { formatError } from '../utils';
 
@@ -75,7 +75,7 @@ export const upsertProject = async (
             },
           },
         });
-        
+
     return {
       success: true,
       message: id
@@ -111,10 +111,9 @@ export const checkIfProjectExists = async (name: string) => {
 };
 
 export const getAllProjects = async () => {
-  
   try {
     const projects = await prisma.project.findMany({
-          include: {
+      include: {
         skills: {
           select: {
             id: true,
@@ -130,10 +129,9 @@ export const getAllProjects = async () => {
     });
 
     const normalizedProjects = projects.map((project) => ({
-  ...project,
-  skills: project.skills.map((s) => s.id),
-}));
-
+      ...project,
+      skills: project.skills.map((s) => s.id),
+    }));
 
     return {
       success: true,
@@ -150,15 +148,16 @@ export const getAllProjects = async () => {
 
 export const getProjectById = async (id: string) => {
   try {
+    unstable_noStore();
     const project = await prisma.project.findFirst({
       where: { id },
-    include: {
-      skills: {
-        select: {
-          id: true,
+      include: {
+        skills: {
+          select: {
+            id: true,
+          },
         },
       },
-    },
     });
 
     if (!project) {
@@ -232,10 +231,10 @@ export const getAllFilterProjects = async ({
     include: {
       category: true,
       skills: {
-      select: {
-        id: true,
+        select: {
+          id: true,
+        },
       },
-    },
     },
     orderBy: [
       { publish: 'desc' },
@@ -269,10 +268,10 @@ export const getAllSimilarProjects = async ({
     include: {
       category: true,
       skills: {
-      select: {
-        id: true,
+        select: {
+          id: true,
+        },
       },
-    },
     },
     orderBy: [
       { publish: 'desc' },
