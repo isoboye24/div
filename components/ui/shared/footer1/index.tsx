@@ -1,6 +1,6 @@
 // components/footer.tsx
 import Link from 'next/link';
-import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { FacebookIcon, Instagram, Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -76,7 +76,7 @@ export default function Footer() {
               href="https://www.facebook.com/isoboye.vincent"
               aria-label="Facebook"
             >
-              <Facebook className="h-5 w-5 hover:text-white" />
+              <FacebookIcon className="h-5 w-5 hover:text-white" />
             </Link>
             <Link
               href="https://www.instagram.com/isoboye_vincent/"

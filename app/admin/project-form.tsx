@@ -64,6 +64,7 @@ const ProjectForm = (props: ProjectFormProps) => {
     resolver: zodResolver(upsertProjectSchema),
     defaultValues: project
       ? {
+          id: project.id,
           projectName: project.projectName,
           categoryId: project.categoryId,
           publish: project.publish,
@@ -90,6 +91,7 @@ const ProjectForm = (props: ProjectFormProps) => {
     if (project && type === 'Update') {
       console.log('Form values:', form.getValues());
       form.reset({
+        id: project.id,
         projectName: project.projectName,
         categoryId: project.categoryId,
         publish: project.publish,
