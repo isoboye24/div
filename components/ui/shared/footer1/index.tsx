@@ -1,6 +1,7 @@
 // components/footer.tsx
 import Link from 'next/link';
 import { FacebookIcon, Instagram, Linkedin } from 'lucide-react';
+import { FaXing } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -75,20 +76,30 @@ export default function Footer() {
             <Link
               href="https://www.facebook.com/isoboye.vincent"
               aria-label="Facebook"
+              target="_blank"
             >
               <FacebookIcon className="h-5 w-5 hover:text-white" />
             </Link>
             <Link
               href="https://www.instagram.com/isoboye_vincent/"
               aria-label="Instagram"
+              target="_blank"
             >
               <Instagram className="h-5 w-5 hover:text-white" />
             </Link>
             <Link
               href="https://www.linkedin.com/in/isoboye-dan-obu-04a892360/"
-              aria-label="X"
+              aria-label="LinkedIn"
+              target="_blank"
             >
               <Linkedin className="h-5 w-5 hover:text-white" />
+            </Link>
+            <Link
+              href="https://www.xing.com/profile/IsoboyeVincent_DanObu"
+              aria-label="Xinq"
+              target="_blank"
+            >
+              <FaXing className="h-5 w-5 hover:text-white" />
             </Link>
           </div>
         </div>
