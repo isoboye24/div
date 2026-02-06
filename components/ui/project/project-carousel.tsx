@@ -62,7 +62,7 @@ const ProjectCarousel = <T extends string>({
                   transition={{ duration: 0.8, ease: 'easeOut' }}
                   viewport={{ once: false, amount: 0.3 }}
                   key={project.id}
-                  className="text-white  rounded-xl h-[300px] flex items-center justify-center text-xl shadow-base"
+                  className="text-white  rounded-xl h-75 flex items-center justify-center text-xl shadow-base"
                 >
                   <div className="w-full py-5">
                     <ProjectCard projectData={project} />
@@ -80,7 +80,7 @@ const ProjectCarousel = <T extends string>({
                   transition={{ duration: 0.8, ease: 'easeOut' }}
                   viewport={{ once: false, amount: 0.3 }}
                   key={project.id}
-                  className="text-white rounded-xl h-[300px] flex items-center justify-center text-xl shadow-base"
+                  className="text-white rounded-xl h-75 flex items-center justify-center text-xl shadow-base"
                 >
                   <div className="w-full">
                     <ProjectCard projectData={project} />
@@ -99,7 +99,7 @@ const ProjectCarousel = <T extends string>({
                   transition={{ duration: 0.8, ease: 'easeOut' }}
                   viewport={{ once: false, amount: 0.3 }}
                   key={project.id}
-                  className="text-white rounded-xl h-[400px] flex items-center justify-center text-xl shadow-base"
+                  className="text-white rounded-xl h-100 flex items-center justify-center text-xl shadow-base"
                 >
                   <div className="w-full">
                     <ProjectCard projectData={project} />

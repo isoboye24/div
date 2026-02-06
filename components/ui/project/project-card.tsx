@@ -6,14 +6,14 @@ import { Project } from '@prisma/client';
 const ProjectCard = ({ projectData }: { projectData?: Project }) => {
   if (!projectData) return null;
 
-  const teckList = ['Next.js', 'PostgreSQL', 'Stripe'];
+  // const teckList = ['Next.js', 'PostgreSQL', 'Stripe'];
 
   return (
     <Link
       href={`/projects/${projectData.id}`}
       className="group relative bg-[#0b122c] rounded-2xl overflow-hidden shadow-lg block"
     >
-      <div className="relative h-56">
+      <div className="relative h-56 w-60 md:w-75">
         <Image
           src={projectData.projectThumbnail!}
           alt={projectData.projectName}
@@ -27,20 +27,18 @@ const ProjectCard = ({ projectData }: { projectData?: Project }) => {
           {projectData.projectName}
         </h3>
 
-        <p className="mt-2 text-gray-400 text-sm">
-          Language learning web application.
-        </p>
+        <p className="mt-2 text-gray-400 text-sm"></p>
 
         {/* Tech stack */}
         <div className="flex flex-wrap gap-2 mt-4">
-          {teckList.map((tech) => (
+          {/* {teckList.map((tech) => (
             <span
               key={tech}
               className="text-xs px-3 py-1 rounded-full bg-[#141b3d] text-gray-300"
             >
               {tech}
             </span>
-          ))}
+          ))} */}
         </div>
       </div>
     </Link>

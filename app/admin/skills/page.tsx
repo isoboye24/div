@@ -49,13 +49,13 @@ const Skills = async () => {
               <TableHead>Level</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Publish</TableHead>
-              <TableHead className="w-[200px]">ACTIONS</TableHead>
+              <TableHead className="w-50">ACTIONS</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {skills?.map((skill) => {
               const category = allCategory?.data?.find(
-                (category) => category.id === skill.categoryId
+                (category) => category.id === skill.categoryId,
               );
 
               return (

@@ -58,7 +58,7 @@ export default function CustomCarousel({ children }: CarouselProps) {
         className="flex ml-4 lg:justify-center overflow-hidden space-x-4 lg:space-x-16 py-4 px-8"
       >
         {React.Children.map(children, (child, index) => (
-          <div key={index} className="flex-shrink-0 w-64">
+          <div key={index} className="shrink-0 w-64">
             {child}
           </div>
         ))}

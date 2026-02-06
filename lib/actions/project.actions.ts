@@ -117,6 +117,7 @@ export const getAllProjects = async () => {
         skills: {
           select: {
             id: true,
+            skillName: true,
           },
         },
       },
