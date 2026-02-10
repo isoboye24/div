@@ -75,7 +75,7 @@ const SingleProject = async ({ project }: { project: Project }) => {
           {similarProjects.length > 0 ? (
             <CustomCarousel>
               {similarProjects.map((similarProj) => (
-                <div key={similarProj.id} className="w-[95%]">
+                <div key={similarProj.id} className="">
                   <ProjectCard projectData={similarProj} />
                 </div>
               ))}

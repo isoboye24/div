@@ -11,7 +11,7 @@ const ProjectCard = ({ projectData }: { projectData?: ProjectCardData }) => {
       href={`/projects/${projectData.id}`}
       className="group relative bg-[#0b122c] rounded-2xl overflow-hidden shadow-lg block"
     >
-      <div className="relative h-56 w-60 md:w-75">
+      <div className="relative h-56 w-65 md:w-80">
         <Image
           src={projectData.projectThumbnail!}
           alt={projectData.projectName}
@@ -30,7 +30,7 @@ const ProjectCard = ({ projectData }: { projectData?: ProjectCardData }) => {
         </p>
 
         {/* Tech stack */}
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="grid grid-cols-3 gap-2 mt-4">
           {projectData.skills.map((skill) => (
             <span
               key={skill}
