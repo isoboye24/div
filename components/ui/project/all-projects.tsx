@@ -5,12 +5,13 @@ import React, { useEffect, useState } from 'react';
 import { TabSectionProps } from '@/interfaces';
 import ProjectComponent from './project';
 import { getAllFilterProjects } from '@/lib/actions/project.actions';
-import { Category, Project } from '@prisma/client';
+import { ProjectCardData } from '@/types';
 
 const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
   const [activeType, setActiveType] = useState<T>(types);
+
   const [filteredProjects, setFilteredProjects] = useState<
-    (Project & { category: Category })[] | null
+    ProjectCardData[] | null
   >(null);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,7 +20,19 @@ const AllProjects = <T extends string>({ tab, types }: TabSectionProps<T>) => {
     const fetchFilteredProjects = async () => {
       setLoading(true);
       const projects = await getAllFilterProjects({ activeType });
-      setFilteredProjects(projects);
+
+      const normalized: ProjectCardData[] = projects.map((p) => ({
+        id: p.id,
+        projectName: p.projectName,
+        projectThumbnail: p.projectThumbnail!,
+        short_description: p.short_description,
+        siteLink: p.siteLink,
+        codeLink: p.codeLink,
+        images: p.images,
+        skills: p.skills.map((s) => s.skillName),
+      }));
+
+      setFilteredProjects(normalized);
       setLoading(false);
     };
 

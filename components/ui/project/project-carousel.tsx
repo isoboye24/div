@@ -13,6 +13,7 @@ const ProjectCarousel = <T extends string>({
   types,
 }: TabSectionProps<T>) => {
   const [activeType, setActiveType] = useState<TabSectionProps['types']>(types);
+
   const [filteredProjects, setFilteredProjects] = useState<
     ProjectCardData[] | null
   >(null);

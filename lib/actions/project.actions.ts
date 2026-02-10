@@ -232,6 +232,7 @@ export const getAllFilterProjects = async ({
       skills: {
         select: {
           id: true,
+          skillName: true,
         },
       },
     },
@@ -245,6 +246,7 @@ export const getAllFilterProjects = async ({
 
   return allFilteredProjects;
 };
+
 export const getAllSimilarProjects = async ({
   categoryId,
   currentProjectId,
