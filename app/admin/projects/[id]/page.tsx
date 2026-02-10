@@ -8,9 +8,20 @@ export const metadata: Metadata = {
   title: 'Update Project',
 };
 
-const UpdateProject = async ({ params }: { params: { id: string } }) => {
-  const project = await getProjectById(params.id);
-  if (!project) notFound();
+const UpdateProject = async ({
+  params,
+}: {
+  params: Promise<{ id?: string }>;
+}) => {
+  const { id } = await params;
+
+  if (!id) notFound();
+
+  const project = await getProjectById(id);
+  if (!project?.success) notFound();
+
+  console.log('PARAM ID:', id);
+  console.log('PROJECT ID:', project.data?.id);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function normalizeProject(data: any): Project {
@@ -22,7 +33,6 @@ const UpdateProject = async ({ params }: { params: { id: string } }) => {
       slug: data.slug,
       rate: data.rate,
       projectThumbnail: data.projectThumbnail,
-
       description: data.description ?? undefined,
       short_description: data.short_description ?? undefined,
       siteLink: data.siteLink ?? undefined,
@@ -41,7 +51,7 @@ const UpdateProject = async ({ params }: { params: { id: string } }) => {
         type="Update"
         project={projectData}
         id={project.data!.id}
-        key={project.data!.id}
+        key={project.data?.id}
       />
     </div>
   );

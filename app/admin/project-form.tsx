@@ -56,7 +56,6 @@ type ProjectFormProps = CreateProps | UpdateProps;
 const ProjectForm = (props: ProjectFormProps) => {
   const { type } = props;
   const project = type === 'Update' ? props.project : undefined;
-  const id = type === 'Update' ? props.id : undefined;
 
   const router = useRouter();
 
@@ -147,7 +146,8 @@ const ProjectForm = (props: ProjectFormProps) => {
         return;
       }
     }
-    const payload = { ...values, id: type === 'Update' && id ? id : undefined };
+    const payload =
+      type === 'Update' ? { ...values, id: props.id } : { ...values };
 
     const res = await upsertProject(payload);
 

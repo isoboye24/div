@@ -147,39 +147,37 @@ export const getAllProjects = async () => {
   }
 };
 
-export const getProjectById = async (id: string) => {
-  try {
-    unstable_noStore();
-    const project = await prisma.project.findUnique({
-      where: { id },
-      include: {
-        skills: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-
-    if (!project) {
-      return {
-        success: false,
-        message: 'Project not found',
-      };
-    }
-
-    return {
-      success: true,
-      data: project,
-      skills: project.skills.map((s) => s.id),
-    };
-  } catch (error) {
-    console.error('Error fetching project:', error);
+export const getProjectById = async (id?: string) => {
+  if (!id) {
     return {
       success: false,
-      message: 'Failed to fetch project',
+      message: 'Missing project id',
     };
   }
+
+  unstable_noStore();
+
+  const project = await prisma.project.findUnique({
+    where: { id },
+    include: {
+      skills: {
+        select: { id: true },
+      },
+    },
+  });
+
+  if (!project) {
+    return {
+      success: false,
+      message: 'Project not found',
+    };
+  }
+
+  return {
+    success: true,
+    data: project,
+    skills: project.skills.map((s) => s.id),
+  };
 };
 
 export async function deleteProject(id: string) {
