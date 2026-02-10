@@ -290,6 +290,7 @@ export const getFilterProjects = async ({
   activeType: string;
 }) => {
   const takeCount = 3;
+
   const filteredProjects = await prisma.project.findMany({
     where: {
       publish: true,
@@ -299,6 +300,11 @@ export const getFilterProjects = async ({
     },
     include: {
       category: true,
+      skills: {
+        select: {
+          skillName: true,
+        },
+      },
     },
     orderBy: [
       { publish: 'desc' },

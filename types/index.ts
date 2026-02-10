@@ -54,3 +54,11 @@ export type UserProps = {
     };
   } | null;
 };
+
+export type ProjectCardData = {
+  id: string;
+  projectName: string;
+  projectThumbnail: string;
+  short_description: string | null;
+  skills: string[];
+};

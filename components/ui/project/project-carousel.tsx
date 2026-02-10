@@ -6,7 +6,7 @@ import ProjectCard from '../project/project-card';
 import { TabSectionProps } from '@/interfaces';
 import { motion } from 'framer-motion';
 import { getFilterProjects } from '@/lib/actions/project.actions';
-import { Category, Project } from '@prisma/client';
+import { ProjectCardData } from '@/types';
 
 const ProjectCarousel = <T extends string>({
   tab,
@@ -14,7 +14,7 @@ const ProjectCarousel = <T extends string>({
 }: TabSectionProps<T>) => {
   const [activeType, setActiveType] = useState<TabSectionProps['types']>(types);
   const [filteredProjects, setFilteredProjects] = useState<
-    (Project & { category: Category })[] | null
+    ProjectCardData[] | null
   >(null);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -22,8 +22,21 @@ const ProjectCarousel = <T extends string>({
   useEffect(() => {
     const fetchFilteredProjects = async () => {
       setLoading(true);
+
       const projects = await getFilterProjects({ activeType });
-      setFilteredProjects(projects);
+
+      const normalized: ProjectCardData[] = projects.map((p) => ({
+        id: p.id,
+        projectName: p.projectName,
+        projectThumbnail: p.projectThumbnail!,
+        short_description: p.short_description,
+        siteLink: p.siteLink,
+        codeLink: p.codeLink,
+        images: p.images,
+        skills: p.skills.map((s) => s.skillName),
+      }));
+
+      setFilteredProjects(normalized);
       setLoading(false);
     };
 
@@ -55,7 +68,7 @@ const ProjectCarousel = <T extends string>({
         <>
           <div className="block md:hidden mt-8">
             <CustomCarousel>
-              {filteredProjects?.map((project: Project) => (
+              {filteredProjects?.map((project: ProjectCardData) => (
                 <motion.div
                   initial={{ opacity: 0, x: 150 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -73,7 +86,7 @@ const ProjectCarousel = <T extends string>({
           </div>
           <div className="hidden md:block xl:hidden mt-12">
             <CustomCarousel>
-              {filteredProjects?.map((project: Project) => (
+              {filteredProjects?.map((project: ProjectCardData) => (
                 <motion.div
                   initial={{ opacity: 0, x: 150 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -92,7 +105,7 @@ const ProjectCarousel = <T extends string>({
 
           <div className="hidden xl:block mt-4">
             <CustomCarousel>
-              {filteredProjects?.map((project: Project) => (
+              {filteredProjects?.map((project: ProjectCardData) => (
                 <motion.div
                   initial={{ opacity: 0, x: 150 }}
                   whileInView={{ opacity: 1, x: 0 }}

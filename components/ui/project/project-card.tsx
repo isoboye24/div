@@ -1,12 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Project } from '@prisma/client';
+import { ProjectCardData } from '@/types';
 
-const ProjectCard = ({ projectData }: { projectData?: Project }) => {
+const ProjectCard = ({ projectData }: { projectData?: ProjectCardData }) => {
   if (!projectData) return null;
-
-  // const teckList = ['Next.js', 'PostgreSQL', 'Stripe'];
 
   return (
     <Link
@@ -27,18 +25,20 @@ const ProjectCard = ({ projectData }: { projectData?: Project }) => {
           {projectData.projectName}
         </h3>
 
-        <p className="mt-2 text-gray-400 text-sm"></p>
+        <p className="mt-2 text-gray-400 text-sm">
+          {projectData.short_description}
+        </p>
 
         {/* Tech stack */}
         <div className="flex flex-wrap gap-2 mt-4">
-          {/* {teckList.map((tech) => (
+          {projectData.skills.map((skill) => (
             <span
-              key={tech}
+              key={skill}
               className="text-xs px-3 py-1 rounded-full bg-[#141b3d] text-gray-300"
             >
-              {tech}
+              {skill}
             </span>
-          ))} */}
+          ))}
         </div>
       </div>
     </Link>
