@@ -18,7 +18,7 @@ const HomePage = () => {
       <section id="about">
         <AboutSection />
       </section>
-      <section className=" xl:pt-25 xl:pb-40 bg-teal-600" id="projects">
+      <section className="py-24 bg-teal-600" id="projects">
         <ProjectSection />
       </section>
       <section className="py-24" id="skills">
