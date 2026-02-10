@@ -150,7 +150,7 @@ export const getAllProjects = async () => {
 export const getProjectById = async (id: string) => {
   try {
     unstable_noStore();
-    const project = await prisma.project.findFirst({
+    const project = await prisma.project.findUnique({
       where: { id },
       include: {
         skills: {
