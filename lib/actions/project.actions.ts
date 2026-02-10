@@ -271,6 +271,7 @@ export const getAllSimilarProjects = async ({
       skills: {
         select: {
           id: true,
+          skillName: true,
         },
       },
     },

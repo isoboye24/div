@@ -4,12 +4,24 @@ import ImageCarousel from './image-carousel';
 import { getAllSimilarProjects } from '@/lib/actions/project.actions';
 import ProjectCard from '../project/project-card';
 import CustomCarousel from '../project/custom-carousel';
+import { ProjectCardData } from '@/types';
 
 const SingleProject = async ({ project }: { project: Project }) => {
-  const similarProjects = await getAllSimilarProjects({
+  const similarProjectsRaw = await getAllSimilarProjects({
     categoryId: project.categoryId,
     currentProjectId: project.id,
   });
+
+  const similarProjects: ProjectCardData[] = similarProjectsRaw.map((p) => ({
+    id: p.id,
+    projectName: p.projectName,
+    projectThumbnail: p.projectThumbnail!,
+    short_description: p.short_description,
+    siteLink: p.siteLink,
+    codeLink: p.codeLink,
+    images: p.images,
+    skills: p.skills.map((s) => s.skillName),
+  }));
 
   return (
     <div className="wrapper">
@@ -39,19 +51,6 @@ const SingleProject = async ({ project }: { project: Project }) => {
                 </a>
               )}
             </div>
-            {/* <div
-              className={`${
-                project?.siteLink
-                  ? 'flex justify-end'
-                  : 'flex justify-center items-center'
-              }`}
-            >
-              {project?.codeLink && (
-                <a target="_blank" href={`${project.codeLink}`}>
-                  <Button className="px-5 md:px-8">Code</Button>
-                </a>
-              )}
-            </div> */}
           </div>
         </div>
       </div>
